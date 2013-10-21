@@ -1,4 +1,4 @@
-# Django settings for s project.
+# Django settings for betteru project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -83,7 +83,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '9d1lg1l3yh4_52oig%3dcsp408ugyhdk0ok36wqixf0qa9c&pf'
+SECRET_KEY = 'endtb6bp9s7vf(i4pielx%ah97=c8+i(dj&#_8m1o_o)4+onvt'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -102,10 +102,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 's.urls'
+ROOT_URLCONF = 'betteru.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 's.wsgi.application'
+WSGI_APPLICATION = 'betteru.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
