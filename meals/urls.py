@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 
+from meals import views
+
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='meals/index.html')),
+    url(r'^$', views.IndexView.as_view(), name='index'),
 )
