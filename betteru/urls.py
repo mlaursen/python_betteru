@@ -8,6 +8,11 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^info/$', TemplateView.as_view(template_name="info.html")),
+    url(r'^stats/', include('stats.urls', namespace="stats")),
+    url(r'^settings/', include('accounts.urls', namespace="accounts")),
+    url(r'^ingredients/', include('ingredients.urls', namespace="ingredients")),
+    url(r'^meals/', include('meals.urls', namespace="meals")),
+    url(r'^goals/', include('goals.urls', namespace="goals")),
     # Examples:
     # url(r'^$', 'betteru.views.home', name='home'),
     # url(r'^betteru/', include('betteru.foo.urls')),

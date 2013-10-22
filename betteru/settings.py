@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'XE',                      # Or path to database file if using sqlite3.
+        'NAME': 'orcl',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'BETTERU',
         'PASSWORD': 'welcome1',
@@ -131,7 +131,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'betteru',
+    'accounts',
+    'ingredients',
+    'meals',
+    'goals',
     #'account',
     #'tempaccount',
     #'account',
