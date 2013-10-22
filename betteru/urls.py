@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="index.html")),
+    url(r'^info/$', TemplateView.as_view(template_name="info.html")),
     # Examples:
     # url(r'^$', 'betteru.views.home', name='home'),
     # url(r'^betteru/', include('betteru.foo.urls')),
