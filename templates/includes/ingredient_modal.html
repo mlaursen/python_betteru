@@ -1,0 +1,38 @@
+    <div id='add-ingredient' class='modal hide fade' tabindex=-1' role='dialog' aria-labelledby'addIngredientLabel' aria-hidden='true'>
+      <div class='modal-header'>
+        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>x</button>
+        <h3 id='addIngredientLabel'>Add New Ingredient</h3>
+      </div> <!-- end model-header -->
+      <form action='ingredients.php' onSubmit='return validateIngredientForm()' method='post' class='form-horizontal'>
+        <input type='hidden' name='add-ingredient' />
+        <div class='modal-body'>
+<?php
+		$cols = getColumns( 'Ingredients' );
+		for($i = 0; $i < sizeof($cols); $i++) {
+			$col = get_col(get_proc_row($cols, $i), 'php_value');
+			if($col === 'Brand') {
+				//$brands	= cursor_to_array( getBrands() );
+				$brands = getBrands();
+				array_splice($brands, 0, 0, 'New Brand');
+				echo createTextAction( 'brand', $brands, 5, 'Brand Name', 'selectItem');
+
+			}
+			else if($col === 'Category') {
+				//$catgs = cursor_to_array( getCategories() );
+				$catgs = getCategories();
+				array_splice($catgs, 0, 0, 'Select Category');
+				echo createButtonDropdown( 'category', $catgs, 5, 'Category Name', 'selectItem');
+
+			}
+			else {
+				echo createTextbox(slimName($col), $col, 5);
+			}
+		}
+?>
+				</div> <!-- end modal-body -->
+				<div class='modal-footer'>
+				<button class='btn' data-dismiss='modal'>Close</button>
+				<button class='btn btn-primary' type='submit'>Add Ingredient</button>
+				</div> <!-- end modal-footer -->
+      </form>
+    </div> <!-- end modal -->

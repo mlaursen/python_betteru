@@ -1,0 +1,35 @@
+/*
+CSS for the Fitness Helper Pages
+Author: Mikkel Laursen
+*/
+
+.important {
+	border-style: solid;
+	border-width: 5px;
+	border-color: green;
+	text-align: center
+
+}
+
+.additional-info {
+	font-size: smaller;
+	font-style: italic;
+}
+
+.error {
+	color: red;
+}
+
+.nav-val-text{
+	color: white;
+}
+
+#add-ingredient .modal-body {
+	max-height: 500px;
+	height: 500px;
+}
+
+#add-ingredient {
+	width: 700px;
+	margin: 0px 0 0 -350px;
+}
