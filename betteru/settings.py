@@ -113,10 +113,12 @@ WSGI_APPLICATION = 'betteru.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(DIRNAME, 'templates/'),
-    os.path.join(DIRNAME, 'templates/betteru/'),
-    os.path.join(DIRNAME, 'templates/settings/'),
-    os.path.join(DIRNAME, 'templates/ingredients/'),
-    os.path.join(DIRNAME, 'templates/meals/'),
+    #os.path.join(DIRNAME, 'templates/betteru/'),
+    #os.path.join(DIRNAME, 'templates/accounts/'),
+    #os.path.join(DIRNAME, 'templates/stats/'),
+    #os.path.join(DIRNAME, 'templates/goals/'),
+    #os.path.join(DIRNAME, 'templates/ingredients/'),
+    #os.path.join(DIRNAME, 'templates/meals/'),
     os.path.join(DIRNAME, 'templates/includes/'),
     # os.path.join(DIRNAME, 'templates/'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
