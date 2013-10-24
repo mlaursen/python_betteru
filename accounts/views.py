@@ -11,16 +11,17 @@ class IndexView(generic.base.TemplateView):
     template_name = 'accounts/index.html'
 
 def login(request):
-    a = Account.objects.get(id=request.POST['id'])
+    a = get_object_or_404(Account, username=request.POST['username'])
     if a.password == request.POST['password']:
         request.session['uid'] = a.id
-        return HttpResponse("You're logged in.")
+        return HttpResponseRedirect(reverse('accounts:index'))
     else:
-        return HttpRespnse("Your username and password didn't match")
+        str = "Invalid username or password: " + a.username + ", " + a.password
+        return HttpResponse(str)
 
 def logout(request):
     try:
         del request.session['uid']
     except KeyError:
         pass
-    return HttpResponse("You're logged out.")
+    return HttpResponseRedirect(reverse('accounts:index'))

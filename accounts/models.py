@@ -16,10 +16,7 @@ class Account(models.Model):
 
     def __str__(self):
         str = "user: " + self.username + "\n"
-        str += "birthday: " + self.birthday + "\n"
         str += "units: " + self.units + "\n"
-        str += "height: " + self.height + "\n"
-        str += "acti-mult: " + self.activity_multiplier + "\n"
         str += "email: " + self.email + "\n"
         return str
 
