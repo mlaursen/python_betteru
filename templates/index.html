@@ -1,3 +1,5 @@
-{% include 'header.html' %}
-<p>Hello world!</p>
-{% include 'footer.html' %}
+{% extends 'base_template.html' %}
+{% block title %}Welcome {{ accounts.username }}{% endblock %}
+{% block content %}
+Welcome to BetterU!
+{% endblock %}

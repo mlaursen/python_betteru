@@ -1,4 +1,5 @@
-{% include 'header.html' %}
+{% extends 'base_template.html' %}
+{% block title %}{% block which-page %}View{% endblock %} Ingredients{% endblock %}
+{% block content %}
 This is the ingredients page
-
-{% include 'footer.html' %}
+{% endblock %}

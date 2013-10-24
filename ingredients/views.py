@@ -9,3 +9,5 @@ from stats.models import Stats
 class IndexView(generic.base.TemplateView):
     template_name = 'ingredients/index.html'
 
+class AddView(generic.base.TemplateView):
+    template_name = 'ingredients/add.html'

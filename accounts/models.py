@@ -26,9 +26,7 @@ class Account(models.Model):
 class TempAccount(models.Model):
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=128)
-    #password = forms.CharField(max_length=128, min_length=128)
     email    = models.CharField(max_length=40)
-    #code     = forms.CharField(max_length=32, min_length=32)
     code     = models.CharField(max_length=32)
     creation = models.DateTimeField('create date')
 
