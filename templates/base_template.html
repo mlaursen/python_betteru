@@ -37,15 +37,20 @@
     <!-- footer.html -->
     <div class='navbar navbar-fixed-bottom'>
       <div class='navbar-inner'>
-        <p class='navbar-text pull-left additional-info'>
-        Report any concerns to {{ "mlaursen03@gmail.com?subject=BetterU: "|urlizetrunc:23 }}
-        </p>
-        <div class='offset5'>
-          <a class='brand' style="text-align: center">BETTERU</a>
-        </div>
-        <p class='navbar-text pull-right additional-info'>
-          Last Modified: 
-        </p>
+        <table class="navbar-bot">
+          <tr>
+            <td class="left">
+              <span class='additional-info'>Report any concerns to {{ "mlaursen03@gmail.com?subject=BetterU: "|urlizetrunc:23 }}</span>
+            </td>
+            <td class="center">
+              <a class='brand'>BETTERU</a>
+            </td>
+            <td class="right">
+              <span class='additional-info'>Last Modified: somedate.jpg</span>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </body>
 </html>

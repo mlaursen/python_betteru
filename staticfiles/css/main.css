@@ -33,3 +33,25 @@ Author: Mikkel Laursen
 	width: 700px;
 	margin: 0px 0 0 -350px;
 }
+
+
+
+table.navbar-bot { 
+    width: 95%;
+}
+
+table.navbar-bot td.left { 
+    width: 40%;
+    text-align: left;
+}
+
+table.navbar-bot td.right { 
+    width: 40%;
+    text-align: right;
+}
+
+table.navbar-bot td.center a.brand { 
+    text-align: center;
+    float: center;
+}
+
