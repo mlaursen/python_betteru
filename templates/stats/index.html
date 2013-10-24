@@ -1,5 +1,5 @@
-{% include 'header.html' %}
-
-this is the stats page
-
-{% include 'footer.html' %}
+{% extends 'base_template.html' %}
+{% block title %}{% block which-page %}View{% endblock %} Meals{% endblock %}
+{% block content %}
+This is the meals page.
+{% endblock %}
