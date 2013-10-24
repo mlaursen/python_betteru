@@ -13,6 +13,7 @@ class Account(models.Model):
     email    = models.CharField(max_length=40)
     active_since = models.DateTimeField('active since')
 
+
     def __str__(self):
         str = "user: " + self.username + "\n"
         str += "birthday: " + self.birthday + "\n"

@@ -5,10 +5,16 @@ from django.views.generic import TemplateView
 # from django.contrib import admin
 # admin.autodiscover()
 
+from accounts import views
+
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^info/$', TemplateView.as_view(template_name="info.html")),
     url(r'^stats/', include('stats.urls', namespace="stats")),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
+    #url(r'^login/', include('accounts.urls', namespace="accounts")),
+    #url(r'^logout/', include('accounts.urls', namespace="accounts")),
     url(r'^settings/', include('accounts.urls', namespace="accounts")),
     url(r'^ingredients/', include('ingredients.urls', namespace="ingredients")),
     url(r'^meals/', include('meals.urls', namespace="meals")),
