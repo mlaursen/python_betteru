@@ -1,5 +1,41 @@
 {% extends 'base_template.html' %}
 {% block title %}BetterU Login page{% endblock %}
 {% block content %}
-Login page
+  <div class='row-fluid'>
+    <div class='span12'></div>
+    <div class='span12'></div>
+    <div class='span12'></div>
+    {% if form.errors %}
+    <div id='success' class='span7 offset2'>
+      <div class='alert alert-error alert-block'>
+        <button type='button' class='close' data-dismiss='alert'>&times;</button>
+        <strong>Invalid username or password</strong>
+      </div>
+    </div>
+    {% endif %}
+    <div class='span7 offset2'>
+      <div class="hero-unit">
+        <form method="post" action="{% url 'django.contrib.auth.views.login' %}" class='form-horizontal'> {% csrf_token %}
+        <div class="control-group">
+          <label class='control-label' for-'username'>Username</label>
+          <div class="controls">
+            <input type='text' name='username' id='username' placeholder='Username' value=''>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class='control-label' for-'password'>Password</label>
+          <div class="controls">
+            <input type='password' name='password' id='password' placeholder='Password'>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <button type='submit' class='btn' name='log-in'>Login</button>
+            <a href="#" data-toggle='modal' class='btn btn-primary' name='create'>Create Account</a>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
