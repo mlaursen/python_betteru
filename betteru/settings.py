@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.oracle', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'orcl',                      # Or path to database file if using sqlite3.
+        'NAME': 'XE',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'BETTERU',
         'PASSWORD': 'welcome1',
@@ -137,10 +137,6 @@ INSTALLED_APPS = (
     'ingredients',
     'meals',
     'goals',
-    #'account',
-    #'tempaccount',
-    #'account',
-
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
