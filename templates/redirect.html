@@ -1,0 +1,8 @@
+{% extends 'base_template.html' %}
+{% block title %}{{ dictionary.pagename }}{% endblock %}
+{% block content %}
+{% for key, value in dictionary %}
+{{ key }}, {{ value }}<br />
+{% endfor %}
+Hello gurlll
+{% endblock %}
