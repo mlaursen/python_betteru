@@ -9,12 +9,9 @@ from django.views.generic import TemplateView
 from accounts import views
 
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name="index.html")),
+    url(r'^$', views.LoginView.as_view(), name='login'),
     url(r'^info/$', TemplateView.as_view(template_name="info.html")),
     url(r'^stats/', include('stats.urls', namespace="stats")),
-    #url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
-    #url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout'),
-    url(r'^login/$', views.LoginView.as_view(), name='login'),
     url(r'^accounts/login/', 'accounts.views.login', name="login"),
     url(r'^logout/', 'accounts.views.logout', name="logout"),
     url(r'^settings/', include('accounts.urls', namespace="accounts")),

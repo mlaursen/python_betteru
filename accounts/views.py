@@ -7,9 +7,6 @@ from django.utils import timezone
 from accounts.models import Account, valid_user
 
 
-class IndexView(generic.base.TemplateView):
-    template_name = 'accounts/index.html'
-
 class LoginView(generic.base.TemplateView):
     template_name = 'accounts/login.html'
 
@@ -24,9 +21,9 @@ def login(request):
 
     if valid_user(user, pswd):
         request.session['uid'] = a.id
-        return HttpResponseRedirect(reverse('accounts:index') + "?msg=Woo!")
+        return HttpResponseRedirect(reverse('accounts:index'))
     else:
-        return HttpResponseRedirect('/login/?msg=Booooo')
+        return HttpResponseRedirect('/login/')
 
 def logout(request):
     try:
@@ -34,4 +31,12 @@ def logout(request):
     except KeyError:
         pass
     return HttpResponseRedirect('/')
+
+
+def index(request):
+    if request.session.has_key('uid'):
+        a = get_object_or_404(Account, pk=request.session['uid'])
+    else:
+        a = Account.objects.get(pk=0)
+    return render(request, 'accounts/index.html', {'account': a})
 
