@@ -2,9 +2,8 @@ from django.db import models
 import hashlib, uuid
 from django.utils import timezone
 
-# Create your models here.
 class AccountManager(models.Manager):
-    def create_account(self, user, pswd, bday, gender, units, height, act_mult, email):
+    def create_full_account(self, user, pswd, bday, gender, units, height, act_mult, email):
         h = createhash(user, pswd)
         account = self.create(username=user,
                 password=h,
@@ -16,6 +15,15 @@ class AccountManager(models.Manager):
                 email=email,
                 active_since=timezone.now()
         )
+        return account
+
+    def create_account_from_temp(self, tmp):
+        account = self.create(username=tmp.username,
+                password=tmp.password,
+                email=tmp.email,
+                active_since=timezone.now()
+        )
+        del tmp
         return account
 
 
@@ -40,6 +48,13 @@ class Account(models.Model):
         return str
 
 
+class TempAccountManager(models.Manager):
+    def create_tempaccount(self, user, pswd, email, code, creation):
+        h = createhash(user, pswd)
+        tmp = self.create(username=user, password=h, email=email, code=code, creation=timezone.now())
+        return tmp
+
+
 
 
 class TempAccount(models.Model):
@@ -48,6 +63,8 @@ class TempAccount(models.Model):
     email    = models.CharField(max_length=40)
     code     = models.CharField(max_length=32)
     creation = models.DateTimeField('create date')
+
+    objects = TempAccountManager()
 
     def __str__(self):
         str  = "user: " + self.username + "\n"
