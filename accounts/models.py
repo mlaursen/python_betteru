@@ -73,6 +73,12 @@ class TempAccount(models.Model):
         str += "creation: " + self.creation + "\n"
         return str
 
+
+
+
+
+
+
 def createhash(user, pswd):
     ran = str(uuid.uuid4().hex)
     salt = hashlib.sha256( str( ran + "super secret PassTHingy herr" + user ).encode('utf-8') ).hexdigest()

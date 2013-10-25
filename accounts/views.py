@@ -31,5 +31,5 @@ def logout(request):
         del request.session['uid']
     except KeyError:
         pass
-    return HttpResponseRedirect(reverse('accounts:index'))
+    return HttpResponseRedirect('/')
 
