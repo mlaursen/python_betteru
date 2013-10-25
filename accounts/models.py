@@ -49,7 +49,7 @@ class Account(models.Model):
 
 
 class TempAccountManager(models.Manager):
-    def create_tempaccount(self, user, pswd, email, code, creation):
+    def create_tempaccount(self, user, pswd, email, code):
         h = createhash(user, pswd)
         tmp = self.create(username=user, password=h, email=email, code=code, creation=timezone.now())
         return tmp
@@ -70,12 +70,14 @@ class TempAccount(models.Model):
         str  = "user: " + self.username + "\n"
         str += "email: " + self.email + "\n"
         str += "code: " + self.code + "\n"
-        str += "creation: " + self.creation + "\n"
         return str
 
 
 
 
+
+def createcode():
+    return str(uuid.uuid1().hex)
 
 
 

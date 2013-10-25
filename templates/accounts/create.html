@@ -5,40 +5,53 @@
   <div class="span12"></div>
   <div class="span12"></div>
   <div class="span12"></div>
-        <h3 id="create-acount-label">Create Account</h3>
-        <form class="form-horizontal" method='post' action='#'>{% csrf_token %}
-          <div class='control-group'>
-            <label class='control-label' for-'username'>Username</label>
-            <div class='controls'>
-              <input type='text' name='username' placeholder='Username' id='username' class='span3' value='' />
-              <span class='help-block error' id='username-help'></span>
-            </div>
-          </div>
-          <div class='control-group'>
-            <label class='control-label' for-'password'>Password</label>
-            <div class='controls'>
-              <input type='password' name='password' placeholder='Password' id='password' class='span3' />
-              <span class='help-block error' id='password-help'></span>
-            </div>
-          </div>
-          <div class='control-group'>
-            <label class='control-label' for-'password'>Password</label>
-            <div class='controls'>
-              <input type='password' name='password-confirm' placeholder='Password' id='password-confirm' class='span3' />
-              <span class='help-block error' id='password-confirm-help'></span>
-            </div>
-          </div>
-          <div class='control-group'>
-            <label class='control-label' for-'email'>Email</label>
-            <div class='controls'>
-              <input type='text' name='email' placeholder='Email' id='email' class='span3' value='' />
-              <span class='help-block error' id='email-help'></span>
-            </div>
-          </div>
-
-
-          <button class="btn btn-primary" type="submit">Create</button>
-        </div>
-        </form>
+</div>
+{% if form.non_field_errors %}
+<div class="row-fluid">
+  <div class="span6 offset1 alert alert-error">
+    {% for error in form.non_field_errors %}
+    {{ error }}<br />
+    {% endfor %}
   </div>
+</div>
+{% endif %}
+<div class="row-fluid">
+  <div class="span8 offset1">
+  <form class="form-horizontal" method='post' action="{% url 'accounts:create' %}">{% csrf_token %}
+    <div class="control-group">
+      <label class="control-label" for-"username">Username</label>
+      <div class="controls">
+        {{ form.username }}
+        <span class='error help-inline' id='username_help'>{% for error in form.username.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"password">Password</label>
+      <div class="controls">
+        {{ form.password }}
+        <span class='error help-inline' id='password_help'>{% for error in form.password.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"password_confirm">Password</label>
+      <div class="controls">
+        {{ form.password_confirm }}
+        <span class='error help-inline' id='password_confirm_help'>{% for error in form.password_confirm.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"email">Email</label>
+      <div class="controls">
+        {{ form.email }}
+        <span class='error help-inline' id='email_help'>{% for error in form.email.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn" name="submit">Create</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
 {% endblock %}
