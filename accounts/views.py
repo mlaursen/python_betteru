@@ -13,6 +13,10 @@ class IndexView(generic.base.TemplateView):
 class LoginView(generic.base.TemplateView):
     template_name = 'accounts/login.html'
 
+class CreateAccountView(generic.base.TemplateView):
+    template_name = 'accounts/create.html'
+
+
 def login(request):
     a = get_object_or_404(Account, username=request.POST['username'])
     if a.password == request.POST['password']:
@@ -28,3 +32,4 @@ def logout(request):
     except KeyError:
         pass
     return HttpResponseRedirect(reverse('accounts:index'))
+
