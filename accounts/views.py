@@ -10,6 +10,9 @@ from accounts.models import Account
 class IndexView(generic.base.TemplateView):
     template_name = 'accounts/index.html'
 
+class LoginView(generic.base.TemplateView):
+    template_name = 'accounts/login.html'
+
 def login(request):
     a = get_object_or_404(Account, username=request.POST['username'])
     if a.password == request.POST['password']:
