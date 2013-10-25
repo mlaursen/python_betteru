@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from accounts.models import Account
+from accounts.models import Account, valid_user
 
 
 class IndexView(generic.base.TemplateView):
@@ -18,13 +18,15 @@ class CreateAccountView(generic.base.TemplateView):
 
 
 def login(request):
-    a = get_object_or_404(Account, username=request.POST['username'])
-    if a.password == request.POST['password']:
+    user = request.POST['username']
+    pswd = request.POST['password']
+    a = get_object_or_404(Account, username=user)
+
+    if valid_user(user, pswd):
         request.session['uid'] = a.id
-        return HttpResponseRedirect(reverse('accounts:index'))
+        return HttpResponseRedirect(reverse('accounts:index') + "?msg=Woo!")
     else:
-        str = "Invalid username or password: " + a.username + ", " + a.password
-        return HttpResponse(str)
+        return HttpResponseRedirect('/login/?msg=Booooo')
 
 def logout(request):
     try:

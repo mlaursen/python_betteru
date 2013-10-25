@@ -41,6 +41,11 @@ class Account(models.Model):
 
     objects = AccountManager()
 
+    def is_logged_in(request):
+        id = self.id
+        return request.session['uid'] == id
+
+
     def __str__(self):
         str = "user: " + self.username + "\n"
         str += "units: " + self.units + "\n"
@@ -105,4 +110,3 @@ def valid_user(user, pswd):
         return h == a.password
     except:
         return false
-
