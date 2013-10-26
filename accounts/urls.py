@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^create/$', views.create_temp, name='create'),
     url(r'^confirm/$', views.confirm, name='confirm'),
     url(r'^login/$', views.login, name='login'),
+    url(r'^logout/', views.logout, name="logout"),
 )

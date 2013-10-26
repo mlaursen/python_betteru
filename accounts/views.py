@@ -34,7 +34,13 @@ def logout(request):
         del request.session['uid']
     except KeyError:
         pass
-    return HttpResponseRedirect('/')
+    msg = {'pagename': 'Logged out',
+            'message': 'You have successfully logged out.  Redirecting to the login apge in 3 seconds.',
+            'location': reverse('accounts:login'),
+            'time': 3,
+            'success': True,
+    }
+    return render(request, 'redirect.html', {'msg': msg})
 
 
 def index(request):

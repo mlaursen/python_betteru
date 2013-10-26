@@ -1,6 +1,6 @@
 {% extends 'base_template.html' %}
 {% block refresh %}
-<meta http-equiv="refresh" content="{{ msg.time }}; url=/">
+<meta http-equiv="refresh" content="{{ msg.time }}; url={{ msg.location }}">
 {% endblock %}
 {% block title %}{{ msg.pagename }}{% endblock %}
 {% block content %}
