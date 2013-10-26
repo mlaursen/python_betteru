@@ -2,6 +2,9 @@ from django.db import models
 import hashlib, uuid
 from django.utils import timezone
 
+from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
+
 class AccountManager(models.Manager):
     def create_full_account(self, user, pswd, bday, gender, units, height, act_mult, email):
         h = createhash(user, pswd)
@@ -74,6 +77,12 @@ class TempAccount(models.Model):
 
 
 
+def send_confirmation_email(email, code):
+    subject = "BetterU Email Confirmation"
+    message = "Thanks for signing up for BetterU.  Please follow the link below.\n"
+    message += "http://localhost:8000" + reverse('accounts:confirm') + "?code=" + code + "&email=" + email
+    email = EmailMessage(subject, message, to=[email,])
+    return email.send()
 
 
 def createcode():

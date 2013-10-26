@@ -184,3 +184,12 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
         "django.contrib.messages.context_processors.messages",
         "django.core.context_processors.request",
 )
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mlaursen03@gmail.com'
+EMAIL_HOST_PASSWORD = '4mydroid!'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'mlaursen03@gmail.com'
+SERVER_EMAIL = 'mlaursen03@gmail.com'

@@ -26,10 +26,3 @@ class CreateForm(ModelForm):
             'username': forms.TextInput(attrs={'placeholder': 'Username'}),
             'email': forms.TextInput(attrs={'placeholder': 'Email'}),
         }
-
-
-    def create_temp(self):
-        code = createcode()
-        TempAccount.objects.create_tempaccount(self.username, self.password, self.email, code)
-        pass
-

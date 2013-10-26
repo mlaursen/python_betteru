@@ -2,6 +2,7 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
+    {% block refresh %}{% endblock %}
     <title>{% block title %}BASE_TEMP{% endblock %}</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
     <link href="{% static 'css/bootsrap-responsive.css' %}" rel="stylesheet" />

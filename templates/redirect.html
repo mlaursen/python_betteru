@@ -1,8 +1,14 @@
 {% extends 'base_template.html' %}
-{% block title %}{{ dictionary.pagename }}{% endblock %}
+{% block refresh %}
+<meta http-equiv="refresh" content="{{ msg.time }}; url=/">
+{% endblock %}
+{% block title %}{{ msg.pagename }}{% endblock %}
 {% block content %}
-{% for key, value in dictionary %}
-{{ key }}, {{ value }}<br />
-{% endfor %}
-Hello gurlll
+{% if msg.success %}
+<div class="alert alert-success">
+{% else %}
+<div class="alert alert-danger">
+{% endif %}
+{{ msg.message }}
+</div>
 {% endblock %}
