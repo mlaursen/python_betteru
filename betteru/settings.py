@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'ingredients',
     'meals',
     'goals',
+    'stats',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -188,8 +189,8 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mlaursen03@gmail.com'
-EMAIL_HOST_PASSWORD = '4mydroid!'
+EMAIL_HOST_USER = 'betteru.webmaster@gmail.com'
+EMAIL_HOST_PASSWORD = 'hydradeadliftPaperwaLLET'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'mlaursen03@gmail.com'
-SERVER_EMAIL = 'mlaursen03@gmail.com'
+DEFAULT_FROM_EMAIL = 'betteru.webmaster@gmail.com'
+SERVER_EMAIL = 'betteru.webmaster@gmail.com'
