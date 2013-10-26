@@ -2,4 +2,6 @@
 *.pot
 *.pyc
 betteru/settings.py
+settings.py
+*/settings.py
 local_settings.py
