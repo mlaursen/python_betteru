@@ -14,9 +14,14 @@ def login(request):
     if request.method == 'POST':
         f = LoginForm(request.POST)
         if f.is_valid():
-            a = Account.objects.get(username=f.cleaned_data.get('username'), password=f.cleaned_data.get('password'))
-            request.session['uid'] = a.id
-            return HttpResponseRedirect(reverse('accounts:index'))
+            cuser = f.cleaned_data.get('username')
+            cpass = f.cleaned_data.get('password')
+            if valid_user(cuser, cpass):
+                a = Account.objects.get(username=cuser)
+                request.session['uid'] = a.id
+                return HttpResponseRedirect(reverse('accounts:index'))
+            else:
+                render(request, 'redirect.html', {'msg': {'message': 'uh oh'}})
     else:
         f = LoginForm()
     return render(request,

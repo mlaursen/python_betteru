@@ -6,10 +6,15 @@
   <div class="span12"></div>
   <div class="span12"></div>
 </div>
-{% if create_form.non_field_errors or create_form.errors.account_exists %}
+{% if create_form.non_field_errors or create_form.errors.account_exists or create_form.errors.check_email %}
 <div class="row-fluid">
   <div class="span6 offset2 alert alert-error">
-    {{ create_form.errors.account_exists.as_text }}
+    {% for error in create_form.errors.account_exists %}
+    {{ error }}<br />
+    {% endfor %}
+    {% for error in create_form.errors.check_email %}
+    {{ error }}<br />
+    {% endfor %}
     {{ create_form.non_field_errors.as_text }}
   </div>
 </div>

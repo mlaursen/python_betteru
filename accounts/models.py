@@ -81,8 +81,8 @@ def send_confirmation_email(email, code):
     subject = "BetterU Email Confirmation"
     message = "Thanks for signing up for BetterU.  Please follow the link below.\n"
     message += "http://localhost:8000" + reverse('accounts:confirm') + "?code=" + code + "&email=" + email
-    email = EmailMessage(subject, message, to=[email,])
-    return email.send()
+    email_to_send = EmailMessage(subject, message, to=[email,])
+    return email_to_send.send()
 
 
 def createcode():

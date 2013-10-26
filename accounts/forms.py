@@ -4,7 +4,7 @@ from accounts.models import TempAccount, createcode
 from django.core.exceptions import ValidationError
 from django.forms.util import ErrorList
 
-from accounts.models import TempAccount, Account
+from accounts.models import TempAccount, Account, valid_user
 
 class CreateForm(ModelForm):
     password_confirm = forms.CharField(max_length=128,
@@ -56,10 +56,10 @@ class LoginForm(Form):
 
     def is_valid(self):
         valid = super(LoginForm, self).is_valid()
-        user = self.cleaned_data.get('username')
-        pswd = self.cleaned_data.get('password')
+        cuser = self.cleaned_data.get('username')
+        cpswd = self.cleaned_data.get('password')
 
-        if not Account.objects.filter(username=user, password=pswd).exists() or not valid:
+        if not valid or not valid_user(cuser, cpswd):
             self._errors['invalid_login'] = ErrorList([u"Invalid username or password."])
             valid = False
 
