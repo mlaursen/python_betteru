@@ -13,11 +13,6 @@ from django.core.urlresolvers import reverse
 class LoginView(TemplateView):
     template_name = 'accounts/login.html'
 
-#class CreateAccountView(FormView):
-#    template_name = 'accounts/create.html'
-#    form_class = CreateForm
-#    success_url = '/'
-
 def login(request):
     user = request.POST['username']
     pswd = request.POST['password']
@@ -76,7 +71,7 @@ def create_temp(request):
 
 def confirm(request):
     conf = {'pagename': 'Confirm Email', 
-            'message': 'You have successfully confirmed your email.  Redirecting in 3 seconds.',
+            'message': 'You have successfully confirmed your email!  Redirecting to login page in 3 seconds.',
             'location': '/',
             'success': True,
             'time': 3,

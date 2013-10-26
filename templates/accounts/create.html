@@ -6,9 +6,12 @@
   <div class="span12"></div>
   <div class="span12"></div>
 </div>
-{% if form.non_field_errors %}
+{% if form.non_field_errors or form.errors.account_exists %}
 <div class="row-fluid">
-  <div class="span6 offset1 alert alert-error">
+  <div class="span6 offset2 alert alert-error">
+    {% for error in form.errors.account_exists %}
+    {{ error }}<br />
+    {% endfor %}
     {% for error in form.non_field_errors %}
     {{ error }}<br />
     {% endfor %}
