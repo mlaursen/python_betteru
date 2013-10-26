@@ -3,26 +3,26 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.utils import timezone
 
 from accounts.models import TempAccount, Account, valid_user, createcode, send_confirmation_email
-from accounts.forms import CreateForm
+from accounts.forms import CreateForm, LoginForm
 from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
 from django.core.mail import send_mail, BadHeaderError
 from django.core.urlresolvers import reverse
 
 
-class LoginView(TemplateView):
-    template_name = 'accounts/login.html'
-
 def login(request):
-    user = request.POST['username']
-    pswd = request.POST['password']
-    a = get_object_or_404(Account, username=user)
-
-    if valid_user(user, pswd):
-        request.session['uid'] = a.id
-        return HttpResponseRedirect(reverse('accounts:index'))
+    if request.method == 'POST':
+        f = LoginForm(request.POST)
+        if f.is_valid():
+            a = Account.objects.get(username=f.cleaned_data.get('username'), password=f.cleaned_data.get('password'))
+            request.session['uid'] = a.id
+            return HttpResponseRedirect(reverse('accounts:index'))
     else:
-        return HttpResponseRedirect('/login/')
+        f = LoginForm()
+    return render(request,
+            'accounts/login.html',
+            {'form': f, 'create_form': CreateForm()}
+    )
 
 def logout(request):
     try:
@@ -66,7 +66,10 @@ def create_temp(request):
     else:
         f = CreateForm()
 
-    return render(request, 'accounts/create.html', {'form': f,})
+    return render(request,
+            'accounts/create.html',
+            {'create_form': f,}
+    )
 
 
 def confirm(request):

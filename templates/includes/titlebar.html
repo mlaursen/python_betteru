@@ -1,6 +1,6 @@
     <div class='navbar navbar-inverse'>
       <div class='navbar-inner'>
-        <a class='brand' href="/info/">INFO</a>
+        <a class='brand' href="/">INFO</a>
         <ul class='nav'>
           <li><a href="{% url 'stats:index' %}">Stats</a></li>
           <li><a href="{% url 'goals:index' %}">Goals</a></li>
@@ -9,13 +9,13 @@
           <li><a href="{% url 'meals:index' %}">Meals</a></li>
         </ul>
         <ul class='nav pull-right'>
-          
-          {% comment %}
-          <li><a data-toggle='modal' href='#'>Add Ingredient</a></li>
-          <li><a data-toggle='modal' href='#'>Add Meal</a></li>
-          <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-          {% endcomment %}
-          <li><a href='logout.php'>Logout</a></li>
+          <li><a data-toggle='modal' href="{% url 'ingredients:add' %}">Add Ingredient</a></li>
+          <li><a data-toggle='modal' href="{% url 'meals:add' %}">Add Meal</a></li>
+          {% if request.session.uid %}
+          <li><a href="/logout/">Logout</a></li>
+          {% else %}
+          <li><a href="{% url 'accounts:login' %}">Login</a></li>
+          {% endif %}
         </ul>
       </div><!-- end navbar-inner -->
     </div><!-- end navbar navbar-inverse -->

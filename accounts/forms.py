@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from accounts.models import TempAccount, createcode
 from django.core.exceptions import ValidationError
 from django.forms.util import ErrorList
@@ -37,10 +37,6 @@ class CreateForm(ModelForm):
 
         return valid
 
-    def clean(self):
-        return self.cleaned_data
-
-
     class Meta:
         model = TempAccount
         fields = ['username', 'password', 'email']
@@ -48,3 +44,24 @@ class CreateForm(ModelForm):
             'username': forms.TextInput(attrs={'placeholder': 'Username'}),
             'email': forms.TextInput(attrs={'placeholder': 'Email'}),
         }
+
+class LoginForm(Form):
+    username = forms.CharField(max_length=40,
+            widget=forms.TextInput(attrs={'placeholder': 'Username'})
+    )
+    password = forms.CharField(max_length=128,
+            min_length=8,
+            widget=forms.PasswordInput(attrs={'placeholder': 'Password'})
+    )
+
+    def is_valid(self):
+        valid = super(LoginForm, self).is_valid()
+        user = self.cleaned_data.get('username')
+        pswd = self.cleaned_data.get('password')
+
+        if not Account.objects.filter(username=user, password=pswd).exists() or not valid:
+            self._errors['invalid_login'] = ErrorList([u"Invalid username or password."])
+            valid = False
+
+        return valid
+

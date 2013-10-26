@@ -1,0 +1,45 @@
+{% if create_form.non_field_errors or create_form.errors.account_exists %}
+<div class="row-fluid">
+  <div class="span6 offset2 alert alert-error">
+    {% for error in create_form.errors.account_exists %}
+    {{ error }}<br />
+    {% endfor %}
+    {% for error in create_form.non_field_errors %}
+    {{ error }}<br />
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% block formstart %}{% endblock %}
+  <form class="form-horizontal" method='post' action="{% url 'accounts:create' %}">{% csrf_token %}
+    <div class="control-group">
+      <label class="control-label" for-"username">Username</label>
+      <div class="controls">
+        {{ create_form.username }}
+        <span class='error help-inline' id='username_help'>{% for error in create_form.username.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"password">Password</label>
+      <div class="controls">
+        {{ create_form.password }}
+        <span class='error help-inline' id='password_help'>{% for error in create_form.password.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"password_confirm">Password</label>
+      <div class="controls">
+        {{ create_form.password_confirm }}
+        <span class='error help-inline' id='password_confirm_help'>{% for error in create_form.password_confirm.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"email">Email</label>
+      <div class="controls">
+        {{ create_form.email }}
+        <span class='error help-inline' id='email_help'>{% for error in create_form.email.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    {% block submit %}{% endblock %}
+  </form>
+{% block formend %}{% endblock %}
