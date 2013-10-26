@@ -3,5 +3,8 @@
 *.pyc
 betteru/settings.py
 settings.py
+<<<<<<< HEAD
 */settings.py
+=======
+>>>>>>> origin/master
 local_settings.py
