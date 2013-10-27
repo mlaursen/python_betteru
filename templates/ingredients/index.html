@@ -11,8 +11,45 @@
           {% for category in categories %}
           <li id="{{ category|lower }}" name="categories" onclick="loadIngredientsTable('{{ category }}', '{{ category|lower }}', 'categories')"><a href="#">{{ category }}</a></li>
           {% endfor %}
+          <hr />
+        </ul>
+        <ul name="brand_nav" class="nav nav-list">
+          <li class="nav-header">Brands</li>
+          <li id="allbrands" class="active" name="brands" onclick="loadIngredientsTable('All brands', 'allbrands', 'brands')"><a href="#">All brands</a></li>
+          {% for brand in brands %}
+          <li id="{{ brand|lower|cut:' '|cut:'\'' }}" name="brands" onclick="loadIngredientsTable('{{ brand|addslashes }}', '{{ brand|lower|cut:' '|cut:'\'' }}', 'brands')"><a href="#">{{ brand }}</a></li>
+          {% endfor %}
         </ul>
       </div>
+    </div>
+    <div class="span10">
+      <h4>Ingredients</h4>
+      <table class="table table-striped table-bordered table-hover tabled-condensed">
+        <tr>
+          <th>Category</th>
+          <th>Brand</th>
+          <th>Name</th>
+          <th>Serving Size (default)</th>
+          <th>Serving Size (alternate)</th>
+          <th>Calories (kCal)</th>
+          <th>Fat (g)</th>
+          <th>Carbohydrates (g)</th>
+          <th>Protein (g)</th>
+        </tr>
+        {% for ingredient in ingredients %}
+        <tr>
+          <td>{{ ingredient.brand }}</td>
+          <td>{{ ingredient.category }}</td>
+          <td>{{ ingredient.name }}</td>
+          <td>{{ ingredient.default_serving_size }} {{ ingredient.default_serving_unit }}</td>
+          <td>{{ ingredient.alt_serving_size }} {{ ingredient.alt_serving_unit }}</td>
+          <td>{{ ingredient.calories }}</td>
+          <td>{{ ingredient.fat }}</td>
+          <td>{{ ingredient.carbohydrates }}</td>
+          <td>{{ ingredient.protein }}</td>
+        </tr>
+        {% endfor %}
+      </table>
     </div>
   </div>
 {% endblock %}

@@ -13,11 +13,23 @@ class AddView(generic.base.TemplateView):
     template_name = 'ingredients/add.html'
 
 def index(request):
-    ingredients = Ingredient.objects.all()
-    brands = Brand.objects.all()
+    if request.method == "POST" and request.is_ajax():
+        category = request.GET.get('category')
+        brand    = request.GET.get('brand')
+        if category != 'allcategories' and category != '' and brand != 'allbrands' and brand != '':
+            ingredients = Ingredient.objects.filter(category=category, brand=brand)
+        elif category != 'allcategories' and category != '':
+            ingredients = Ingredient.objects.filter(category=category)
+        elif brand != 'allbrands' and brand != '':
+            ingredients = Ingredient.objects.filter(brand=brand)
+        else:
+            ingredients = Ingredient.objects.all()
+    else:
+        ingredients = Ingredient.objects.all()
+    brands = Brand.objects.all().order_by('name')
     categories = Category.objects.all()
     return render(request,
-            'ingredeints/index.html',
+            'ingredients/index.html',
             {'ingredients': ingredients,
                 'brands': brands,
                 'categories': categories}
