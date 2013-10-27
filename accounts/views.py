@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from accounts.models import TempAccount, Account, Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
+from accounts.models import TempAccount, Account
+from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
 from accounts.forms import CreateForm, LoginForm
 
 
