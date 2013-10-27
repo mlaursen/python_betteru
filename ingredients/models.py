@@ -3,7 +3,7 @@ from django.db import models
 
 
 class BrandManager(models.Manager):
-    def ceate_brand(self, name):
+    def create_brand(self, name):
         return self.create(name=name)
 
 class Brand(models.Model):
@@ -16,7 +16,7 @@ class Brand(models.Model):
 
 
 class CategoryManager(models.Manager):
-    def create_brand(self, name):
+    def create_category(self, name):
         return self.create(name=name)
 
 class Category(models.Model):
@@ -32,11 +32,16 @@ class Category(models.Model):
 
 
 class IngredientManager(models.Manager):
-    def create_ingredient(self, brand, catg, i_servingsize, m_servingsize, cal, fat, carb, prot):
-        ingredient = self.create(brand=brand,
+    def create_ingredient(self, name, brand, catg, dservingsize, dservingunit, aservingsize, aservingunit, cal, fat, carb, prot):
+        brand = Brand.objects.get(name=brand)
+        catg  = Category.objects.get(name=catg)
+        ingredient = self.create(name=name,
+                brand=brand,
                 category=catg,
-                i_serving_size=i_servingsize,
-                m_serving_size=m_servingsize,
+                default_serving_size=dservingsize,
+                default_serving_unit=dservingunit,
+                alt_serving_size=aservingsize,
+                alt_serving_unit=aservingunit,
                 calories=cal,
                 fat=fat,
                 carbohydrates=carb,
@@ -49,8 +54,10 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=128)
     brand = models.ForeignKey(Brand)
     category = models.ForeignKey(Category)
-    i_serving_size = models.IntegerField(default=0)
-    m_serving_size = models.IntegerField(default=0)
+    default_serving_size = models.IntegerField(default=0)
+    default_serving_unit = models.CharField(max_length=15)
+    alt_serving_size = models.IntegerField(default=0)
+    alt_serving_unit = models.CharField(max_length=15)
     calories = models.IntegerField()
     fat = models.IntegerField()
     carbohydrates = models.IntegerField()
