@@ -1,5 +1,18 @@
 {% extends 'base_template.html' %}
 {% block title %}{% block which-page %}View{% endblock %} Ingredients{% endblock %}
+{% block container %}<div class="container-fluid">{% endblock %}
 {% block content %}
-This is the ingredients page
+  <div class="row-fluid">
+    <div class="span2">
+      <div class="well sidebar-nav">
+        <ul name="catg_nav" class="nav nav-list">
+          <li class="nav-header">Food Categories</li>
+          <li id="allcategories" class="active" name="categories" onclick="loadIngredientsTable('All Categories', 'allcategories', 'categories')"><a href="#">All Categories</a></li>
+          {% for category in categories %}
+          <li id="{{ category|lower }}" name="categories" onclick="loadIngredientsTable('{{ category }}', '{{ category|lower }}', 'categories')"><a href="#">{{ category }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
 {% endblock %}
