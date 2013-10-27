@@ -1,9 +1,4 @@
 from django.db import models
-import hashlib, uuid
-from django.utils import timezone
-
-from django.core.mail import EmailMessage
-from django.core.urlresolvers import reverse
 
 class AccountManager(models.Manager):
     def create_full_account(self, user, pswd, bday, gender, units, height, act_mult, email):

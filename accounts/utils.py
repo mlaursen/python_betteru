@@ -1,3 +1,10 @@
+from django.utils import timezone
+from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
+
+from accounts.models import Account
+
+import hashlib, uuid
 
 def send_confirmation_email(email, code):
     subject = "BetterU Email Confirmation"
@@ -33,8 +40,26 @@ def valid_user(user, pswd):
         h = repeated_hashing(salt, pswd)
         return h == a.password
     except:
-        return false
+        return False
 
 def logged_in(request):
     return 'uid' in request.session
 
+
+class Redirect(object):
+    msg = {}
+
+    def __str__(self):
+        return str(self.msg)
+
+
+    def __init__(self, pname, message, loc='/', divtype='success', login=True, time=3):
+        if login:
+            message += " Redirecting to the login page in %s seconds." % time
+        msg = {'pagename': pname,
+                'message': message,
+                'location': loc,
+                'time': time,
+                'type': divtype,
+        }
+        self.msg = msg
