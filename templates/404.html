@@ -1,5 +1,6 @@
 {% extends 'base_template.html' %}
 {% load static %}
+{% load util_tags %}
 
 {% block title %}Page Not Found{% endblock %}
 {% comment %}{% block body %}<body background="{% static 'media/imgs/404.jpg' %}">{% endblock %}{% endcomment %}
@@ -13,7 +14,7 @@
   Check out any of the links on the navigation bar or go to the <a href="{% url 'accounts:login' %}">index</a> page.
   </p>
 </div>
-  <div class="thanks">
-    Thanks to Writer <a href="http://techfar.com/author/gmornob/">gnornob</a> for the free 404 page.
-  </div>
+<div class="thanks">
+  Thanks to Writer <a href="http://techfar.com/author/gmornob/">gnornob</a> for the free 404 page.
+</div>
 {% endblock %}
