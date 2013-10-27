@@ -1,5 +1,8 @@
 {% extends 'base_template.html' %}
 {% block title %}INFO{% endblock %}
+{% if not request.session.uid %}
+
+{% endif %}
 {% block content %}
 this is the info page. yeah bruh
 {% endblock %}

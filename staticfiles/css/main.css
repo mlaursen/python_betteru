@@ -55,3 +55,14 @@ table.navbar-bot td.center a.brand {
     float: center;
 }
 
+.thanks {
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+}
+
+body.page404 {
+    background: white url("../media/imgs/404.jpg") no-repeat;
+    background-position: 35%;
+    background-attachment: fixed;
+}

@@ -1,13 +1,10 @@
-from django.shortcuts import render, get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
-from django.utils import timezone
-
-from accounts.models import TempAccount, Account, valid_user, createcode, send_confirmation_email
-from accounts.forms import CreateForm, LoginForm
-from django.views.generic.edit import FormView
-from django.views.generic.base import TemplateView
-from django.core.mail import send_mail, BadHeaderError
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+
+from accounts.models import TempAccount, Account 
+from accounts.forms import CreateForm, LoginForm
+from accounts.utils import valid_user, createcode, send_confirmation_email
 
 
 def login(request):
@@ -20,8 +17,6 @@ def login(request):
                 a = Account.objects.get(username=cuser)
                 request.session['uid'] = a.id
                 return HttpResponseRedirect(reverse('accounts:index'))
-            else:
-                render(request, 'redirect.html', {'msg': {'message': 'uh oh'}})
     else:
         f = LoginForm()
     return render(request,
