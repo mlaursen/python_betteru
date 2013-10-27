@@ -43,6 +43,44 @@ class ErrorPage(object):
         self.msg = msg
 
 
+class FormPart(object):
+    def __init__(self, name, attrs):
+        self.name = name
+        self.attrs = attrs
+
+    def print(self):
+        return self.name
+
+class HtmlTag(object):
+    def __init__(self, name, content='', tclass=False, tid=False, args=False, inline=False):
+        self.name = name
+        self.content = content
+        self.tclass = tclass
+        self.tid = tid
+        self.args = args
+        self.inline = inline
+
+    def print(self):
+        s = "<%s" % self.name
+        if self.tclass:
+            s += " class=\"%s\"" % self.tclass
+
+        if self.tid:
+            s += " id=\"%s\"" % self.tid
+
+        if self.args:
+            for k,v in self.args.items():
+                s += " %s=\"%s\"" % (k, v)
+
+        s += ">"
+        s2 = "%s" % self.content
+        s3 = "</%s>\n" % self.name
+        if self.inline:
+            return s + s2 + s3
+        else:
+            return s + "\n" + s2 + "\n" + s3
+
+
 
 
 
