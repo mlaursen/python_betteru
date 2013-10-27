@@ -35,7 +35,7 @@
       </div><!-- end navbar-inner -->
     </div><!-- end navbar navbar-inverse -->
     <!-- end title bar -->
-    <div class='container'>
+    {% block container %}<div class='container'>{% endblock %}
       {% block content %}
       {% endblock %}
     </div>
