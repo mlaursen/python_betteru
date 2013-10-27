@@ -4,11 +4,7 @@
 {% endblock %}
 {% block title %}{{ msg.pagename }}{% endblock %}
 {% block content %}
-{% if msg.success %}
-<div class="alert alert-success">
-{% else %}
-<div class="alert alert-danger">
-{% endif %}
+<div class="alert alert-{% msg.type %}">
 {{ msg.message }}
 </div>
 {% endblock %}
