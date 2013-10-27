@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from accounts.models import TempAccount, Account, valid_user, createcode, Redirect, send_confirmation_email
+from accounts.models import TempAccount, Account, Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
 from accounts.forms import CreateForm, LoginForm
 
 
@@ -50,32 +50,17 @@ def create_temp(request):
             TempAccount.objects.create_tempaccount(user, pswd, email, code)
             if send_confirmation_email(email, code):
                 r = Redirect('Email Sent', "An email confirmation has been sent to %s." % email)
-                msg = {'pagename': 'Email Sent',
-                        'message': 'An email confirmation has been sent to ' + email,
-                        'location': '/',
-                        'success': True,
-                        'time': 3
-                }
             else:
                 r = Redirect('Email Failure',
                         'Something went wrong when attempting to send an email. Please try again.',
                         reverse('accounts:create'),
                         'failure'
                 )
-                msg = {'pagename': 'Email Failure',
-                        'location': reverse('accounts:create'),
-                        'time': 3,
-                        'message': 'Something went wrong when attempting to send an email. Please try again.',
-                }
-            #return render(request, 'redirect.html', {'msg': msg})
             return r.redirect(request)
     else:
         f = CreateForm()
 
-    return render(request,
-            'accounts/create.html',
-            {'create_form': f,}
-    )
+    return render(request, 'accounts/create.html', {'create_form': f,})
 
 
 def confirm(request):
@@ -94,8 +79,8 @@ def confirm(request):
         t = TempAccount.objects.get(code=code, email=email)
         Account.objects.create_account_from_temp(t)
         t.delete()
-        return render(request, 'redirect.html', {'msg': conf})
+        return Redirect('Confirm Email', 'You have successfully confirmed your email!  ').redirect(request)
     else:
-        return render(request, 'errorpage.html', {'msg': errs})
+        return ErrorPage('Invalid Email Confirmation', 'The email confirmation link is invalid.  Please try to copy the link again.').send(request)
 
 

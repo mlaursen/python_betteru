@@ -78,6 +78,45 @@ class TempAccount(models.Model):
         return str
 
 
+class Redirect(object):
+    msg = {}
+    def redirect(self, request):
+        return render(request, 'redirect.html', {'msg': self.msg})
+
+    def __str__(self):
+        return str(self.msg)
+
+    def __init__(self, pname, message, loc=False, type='success', time=3):
+        if not loc:
+            message += "Redirecting to the login page in %s seconds." % time
+            loc = '/'
+        msg = {'pagename': pname,
+            'message': message,
+            'location': loc,
+            'type': type,
+            'time': time,
+        }
+        self.msg = msg
+
+
+class ErrorPage(object):
+    msg = {}
+    def send(self, request):
+        return render(request, 'errorpage.html', {'msg': self.msg})
+
+    def __str__(self):
+        return str(self.msg)
+
+    def __init__(self, pname, message):
+        msg = {'pagename': pname,
+            'message': message,
+        }
+        self.msg = msg
+
+
+
+
+
 
 def send_confirmation_email(email, code):
     subject = "BetterU Email Confirmation"
@@ -117,27 +156,5 @@ def valid_user(user, pswd):
 
 def logged_in(request):
     return 'uid' in request.session
-
-
-class Redirect(object):
-    msg = {}
-    def redirect(self, request):
-        return render(request, 'redirect.html', {'msg': self.msg})
-
-    def __str__(self):
-        return str(self.msg)
-
-    def __init__(self, pname, message, loc=False, type='success', time=3):
-        if not loc:
-            message += "Redirecting to the login page in %s seconds." % time
-            loc = '/'
-        msg = {'pagename': pname,
-            'message': message,
-            'location': loc,
-            'type': type,
-            'time': time,
-        }
-        self.msg = msg
-
 
 
