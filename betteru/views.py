@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-from accounts.utils import logged_in
+from accounts.models import logged_in
 
 def info(request):
     if logged_in(request):

@@ -2,9 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from accounts.models import TempAccount, Account 
+from accounts.models import TempAccount, Account, valid_user, createcode, Redirect, send_confirmation_email
 from accounts.forms import CreateForm, LoginForm
-from accounts.utils import valid_user, createcode, send_confirmation_email
 
 
 def login(request):
@@ -29,13 +28,7 @@ def logout(request):
         del request.session['uid']
     except KeyError:
         pass
-    msg = {'pagename': 'Logged out',
-            'message': 'You have successfully logged out.  Redirecting to the login apge in 3 seconds.',
-            'location': reverse('accounts:login'),
-            'time': 3,
-            'success': True,
-    }
-    return render(request, 'redirect.html', {'msg': msg})
+    return Redirect('Logged Out', 'You have successfully logged out.').redirect(request)
 
 
 def index(request):
@@ -56,6 +49,7 @@ def create_temp(request):
             code = createcode()
             TempAccount.objects.create_tempaccount(user, pswd, email, code)
             if send_confirmation_email(email, code):
+                r = Redirect('Email Sent', "An email confirmation has been sent to %s." % email)
                 msg = {'pagename': 'Email Sent',
                         'message': 'An email confirmation has been sent to ' + email,
                         'location': '/',
@@ -63,12 +57,18 @@ def create_temp(request):
                         'time': 3
                 }
             else:
+                r = Redirect('Email Failure',
+                        'Something went wrong when attempting to send an email. Please try again.',
+                        reverse('accounts:create'),
+                        'failure'
+                )
                 msg = {'pagename': 'Email Failure',
                         'location': reverse('accounts:create'),
                         'time': 3,
                         'message': 'Something went wrong when attempting to send an email. Please try again.',
                 }
-            return render(request, 'redirect.html', {'msg': msg})
+            #return render(request, 'redirect.html', {'msg': msg})
+            return r.redirect(request)
     else:
         f = CreateForm()
 

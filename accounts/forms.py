@@ -2,8 +2,7 @@ from django import forms
 from django.forms import ModelForm, Form
 from django.forms.util import ErrorList
 
-from accounts.models import TempAccount, Account
-from accounts.utils import valid_user, createcode
+from accounts.models import TempAccount, Account, valid_user, createcode
 
 class CreateForm(ModelForm):
     password_confirm = forms.CharField(max_length=128,
