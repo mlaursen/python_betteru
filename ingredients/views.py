@@ -11,7 +11,10 @@ from ingredients.models import Ingredient, Category, Brand
 import sys
 
 def index(request):
-    ingredients = Ingredient.objects.all()
+    if request.is_ajax():
+        ingredients = Ingredient.objects.get(pk=2)
+    else:
+        ingredients = Ingredient.objects.all()
     brands = Brand.objects.all().order_by('name')
     categories = Category.objects.all()
     return render_to_response('ingredients/index.html',
@@ -34,8 +37,7 @@ def create(request):
     return render(request, 'ingredients/create.html', {'form': f},)
 
 def load_table(request):
-    if request.method == 'GET' and request.is_ajax():
-        print("<pre>WE ARE HERE</pre>")
+    if request.is_ajax():
         category = request.GET.get('category')
         brand    = request.GET.get('brand')
         if category != 'allcategories' and category != '' and brand != 'allbrands' and brand != '':
@@ -46,9 +48,7 @@ def load_table(request):
             ingredients = Ingredient.objects.filter(brand=brand)
         else:
             ingredients = Ingredient.objects.all()
-        brands = Brand.objects.all().order_by('name')
-        categories = Category.objects.all()
-        return HttpResponse('Hello')
+        return 'this'
         #return render_to_response('ingredients/index.html',
         #    {'ingredients': ingredients,
         #        'brands': brands,
@@ -56,4 +56,4 @@ def load_table(request):
         #    context_instance=RequestContext(request))
     else:
         message = "This is not ajax"
-        return HttpResponse(message)
+        return message

@@ -15,6 +15,8 @@ function loadIngredientsTable(id, slimID, groupName){
 
     if(groupName === active[0][0]) {
         $.get("/table/", {category: id, brand: active[1][1]}, function(data) {
+            alert('we hurr son');
+            alert(data);
             $("#table_content").hide().html(data).fadeIn('fast')
         });
     }
