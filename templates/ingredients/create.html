@@ -1,5 +1,19 @@
 {% extends 'ingredients/index.html' %}
 {% block which-page %}Add{% endblock %}
+{% block container %}<div class="container">{% endblock %}
 {% block content %}
-{{ form.as_p }}
+
+{% include 'ingredients/create_form.html' %}
+
+
+{% comment %}
+  <form class="form-horizontal" method='post' action="{% url 'ingredients:create' %}">{% csrf_token %}
+  {{ form.as_p }}
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn" name="submit">Create</button>
+      </div>
+    </div>
+  </form>
+  {% endcomment %}
 {% endblock %}

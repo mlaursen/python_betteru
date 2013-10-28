@@ -1,0 +1,82 @@
+{% if form.non_field_errors or form.errors.account_exists %}
+<div class="row-fluid">
+  <div class="span6 offset2 alert alert-error">
+    {% for error in form.errors.account_exists %}
+    {{ error }}<br />
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    {{ error }}<br />
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% block formstart %}{% endblock %}
+  <form class="form-horizontal" method='post' action="{% url 'ingredients:create' %}">{% csrf_token %}
+    {{ form.brand }}
+    {{ form.category }}
+    <div class="control-group">
+      <label class="control-label" for-"username">Ingredient Name</label>
+      <div class="controls">
+        {{ form.name }}
+        <span class='error help-inline' id='name_help'>{% for error in form.name.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"default_serving_size">Default Serving Size</label>
+      <div class="controls">
+        {{ form.default_serving_size }}
+        <span class='error help-inline' id='default_serving_size_help'>{% for error in form.default_serving_size.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"default_serving_unit">Default Serving Unit</label>
+      <div class="controls">
+        {{ form.default_serving_unit }}
+        <span class='error help-inline' id='default_serving_unit_help'>{% for error in form.default_serving_unit.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"alt_serving_size">Alternate Serving Size</label>
+      <div class="controls">
+        {{ form.alt_serving_size }}
+        <span class='error help-inline' id='alt_serving_size_help'>{% for error in form.alt_serving_size.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"default_serving_unit">Alternate Serving Unit</label>
+      <div class="controls">
+        {{ form.alt_serving_unit }}
+        <span class='error help-inline' id='alt_serving_unit_help'>{% for error in form.alt_serving_unit.errors %}{{ error|escape }}{% endfor %}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"calories">Calories</label>
+      <div class="controls">
+        {{ form.calories }}
+        <span class='error help-inline' id='calories_help'>{{ form.calories.errors.as_text }}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"fat">Fat</label>
+      <div class="controls">
+        {{ form.fat }}
+        <span class='error help-inline' id='fat_help'>{{ form.fat.errors.as_text }}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"carbohydrates">Carbohydrates</label>
+      <div class="controls">
+        {{ form.carbohydrates }}
+        <span class='error help-inline' id='carbohydrates_help'>{{ form.carbohydrates.errors.as_text }}</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for-"fat">Protein</label>
+      <div class="controls">
+        {{ form.protein }}
+        <span class='error help-inline' id='protein_help'>{{ form.protein.errors.as_text }}</span>
+      </div>
+    </div>
+    {% block submit %}{% endblock %}
+  </form>
+{% block formend %}{% endblock %}
