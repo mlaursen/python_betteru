@@ -41,7 +41,8 @@ def load_table(request):
         category = request.GET.get('category')
         brand    = request.GET.get('brand')
         if category != 'allcategories' and category != '' and brand != 'allbrands' and brand != '':
-            ingredients = Ingredient.objects.filter(category=category, brand=brand)
+            ingredients = Ingredient.objects.filter(pk=1)
+            #ingredients = Ingredient.objects.filter(category=category, brand=brand)
         elif category != 'allcategories' and category != '':
             ingredients = Ingredient.objects.filter(category=category)
         elif brand != 'allbrands' and brand != '':
