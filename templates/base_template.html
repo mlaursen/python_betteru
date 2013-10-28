@@ -24,7 +24,7 @@
           <li><a href="{% url 'meals:index' %}">Meals</a></li>
         </ul>
         <ul class='nav pull-right'>
-          <li><a data-toggle='modal' href="{% url 'ingredients:add' %}">Add Ingredient</a></li>
+          <li><a data-toggle='modal' href="{% url 'ingredients:create' %}">Add Ingredient</a></li>
           <li><a data-toggle='modal' href="{% url 'meals:add' %}">Add Meal</a></li>
           {% if request.session.uid %}
           <li><a href="{% url 'accounts:logout' %}">Logout</a></li>

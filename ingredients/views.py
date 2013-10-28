@@ -4,13 +4,8 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
+from ingredients.forms import CreateForm
 from ingredients.models import Ingredient, Category, Brand
-
-class IndexView(generic.base.TemplateView):
-    template_name = 'ingredients/index.html'
-
-class AddView(generic.base.TemplateView):
-    template_name = 'ingredients/add.html'
 
 def index(request):
     if request.method == "POST" and request.is_ajax():
@@ -35,3 +30,9 @@ def index(request):
                 'categories': categories}
     )
 
+def create(request):
+    if request.method == 'POST':
+        f = CreateForm(request.POST)
+    else:
+        f = CreateForm()
+    return render(request, 'ingredients/create.html', {'form': f},)
