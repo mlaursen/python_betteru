@@ -13,21 +13,14 @@ function loadIngredientsTable(id, slimID, groupName){
         active.push([$(this).attr('name'), $(this).find('a').html()]) 
     });
 
-	/*
-    if(groupName===active[0][0])
-		$.get("load-table.php", {catg: id, brand: active[1][1]}, function(data) {
-        $("#table-content").hide().html(data).fadeIn('fast') });
-	else if(groupName===active[1][0])
-		$.get("load-table.php", {catg: active[0][1], brand: id}, function(data) { $("#table-content").hide().html(data).fadeIn('fast') });
-    */
     if(groupName === active[0][0]) {
-        $.get("/ingredients/", {categories: id, brands: active[1][1]}, function(data) {
-            $("#table-content").hide().html(data).fadeIn('fast')
+        $.get("/table/", {category: id, brand: active[1][1]}, function(data) {
+            $("#table_content").hide().html(data).fadeIn('fast')
         });
     }
     else if( groupName === active[1][0]) {
-		$.get("/ingredients/", {categories: active[0][1], brand: id}, function(data) {
-            $("#table-content").hide().html(data).fadeIn('fast')
+		$.get("/table/", {category: active[0][1], brand: id}, function(data) {
+            $("#table_content").hide().html(data).fadeIn('fast')
         });
     }
     else {

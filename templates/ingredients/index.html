@@ -7,22 +7,33 @@
       <div class="well sidebar-nav">
         <ul name="catg_nav" class="nav nav-list">
           <li class="nav-header">Food Categories</li>
-          <li id="allcategories" class="active" name="categories" onclick="loadIngredientsTable('All Categories', 'allcategories', 'categories')"><a href="#">All Categories</a></li>
+          <li id="allcategories" class="active" name="categories" onclick="loadIngredientsTable('All Categories', 'allcategories', 'categories')">
+          <a href="#">All Categories</a>
+          </li>
           {% for category in categories %}
-          <li id="{{ category|lower }}" name="categories" onclick="loadIngredientsTable('{{ category }}', '{{ category|lower }}', 'categories')"><a href="#">{{ category }}</a></li>
+          <li id="{{ category|lower }}" name="categories" onclick="loadIngredientsTable('{{ category }}', '{{ category|lower }}', 'categories')">
+          <a href="#">{{ category }}</a>
+          </li>
           {% endfor %}
           <hr />
         </ul>
         <ul name="brand_nav" class="nav nav-list">
           <li class="nav-header">Brands</li>
-          <li id="allbrands" class="active" name="brands" onclick="loadIngredientsTable('All brands', 'allbrands', 'brands')"><a href="#">All brands</a></li>
+          <li id="allbrands" class="active" name="brands" onclick="loadIngredientsTable('All brands', 'allbrands', 'brands')">
+          <a href="#">All brands</a>
+          </li>
           {% for brand in brands %}
-          <li id="{{ brand|lower|cut:' '|cut:'\'' }}" name="brands" onclick="loadIngredientsTable('{{ brand|addslashes }}', '{{ brand|lower|cut:' '|cut:'\'' }}', 'brands')"><a href="#">{{ brand }}</a></li>
+          <li id="{{ brand|lower|cut:' '|cut:'\'' }}" name="brands" onclick="loadIngredientsTable('{{ brand|addslashes }}', '{{ brand|lower|cut:' '|cut:'\'' }}', 'brands')">
+          <a href="#">{{ brand }}</a>
+          </li>
           {% endfor %}
         </ul>
       </div>
     </div>
     <div class="span10">
+      <div id="table_content">
+      {% include 'ingredients/ingredient_table.html' %}
+      {% comment %}
       <h4>Ingredients</h4>
       <table class="table table-striped table-bordered table-hover tabled-condensed">
         <tr>
@@ -50,6 +61,19 @@
         </tr>
         {% endfor %}
       </table>
+      {% endcomment %}
+
+      </div>
     </div>
   </div>
+
+  {% comment %}
+<script type="text/javascript">
+  $(document).ready( function() { 
+    $.get("{% url 'ingredients:load_table' %}", function(data) { 
+          alert(data);
+        });
+  });
+</script>
+{% endcomment %}
 {% endblock %}
