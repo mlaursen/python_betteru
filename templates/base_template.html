@@ -36,6 +36,16 @@
     </div><!-- end navbar navbar-inverse -->
     <!-- end title bar -->
     {% block container %}<div class='container'>{% endblock %}
+    {% if not request.session.uid and not request.POST %}
+    <div class="container">
+      <div class="row-fluid">
+        <div class="span8 offset2 alert alert-info alert-block">
+          <button type='button' class='close' data-dismiss='alert'>&times;</button>
+          <strong>Heads up!</strong> You are currently not logged in, but you can browse the website as an example user to get a feel.
+        </div>
+      </div>
+    </div>
+    {% endif %}
       {% block content %}
       {% endblock %}
     </div>
