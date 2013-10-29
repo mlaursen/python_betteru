@@ -7,11 +7,11 @@
       <div class="well sidebar-nav">
         <ul name="catg_nav" class="nav nav-list">
           <li class="nav-header">Food Categories</li>
-          <li id="allcategories" class="active" name="categories" onclick="activate(this)">
+          <li id="categories_all" class="active" name="categories" onclick="activate(this)">
           <a href="#">All Categories</a>
           </li>
           {% for category in categories %}
-          <li id="{{ category|lower }}" name="categories" onclick="activate(this)">
+          <li id="category_{{ category.id }}" name="categories" onclick="activate(this)">
           <a href="#">{{ category }}</a>
           </li>
           {% endfor %}
@@ -19,11 +19,11 @@
         </ul>
         <ul name="brand_nav" class="nav nav-list">
           <li class="nav-header">Brands</li>
-          <li id="allbrands" class="active" name="brands" onclick="activate(this)">
+          <li id="brand_all" class="active" name="brands" onclick="activate(this)">
           <a href="#">All brands</a>
           </li>
           {% for brand in brands %}
-          <li id="{{ brand|lower|cut:' '|cut:'\'' }}" name="brands" onclick="activate(this)">
+          <li id="brand_{{ brand.id }}" name="brands" onclick="activate(this)">
           <a href="#">{{ brand }}</a>
           </li>
           {% endfor %}
@@ -46,14 +46,17 @@
 
     if(name === 'categories') {
       brnd = $('li[name=brands].active').attr('id');
+      brnd = brnd.replace("brand_", '');
+      id = id.replace('category_', '');
       $.get("{% url 'ingredients:load_table' %}", {category: id, brand: brnd}, function(data) { 
-            $('#table_content').hide().html(data).fadeIn('fast');
+        $('#table_content').hide().html(data).fadeIn('fast');
       });
     }
     else if(name === 'brands') { 
       catg = $('li[name=categories].active').attr('id');
-      $.ajax("{% url 'ingredients:load_table' %}", {category: catg, brand: id}, function(data) {
-          alert(data);
+      catg = catg.replace("category_", '');
+      id = id.replace("brand_", '');
+      $.get("{% url 'ingredients:load_table' %}", {category: catg, brand: id}, function(data) {
         $('#table_content').hide().html(data).fadeIn('fast');
       });
     }
