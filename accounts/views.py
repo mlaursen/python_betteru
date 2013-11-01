@@ -7,6 +7,24 @@ from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirm
 from accounts.forms import CreateForm, LoginForm, EditAccountForm
 
 
+GENDER_CHOICES = (
+        ('select_gender', 'Select Gender'),
+        ('m', 'Male'),
+        ('f', 'Female'),
+)
+UNIT_CHOICES = (
+        ('select_units', 'Select Units'),
+        ('imperial', 'Imperial'),
+        ('metric', 'Metric'),
+)
+MULTIPLIERS = (
+        ('select_multiplier', 'Select Activity Multiplier'),
+        ('sedentary', 'Sedentary - 1.2'),
+        ('lightly', 'Lightly Active - 1.375'),
+        ('moderately', 'Moderately Active - 1.55'),
+        ('very', 'Very Active - 1.725'),
+        ('extremely','Extremely Active - 1.9'),
+)
 def login(request):
     if request.method == 'POST':
         f = LoginForm(request.POST)
@@ -37,7 +55,18 @@ def index(request):
         a = get_object_or_404(Account, pk=request.session['uid'])
     else:
         a = Account.objects.get(pk=0)
-    return render(request, 'accounts/index.html', {'account': a})
+
+    if request.method == 'POST':
+        f = EditAccountForm(request.POST)
+    else:
+        f = EditAccountForm()
+
+    return render(request,'accounts/index.html', {'form': f,
+        'genders': GENDER_CHOICES,
+        'units': UNIT_CHOICES,
+        'multipliers': MULTIPLIERS,
+        'account': a,
+        })
 
 
 def create_temp(request):
@@ -86,24 +115,6 @@ def confirm(request):
 
 
 def edit(request):
-    GENDER_CHOICES = (
-            ('select_gender', 'Select Gender'),
-            ('m', 'Male'),
-            ('f', 'Female'),
-    )
-    UNIT_CHOICES = (
-            ('select_units', 'Select Units'),
-            ('imperial', 'Imperial'),
-            ('metric', 'Metric'),
-    )
-    MULTIPLIERS = (
-            ('select_multiplier', 'Select Activity Multiplier'),
-            ('sedentary', 'Sedentary - 1.2'),
-            ('lightly', 'Lightly Active - 1.375'),
-            ('moderately', 'Moderately Active - 1.55'),
-            ('very', 'Very Active - 1.725'),
-            ('extremely','Extremely Active - 1.9'),
-    )
     if request.method == 'POST':
         f = EditAccountForm(request.POST)
     else:
