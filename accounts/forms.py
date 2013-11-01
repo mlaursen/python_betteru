@@ -64,3 +64,13 @@ class LoginForm(Form):
 
         return valid
 
+class EditAccountForm(ModelForm):
+
+    class Meta:
+        model = Account
+        fields = ['birthday', 'gender', 'units', 'height', 'activity_multiplier']
+        widgets = { 
+            'birthday': forms.DateInput(format=('%dd/%mm/%Y'),
+                                        attrs={'placeholder': 'Select a date'}),
+            'gender': forms.ChoiceField(choices=('Male', 'Female'))
+    }

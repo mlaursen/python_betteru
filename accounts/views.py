@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 
 from accounts.models import TempAccount, Account
 from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
-from accounts.forms import CreateForm, LoginForm
+from accounts.forms import CreateForm, LoginForm, EditAccountForm
 
 
 def login(request):
@@ -85,3 +85,10 @@ def confirm(request):
         return ErrorPage('Invalid Email Confirmation', 'The email confirmation link is invalid.  Please try to copy the link again.').send(request)
 
 
+def edit(request):
+    if request.method == 'POST':
+        f = EditAccountForm(request.POST)
+    else:
+        f = EditAccountForm()
+
+    return render(request,'accounts/edit.html', {'edit_account_form': f})
