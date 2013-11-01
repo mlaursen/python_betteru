@@ -19,4 +19,49 @@
   </div>
 </div>
 {% endif %}
+<form class="form-horizontal" method="post" action="{% url 'accounts:edit' %}">{% csrf_token %}
+  <div class="control-group">
+    <label class="control-label" for="birthday">Birthday:</label>
+    <div class="controls">
+      {{ edit_account_form.birthday }}
+      <span class="error help-inline" id="birthday_help">{{ edit_account_form.birthday.errors.as_text }}</span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <div class="input-append">
+        <div class="btn-group">
+          <button id="gender_button" class="btn dropdown-toggle" data-toggle="dropdown">
+            Select Gender <span class="caret"></span>
+          </button>
+          <input type="hidden" name="gender" value="Select Gender" />
+          <ul class="dropdown-menu">
+            <li><a href="#" onclick="selectItem('Select Gender', 'gender')">Select Gender</a></li>
+            <li class="divider"</li>
+            <li><a href="#" onclick="selectItem('Male', 'gender')">Male</a></li>
+            <li><a href="#" onclick="selectItem('Female', 'gender')">Female</a></li>
+          </ul>
+        </div>
+      </div>
+      <span class="error help-inline"id="gender_help">{{ edit_account_form.gender.errors.as_text }}</span>
+    </div>
+  </div>
+
+  {% comment %}
+  units, height, activity_multiplier
+  {% endcomment %}
+<script type="text/javascript">
+  function selectItem(id, name) {
+    $('#' + name + '_button').html(id + ' <span class="caret"></span>');
+    if(id === 'Select Gender') {
+      $('input[name=' + name + ']').val('');
+      $('input[name=' + name + ']').removeAttr('readonly');
+    }
+    else {
+      $('input[name=' + name + ']').val(id);
+      $('input[name=' + name + ']').attr('readonly', 'readonly');
+    }
+  }
+</script>
 {% endblock %}
