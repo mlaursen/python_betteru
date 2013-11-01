@@ -5,11 +5,8 @@
 {% endblock %}
 
 {% block submit %}
-    <div class="control-group">
-      <div class="controls">
-        <button type="submit" class="btn" name="submit">Create</button>
-      </div>
-    </div>
+{% load util_tags %}
+{% as_submit 'Create' %}
 {% endblock %}
 
 {% block formend %}
