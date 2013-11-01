@@ -65,10 +65,33 @@ class LoginForm(Form):
         return valid
 
 class EditAccountForm(ModelForm):
+    def is_valid(self):
+        valid = super(EditAccountForm, self).is_valid()
+        MULTIPLIERS = ('sedentary', 'lightly', 'moderately', 'very', 'extremely')
+        gender = self.cleaned_data.get('gender')
+        units = self.cleaned_data.get('units')
+        mult = self.cleaned_data.get('multipliers')
+        if gender != "m" or gender != "f":
+            self._errors['gender'] = ErrorList([u"A gender must be either male or female"])
+            valid = false
+
+        if units != "imperial" or units != "metric":
+            self._errors['units'] = ErrorList([u"A unit must be either imperial or metric."])
+            valid = false
+
+        if mult not in MULTIPLIERS:
+            self._errors['multipliers'] = ErrorList([u"A valid multiplier must be selected."])
+            valid = false
+
+
+        return valid
+
     class Meta:
         model = Account
-        fields = ['birthday', 'height', 'activity_multiplier']
+        fields = ['birthday', 'height']
         widgets = { 
             'birthday': forms.DateInput(format=('%dd/%mm/%Y'),
                                         attrs={'placeholder': 'Select a date'}),
+            'height': forms.TextInput(attrs={'placeholder': 'Enter your height'},)
     }
+

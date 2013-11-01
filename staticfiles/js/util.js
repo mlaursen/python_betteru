@@ -31,6 +31,7 @@ function loadIngredientsTable(id, slimID, groupName){
 }
 
 
+/*
 function selectItem(id, name) {
 	$('#' + name + '-button').html(id + ' <span class="caret"></span>');
 	if(name==='brand') {
@@ -47,7 +48,7 @@ function selectItem(id, name) {
 		$('input[name=' + name + ']').val(id);
 	}
 }
-
+*/
 
 function matchRegex( pattn, str ) {
 	var pattern = new RegExp(pattn);

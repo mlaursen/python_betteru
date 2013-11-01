@@ -86,9 +86,31 @@ def confirm(request):
 
 
 def edit(request):
+    GENDER_CHOICES = (
+            ('select_gender', 'Select Gender'),
+            ('m', 'Male'),
+            ('f', 'Female'),
+    )
+    UNIT_CHOICES = (
+            ('select_units', 'Select Units'),
+            ('imperial', 'Imperial'),
+            ('metric', 'Metric'),
+    )
+    MULTIPLIERS = (
+            ('select_multiplier', 'Select Activity Multiplier'),
+            ('sedentary', 'Sedentary - 1.2'),
+            ('lightly', 'Lightly Active - 1.375'),
+            ('moderately', 'Moderately Active - 1.55'),
+            ('very', 'Very Active - 1.725'),
+            ('extremely','Extremely Active - 1.9'),
+    )
     if request.method == 'POST':
         f = EditAccountForm(request.POST)
     else:
         f = EditAccountForm()
 
-    return render(request,'accounts/edit.html', {'edit_account_form': f})
+    return render(request,'accounts/edit.html', {'edit_account_form': f,
+        'genders': GENDER_CHOICES,
+        'units': UNIT_CHOICES,
+        'multipliers': MULTIPLIERS,
+        })

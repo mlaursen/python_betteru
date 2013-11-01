@@ -56,3 +56,59 @@ def goal_table_row(row, day):
 
 
 
+@register.simple_tag
+def as_controls(name, label, input, error):
+    h  = "<div class=\"control-group\">\n"
+    if label:
+        h += "  <label class=\"control-label\" for=\"%s\">%s</label>\n" % (name, label)
+    h += "  <div class=\"controls\">\n"
+    h += "    %s\n" % input
+    h += "    <span class=\"error help-inline\" id=\"%s_help\">%s</span>\n" % (name, error)
+    h += "  </div>\n"
+    h += "</div>\n"
+    return h
+
+@register.simple_tag
+def as_dropdown(name, choices, error, onclick=False):
+    h  = "<div class=\"input-append\">\n"
+    h += "  <div class=\"btn-group\">\n"
+    h += "  <button id=\"%s_button\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\">" % name
+    h += "%s <span class=\"caret\"></span></button>\n" % choices[0][1]
+    h += "  <input type=\"hidden\" name=\"%s\" value=\"%s\" />\n" % (name, choices[0][0])
+    h += "  <ul class=\"dropdown-menu\">\n"
+    for c in choices:
+        if "Select" in c[1]:
+            h += "    <li><a href=\"#\""
+            if onclick:
+                h += " id=\"id_%s\" onclick=\"%s\"" % (c[0], onclick)
+            h += ">%s</a></li>\n" % c[1]
+            h += "    <li class=\"divider\"></li>\n"
+        else:
+            h += "    <li><a href=\"#\""
+            if onclick:
+                h += " id=\"id_%s\" onclick=\"%s\"" % (c[0], onclick)
+            h += ">%s</a></li>\n" % c[1]
+    h += "  </ul>\n"
+    h += "  </div>\n"
+    h += "</div>\n"
+    return as_controls(name, False, h, error)
+
+
+@register.simple_tag
+def as_submit(value, primary=True):
+    h  = "<div class=\"control-group\">\n"
+    h += "  <div class=\"controls\">\n"
+    h += "    <button type=\"submit\" class=\"btn"
+    if primary:
+        if primary is True:
+            h += " btn-primary"
+        else:
+            h += " btn-%s" % primary
+    
+    h += "\" name=\"submit\">%s</button>\n" % value
+    h += "  </div>\n"
+    h += "</div>\n"
+    return h
+
+
+

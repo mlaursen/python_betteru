@@ -1,4 +1,6 @@
-{% extends 'base_template.html' %}
+{% extends 'date_picker.html' %}
+
+{% load util_tags %}
 {% block title %}Edit Account{% endblock %}
 {% block content %}
 <div class="row-fluid">
@@ -20,48 +22,27 @@
 </div>
 {% endif %}
 <form class="form-horizontal" method="post" action="{% url 'accounts:edit' %}">{% csrf_token %}
-  <div class="control-group">
-    <label class="control-label" for="birthday">Birthday:</label>
-    <div class="controls">
-      {{ edit_account_form.birthday }}
-      <span class="error help-inline" id="birthday_help">{{ edit_account_form.birthday.errors.as_text }}</span>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <div class="controls">
-      <div class="input-append">
-        <div class="btn-group">
-          <button id="gender_button" class="btn dropdown-toggle" data-toggle="dropdown">
-            Select Gender <span class="caret"></span>
-          </button>
-          <input type="hidden" name="gender" value="Select Gender" />
-          <ul class="dropdown-menu">
-            <li><a href="#" onclick="selectItem('Select Gender', 'gender')">Select Gender</a></li>
-            <li class="divider"</li>
-            <li><a href="#" onclick="selectItem('Male', 'gender')">Male</a></li>
-            <li><a href="#" onclick="selectItem('Female', 'gender')">Female</a></li>
-          </ul>
-        </div>
-      </div>
-      <span class="error help-inline"id="gender_help">{{ edit_account_form.gender.errors.as_text }}</span>
-    </div>
-  </div>
+  {% as_controls 'birthday' 'Birthday:' edit_account_form.birthday edit_account_form.birthday.errors.as_text %}
+  {% as_dropdown 'gender' genders edit_account_form.gender.errors.as_text "selectItem(this, 'gender')" %}
+  {% as_dropdown 'units' units edit_account_form.units.errors.as_text "selectItem(this, 'units')" %}
+  {% as_controls 'height' 'Height:' edit_account_form.height edit_account_form.height.errors.as_text %}
+  {% as_dropdown 'multipliers' multipliers edit_account_form.activity_multiplier.errors.as_text "selectItem(this, 'multipliers')" %}
+  {% as_submit 'Update'%}
 
   {% comment %}
   units, height, activity_multiplier
   {% endcomment %}
 <script type="text/javascript">
-  function selectItem(id, name) {
-    $('#' + name + '_button').html(id + ' <span class="caret"></span>');
-    if(id === 'Select Gender') {
-      $('input[name=' + name + ']').val('');
-      $('input[name=' + name + ']').removeAttr('readonly');
-    }
-    else {
-      $('input[name=' + name + ']').val(id);
-      $('input[name=' + name + ']').attr('readonly', 'readonly');
-    }
+  function selectItem(f, name) {
+    id = f.getAttribute('id');
+    html = $('#' + id).html();
+    $('#' + name + '_button').html(html + " <span class=\"caret\"></span>");
+    $('input[name=' + name + ']').val(val);
   }
+  
+  $(function() { 
+    $('#id_birthday').datepicker();
+  });
+
 </script>
 {% endblock %}
