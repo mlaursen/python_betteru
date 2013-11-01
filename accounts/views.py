@@ -61,10 +61,29 @@ def index(request):
     else:
         f = EditAccountForm()
 
+    genders = GENDER_CHOICES
+    if a.gender is not '':
+        genders = (
+                (a.gender, a.gender),
+                ('m', 'Male'),
+                ('f', 'Female')
+        )
+
+    birthday = ''
+    if a.birthday is not '':
+        birthday = a.birthday
+
+    units = UNIT_CHOICES
+    if a.units is not '':
+        units[0] = (a.units, a.units)
+
+    multipliers = MULTIPLIERS
+    if a.activity_multiplier is not '':
+        multipliers[0] = (a.activity_multiplier, MULTIPLIERS[a.activity_multiplier][1])
     return render(request,'accounts/index.html', {'form': f,
-        'genders': GENDER_CHOICES,
-        'units': UNIT_CHOICES,
-        'multipliers': MULTIPLIERS,
+        'genders': genders,
+        'units': units,
+        'multipliers': multipliers,
         'account': a,
         })
 
