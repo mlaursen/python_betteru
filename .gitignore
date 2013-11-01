@@ -3,6 +3,7 @@
 *.pyc
 betteru/settings.py
 settings.py
+*.swp
 <<<<<<< HEAD
 */settings.py
 =======
