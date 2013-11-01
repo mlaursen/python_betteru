@@ -90,7 +90,7 @@ def as_dropdown(name, choices, error, onclick=False):
             h += ">%s</a></li>\n" % c[1]
     h += "  </ul>\n"
     h += "  </div>\n"
-    h += "</div>\n"
+    h += "</div>"
     return as_controls(name, False, h, error)
 
 

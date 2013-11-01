@@ -4,5 +4,6 @@
 <div class="container">
   <h3>Welcome, {{ account.username }}!</h3>
   <p>This is the accounts page!</p>
+  <a href="{% url 'accounts:edit' %}">Edit your account</a>
 </div>
 {% endblock %}

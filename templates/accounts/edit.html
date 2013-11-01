@@ -21,6 +21,7 @@
   </div>
 </div>
 {% endif %}
+<div class="row-fluid">
 <form class="form-horizontal" method="post" action="{% url 'accounts:edit' %}">{% csrf_token %}
   {% as_controls 'birthday' 'Birthday:' edit_account_form.birthday edit_account_form.birthday.errors.as_text %}
   {% as_dropdown 'gender' genders edit_account_form.gender.errors.as_text "selectItem(this, 'gender')" %}
@@ -28,10 +29,8 @@
   {% as_controls 'height' 'Height:' edit_account_form.height edit_account_form.height.errors.as_text %}
   {% as_dropdown 'multipliers' multipliers edit_account_form.activity_multiplier.errors.as_text "selectItem(this, 'multipliers')" %}
   {% as_submit 'Update'%}
-
-  {% comment %}
-  units, height, activity_multiplier
-  {% endcomment %}
+</form>
+</div>
 <script type="text/javascript">
   function selectItem(f, name) {
     id = f.getAttribute('id');
