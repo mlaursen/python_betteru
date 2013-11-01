@@ -36,6 +36,7 @@
     </div><!-- end navbar navbar-inverse -->
     <!-- end title bar -->
     {% block container %}<div class='container'>{% endblock %}
+    {% comment %}
     {% if not request.session.uid and not request.POST %}
     <div class="container">
       <div class="row-fluid">
@@ -46,6 +47,7 @@
       </div>
     </div>
     {% endif %}
+    {% endcomment %}
       {% block content %}
       {% endblock %}
     </div>

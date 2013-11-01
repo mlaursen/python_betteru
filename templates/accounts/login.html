@@ -6,9 +6,9 @@
     <div class='span12'></div>
     <div class='span12'></div>
   </div>
+  {% if create_form.non_field_errors or create_form.errors.account_exists %}
   <div class="row-fluid">
-    {% if create_form.non_field_errors or create_form.errors.account_exists %}
-    <div class="span6 offset2 alert alert-error">
+    <div class="span8 offset2 alert alert-error">
       {% for error in create_form.errors.account_exists %}
       {{ error }}<br />
       {% endfor %}
@@ -16,38 +16,33 @@
       {{ error }}<br />
       {% endfor %}
     </div>
-    {% endif %}
-    {% if form.errors.invalid_login %}
+  </div>
+  {% endif %}
+  {% if form.errors.invalid_login %}
+  <div class="row-fluid">
     <div id='failure' class='span8 offset2'>
       <div class='alert alert-error alert-block'>
         <button type='button' class='close' data-dismiss='alert'>&times;</button>
         <strong>{{ form.errors.invalid_login.as_text }}</strong><br />
       </div>
     </div>
-    {% endif %}
+  </div>
+  {% endif %}
+  <div class="row-fluid">
     <div class="span8 offset2">
-    <div class="hero-unit">
-      <form class="form-horizontal" method='post' action="{% url 'accounts:login' %}">{% csrf_token %}
-        <div class="control-group">
-          <label class='control-label' for='username'>Username</label>
-          <div class="controls">
-            {{ form.username }}
+      <div class="hero-unit">
+        <form class="form-horizontal" method='post' action="{% url 'accounts:login' %}">{% csrf_token %}
+          {% load util_tags %}
+          {% as_controls 'username' 'Username:' form.username form.username.errors.as_text %}
+          {% as_controls 'password' 'Password:' form.password form.password.errors.as_text %}
+          <div class="control-group">
+            <div class="controls">
+              <button type='submit' class='btn' name='log-in'>Login</button>
+              <a href="#create_account" class='btn btn-primary' data-toggle="modal" name='create'>Create Account</a>
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class='control-label' for='password'>Password</label>
-          <div class="controls">
-            {{ form.password }}
-          </div>
-        </div>
-        <div class="control-group">
-          <div class="controls">
-            <button type='submit' class='btn' name='log-in'>Login</button>
-            <a href="#create_account" class='btn btn-primary' data-toggle="modal" name='create'>Create Account</a>
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
     </div>
   </div>
 {% include 'accounts/create_modal.html' %}
