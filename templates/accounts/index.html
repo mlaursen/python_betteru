@@ -24,7 +24,7 @@
 {% endif %}
 <div class="row-fluid">
 <form class="form-horizontal" method="post" action="{% url 'accounts:index' %}">{% csrf_token %}
-  {% as_controls 'birthday' 'Birthday:' form.birthday form.birthday.errors.as_text account.birthday %}
+  {% as_controls 'birthday' 'Birthday:' form.birthday form.birthday.errors.as_text %}
   {% as_dropdown 'gender' genders form.gender.errors.as_text "selectItem(this, 'gender')" %}
   {% as_dropdown 'units' units form.units.errors.as_text "selectItem(this, 'units')" %}
   {% as_controls 'height' 'Height:' form.height form.height.errors.as_text %}
