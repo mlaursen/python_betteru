@@ -57,23 +57,27 @@ def goal_table_row(row, day):
 
 
 @register.simple_tag
-def as_controls(name, label, input, error):
+def as_controls(name, label, input, error, d=False):
     h  = "<div class=\"control-group\">\n"
     if label:
         h += "  <label class=\"control-label\" for=\"%s\">%s</label>\n" % (name, label)
     h += "  <div class=\"controls\">\n"
-    h += "    %s\n" % input
+    if d:
+        h += "    <input id=\"id_%s\" name=\"%s\" placeholder=\"%s\" type=\"text\" value=\"%s\" />\n" % (name, name, label, d)
+    else:
+        h += "    %s\n" % input
     h += "    <span class=\"error help-inline\" id=\"%s_help\">%s</span>\n" % (name, error)
     h += "  </div>\n"
     h += "</div>\n"
     return h
 
 @register.simple_tag
-def as_dropdown(name, choices, error, onclick=False):
+def as_dropdown(name, choices, error, onclick=False, d=0, label=False):
     h  = "<div class=\"input-append\">\n"
     h += "  <div class=\"btn-group\">\n"
     h += "  <button id=\"%s_button\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\">" % name
-    h += "%s <span class=\"caret\"></span></button>\n" % choices[0][1]
+    h += "%s" % choices[d][1]
+    h += " <span class=\"caret\"></span></button>\n"
     h += "  <input type=\"hidden\" name=\"%s\" value=\"%s\" />\n" % (name, choices[0][0])
     h += "  <ul class=\"dropdown-menu\">\n"
     for c in choices:
@@ -91,7 +95,7 @@ def as_dropdown(name, choices, error, onclick=False):
     h += "  </ul>\n"
     h += "  </div>\n"
     h += "</div>"
-    return as_controls(name, False, h, error)
+    return as_controls(name, label, h, error)
 
 
 @register.simple_tag

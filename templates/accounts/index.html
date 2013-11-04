@@ -25,10 +25,10 @@
 <div class="row-fluid">
 <form class="form-horizontal" method="post" action="{% url 'accounts:index' %}">{% csrf_token %}
   {% as_controls 'birthday' 'Birthday:' form.birthday form.birthday.errors.as_text %}
-  {% as_dropdown 'gender' genders form.gender.errors.as_text "selectItem(this, 'gender')" %}
-  {% as_dropdown 'units' units form.units.errors.as_text "selectItem(this, 'units')" %}
+  {% as_dropdown 'gender' genders form.gender.errors.as_text "selectItem(this, 'gender')" gender_default 'Gender:'%}
+  {% as_dropdown 'units' units form.units.errors.as_text "selectItem(this, 'units')" unit_default 'Units: '%}
   {% as_controls 'height' 'Height:' form.height form.height.errors.as_text %}
-  {% as_dropdown 'multipliers' multipliers form.activity_multiplier.errors.as_text "selectItem(this, 'multipliers')" %}
+  {% as_dropdown 'multipliers' multipliers form.activity_multiplier.errors.as_text "selectItem(this, 'multipliers')" multiplier_default 'Activity Multiplier:' %}
   {% as_submit 'Update'%}
 </form>
 </div>

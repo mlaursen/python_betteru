@@ -129,4 +129,7 @@ def logged_in(request):
 
 
 
-
+def get_index_of(ttuples, itm):
+    for x,y in enumerate(ttuples):
+        if(y[0] == itm):
+            return x

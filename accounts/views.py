@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from accounts.models import TempAccount, Account
-from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
+from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email, get_index_of
 from accounts.forms import CreateForm, LoginForm, EditAccountForm
 
 
@@ -61,29 +61,30 @@ def index(request):
     else:
         f = EditAccountForm()
 
-    genders = GENDER_CHOICES
+    gender_default = 0
     if a.gender is not '':
-        genders = (
-                (a.gender, a.gender),
-                ('m', 'Male'),
-                ('f', 'Female')
-        )
+        gender_default = get_index_of(GENDER_CHOICES, a.gender)
 
     birthday = ''
     if a.birthday is not '':
         birthday = a.birthday
 
-    units = UNIT_CHOICES
+    unit_default = 0
     if a.units is not '':
-        units[0] = (a.units, a.units)
+        unit_default = get_index_of(UNIT_CHOICES, a.units)
 
-    multipliers = MULTIPLIERS
+    multiplier_default = 0
     if a.activity_multiplier is not '':
-        multipliers[0] = (a.activity_multiplier, MULTIPLIERS[a.activity_multiplier][1])
+        multiplier_default = get_index_of(MULTIPLIERS, a.activity_multiplier)
+
     return render(request,'accounts/index.html', {'form': f,
-        'genders': genders,
-        'units': units,
-        'multipliers': multipliers,
+        'genders': GENDER_CHOICES,
+        'gender_default': gender_default,
+        'birthday': birthday,
+        'units': UNIT_CHOICES,
+        'unit_default': unit_default,
+        'multipliers': MULTIPLIERS,
+        'multiplier_default': multiplier_default,
         'account': a,
         })
 
