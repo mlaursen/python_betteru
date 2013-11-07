@@ -2,6 +2,7 @@
 
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.timezone import utc
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 
@@ -133,3 +134,10 @@ def get_index_of(ttuples, itm):
     for x,y in enumerate(ttuples):
         if(y[0] == itm):
             return x
+
+def create_birthday_time(date):
+    return datetime.datetime.strptime(date, '%m/%d/%Y').replace(tzinfo=utc)
+
+def birthday_time_as_str(bday):
+    return bday.strftime("%m/%d/%Y")
+

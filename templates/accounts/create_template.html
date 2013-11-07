@@ -1,15 +1,8 @@
 {% load util_tags %}
 {% if create_form.non_field_errors or create_form.errors.account_exists %}
-<div class="row-fluid">
-  <div class="span6 offset2 alert alert-error">
-    {% for error in create_form.errors.account_exists %}
-    {{ error }}<br />
-    {% endfor %}
-    {% for error in create_form.non_field_errors %}
-    {{ error }}<br />
-    {% endfor %}
-  </div>
-</div>
+  {% load util_tags %}
+  {% display_error create_form.errors.account_exists.as_text %}
+  {% display_error create_form.errors.non_field_errors.as_text %}
 {% endif %}
 {% block formstart %}{% endblock %}
   <form class="form-horizontal" method='post' action="{% url 'accounts:create' %}">{% csrf_token %}

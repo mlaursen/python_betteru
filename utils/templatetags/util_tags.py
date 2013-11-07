@@ -4,57 +4,6 @@ from utils.util import HtmlTag
 
 register = template.Library()
 
-@register.simple_tag
-def tag(name, content='', tclass=False, tid=False, other=False):
-    return HtmlTag(name, content, tclass, tid, other).print()
-
-@register.simple_tag
-def submit(init='Submit'):
-    return tag( 'button', init, 'btn', False, {'type': 'submit'}, True)
-
-
-@register.simple_tag
-def print_goal_table(table):
-    h  = "<h4>%s</h4>\n" % table.day
-    h += "<table class='table table-striped table-condensed'>\n"
-    h += "<tr>\n"
-    h += "<th></th>\n"
-    for meal in table.meals:
-        h += "<th>%s</th>\n" % meal
-    h += "<th>Expected Total</th>\n"
-    h += "<th>My Total</th>\n"
-    h += "<th>Remaining Total</th>\n"
-    h += "</tr>\n"
-    h += goal_table_row(table.calories, table.day)
-    h += goal_table_row(table.fat, table.day)
-    h += goal_table_row(table.carbs, table.day)
-    h += goal_table_row(table.protein, table.day)
-    h += "</table>\n"
-    return h
-
-
-def goal_table_row(row, day):
-    h  = "<tr>\n"
-    h += "<th>%s</th>\n" % row['name']
-
-    rowvals = []
-    for v in row['values']:
-        rowvals.append(v)
-
-    for v in rowvals:
-        h += "<td>%02d</td>\n" % v
-
-    expect = row['expected']
-    total = sum(rowvals)
-    rem = expect - total
-    h += "<td>%02d</td>\n" % expect
-    h += "<td>%02d</td>\n" % total
-    h += "<td>%02d</td>\n" % rem
-    h += "</tr>\n"
-    return h
-
-
-
 
 @register.simple_tag
 def as_controls(name, label, input, error, d=False):
@@ -78,7 +27,7 @@ def as_dropdown(name, choices, error, onclick=False, d=0, label=False):
     h += "  <button id=\"%s_button\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\">" % name
     h += "%s" % choices[d][1]
     h += " <span class=\"caret\"></span></button>\n"
-    h += "  <input type=\"hidden\" name=\"%s\" value=\"%s\" />\n" % (name, choices[0][0])
+    h += "  <input type=\"hidden\" name=\"%s\" value=\"%s\" />\n" % (name, choices[d][0])
     h += "  <ul class=\"dropdown-menu\">\n"
     for c in choices:
         if "Select" in c[1]:
@@ -99,7 +48,7 @@ def as_dropdown(name, choices, error, onclick=False, d=0, label=False):
 
 
 @register.simple_tag
-def as_submit(value, primary=True):
+def as_submit(value, primary=True, disable=False):
     h  = "<div class=\"control-group\">\n"
     h += "  <div class=\"controls\">\n"
     h += "    <button type=\"submit\" class=\"btn"
@@ -109,10 +58,30 @@ def as_submit(value, primary=True):
         else:
             h += " btn-%s" % primary
     
-    h += "\" name=\"submit\">%s</button>\n" % value
+    h += "\" name=\"submit\""
+    if disable:
+        h += " disabled"
+    h += ">%s</button>\n" % value
     h += "  </div>\n"
     h += "</div>\n"
     return h
 
 
+@register.simple_tag
+def display_error(field):
+    h  = "  <div class=\"row-fluid\">\n"
+    h += "    <div class=\"span6 offset2 alert alert-error\">\n"
+    h += "      %s<br />\n" % field
+    h += "    </div>\n"
+    h += "  </div>\n"
+    return h
 
+@register.simple_tag
+def display_success(text):
+    h  = "  <div class=\"row-fluid\">\n"
+    h += "    <div class=\"alert alert-success\">\n"
+    h += "      %s\n" % text
+    h += "    <a href=\"#\" class=\"close\" data-dismiss=\"alert\">x</a>\n"
+    h += "    </div>\n"
+    h += "  </div>\n"
+    return h

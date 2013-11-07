@@ -4,27 +4,9 @@ from django.core.urlresolvers import reverse
 
 from accounts.models import TempAccount, Account
 from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email, get_index_of
-from accounts.forms import CreateForm, LoginForm, EditAccountForm
+from accounts.forms import CreateForm, LoginForm, EditAccountForm, gender_choices, multiplier_choices, unit_choices
 
 
-GENDER_CHOICES = (
-        ('select_gender', 'Select Gender'),
-        ('m', 'Male'),
-        ('f', 'Female'),
-)
-UNIT_CHOICES = (
-        ('select_units', 'Select Units'),
-        ('imperial', 'Imperial'),
-        ('metric', 'Metric'),
-)
-MULTIPLIERS = (
-        ('select_multiplier', 'Select Activity Multiplier'),
-        ('sedentary', 'Sedentary - 1.2'),
-        ('lightly', 'Lightly Active - 1.375'),
-        ('moderately', 'Moderately Active - 1.55'),
-        ('very', 'Very Active - 1.725'),
-        ('extremely','Extremely Active - 1.9'),
-)
 def login(request):
     if request.method == 'POST':
         f = LoginForm(request.POST)
@@ -51,41 +33,38 @@ def logout(request):
 
 
 def index(request):
+    example = Account.objects.get(pk=0)
+    disable = False
     if request.session.has_key('uid'):
         a = get_object_or_404(Account, pk=request.session['uid'])
     else:
-        a = Account.objects.get(pk=0)
+        a = example
+        disable = True
 
-    if request.method == 'POST':
+    success=False
+
+    if request.method == 'POST' and a != example:
         f = EditAccountForm(request.POST)
+        if f.is_valid():
+            bday = f.cleaned_data.get('birthday')
+            g = f.cleaned_data.get('gender')
+            u = f.cleaned_data.get('units')
+            h = f.cleaned_data.get('height')
+            m = f.cleaned_data.get('multipliers')
+            a.birthday = bday
+            a.gender = g
+            a.units = u
+            a.height = h
+            a.activity_multiplier = m
+            a.save()
+            success = 'You have successfully updated your account information!'
     else:
-        f = EditAccountForm()
-
-    gender_default = 0
-    if a.gender is not '':
-        gender_default = get_index_of(GENDER_CHOICES, a.gender)
-
-    birthday = ''
-    if a.birthday is not '':
-        birthday = a.birthday
-
-    unit_default = 0
-    if a.units is not '':
-        unit_default = get_index_of(UNIT_CHOICES, a.units)
-
-    multiplier_default = 0
-    if a.activity_multiplier is not '':
-        multiplier_default = get_index_of(MULTIPLIERS, a.activity_multiplier)
+        f = EditAccountForm(instance=a)
 
     return render(request,'accounts/index.html', {'form': f,
-        'genders': GENDER_CHOICES,
-        'gender_default': gender_default,
-        'birthday': birthday,
-        'units': UNIT_CHOICES,
-        'unit_default': unit_default,
-        'multipliers': MULTIPLIERS,
-        'multiplier_default': multiplier_default,
         'account': a,
+        'success': success,
+        'disable': disable,
         })
 
 
@@ -134,14 +113,3 @@ def confirm(request):
         return ErrorPage('Invalid Email Confirmation', 'The email confirmation link is invalid.  Please try to copy the link again.').send(request)
 
 
-def edit(request):
-    if request.method == 'POST':
-        f = EditAccountForm(request.POST)
-    else:
-        f = EditAccountForm()
-
-    return render(request,'accounts/edit.html', {'edit_account_form': f,
-        'genders': GENDER_CHOICES,
-        'units': UNIT_CHOICES,
-        'multipliers': MULTIPLIERS,
-        })

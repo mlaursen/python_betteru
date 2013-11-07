@@ -1,35 +1,29 @@
 {% extends 'date_picker.html' %}
 
-{% load util_tags %}
 {% block title %}Edit Account{% endblock %}
 {% block content %}
+{% load util_tags %}
 <div class="row-fluid">
   <h3>Welcome, {{ account.username }}!</h3>
   <h4>Current Settings:</h4>
   <div class="span12"></div>
 </div>
 
-{% if form.non_field_errors or form.errors.account_exists or form.errors.check_email %}
-<div class="row-fluid">
-  <div class="span6 offset2 alert alert-error">
-    {% for error in form.errors.account_exists %}
-    {{ error }}<br />
-    {% endfor %}
-    {% for error in form.errors.check_email %}
-    {{ error }}<br />
-    {% endfor %}
-    {{ form.non_field_errors.as_text }}
-  </div>
-</div>
+{% if form.non_field_errors %}
+  {% display_error form.non_field_errors %}
 {% endif %}
+{% if success %}
+  {% display_success success %}
+{% endif %}
+
 <div class="row-fluid">
 <form class="form-horizontal" method="post" action="{% url 'accounts:index' %}">{% csrf_token %}
-  {% as_controls 'birthday' 'Birthday:' form.birthday form.birthday.errors.as_text %}
-  {% as_dropdown 'gender' genders form.gender.errors.as_text "selectItem(this, 'gender')" gender_default 'Gender:'%}
-  {% as_dropdown 'units' units form.units.errors.as_text "selectItem(this, 'units')" unit_default 'Units: '%}
-  {% as_controls 'height' 'Height:' form.height form.height.errors.as_text %}
-  {% as_dropdown 'multipliers' multipliers form.activity_multiplier.errors.as_text "selectItem(this, 'multipliers')" multiplier_default 'Activity Multiplier:' %}
-  {% as_submit 'Update'%}
+  {% as_controls 'birthday'    'Birthday:'            form.birthday    form.errors.birthday.as_text %}
+  {% as_controls 'gender'      'Gender:'              form.gender      form.errors.gender.as_text %}
+  {% as_controls 'units'       'Units:'               form.units       form.errors.units.as_text %}
+  {% as_controls 'height'      'Height:'              form.height      form.errors.height.as_text %}
+  {% as_controls 'multipliers' 'Activity Multiplier:' form.multipliers form.errors.multipliers.as_text %}
+  {% as_submit 'Update' True disable %}
 </form>
 </div>
 <script type="text/javascript">

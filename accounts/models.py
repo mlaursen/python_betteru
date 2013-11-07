@@ -26,14 +26,32 @@ class AccountManager(models.Manager):
 
 
 class Account(models.Model):
+    GENDER_CHOICES = (
+            ('select_gender', 'Select Gender'),
+            ('m', 'Male'),
+            ('f', 'Female'),
+    )
+    UNIT_CHOICES = (
+            ('select_units', 'Select Units'),
+            ('imperial', 'Imperial'),
+            ('metric', 'Metric'),
+    )
+    MULTIPLIER_CHOICES = (
+            ('select_multiplier', 'Select Activity Multiplier'),
+            ('sedentary', 'Sedentary - 1.2'),
+            ('lightly', 'Lightly Active - 1.375'),
+            ('moderately', 'Moderately Active - 1.55'),
+            ('very', 'Very Active - 1.725'),
+            ('extremely','Extremely Active - 1.9'),
+    )
     id       = models.IntegerField(primary_key=True)
     username = models.CharField(max_length=40)
     password = models.CharField(max_length=128)
     birthday = models.DateTimeField('birthday')
-    gender   = models.CharField(max_length=1)
-    units    = models.CharField(max_length=8)
+    gender   = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    units    = models.CharField(max_length=8, choices=UNIT_CHOICES)
     height   = models.IntegerField()
-    activity_multiplier = models.CharField(max_length=30)
+    activity_multiplier = models.CharField(max_length=9, choices=MULTIPLIER_CHOICES)
     email    = models.CharField(max_length=40)
     active_since = models.DateTimeField(auto_now_add=True, blank=True)
 
