@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 
 from accounts.models import TempAccount, Account
 from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email, get_index_of
-from accounts.forms import CreateForm, LoginForm, EditAccountForm, gender_choices, multiplier_choices, unit_choices
+from accounts.forms import CreateForm, LoginForm, EditAccountForm 
 
 
 def login(request):
@@ -50,7 +50,7 @@ def index(request):
             g = f.cleaned_data.get('gender')
             u = f.cleaned_data.get('units')
             h = f.cleaned_data.get('height')
-            m = f.cleaned_data.get('multipliers')
+            m = f.cleaned_data.get('activity_multiplier')
             a.birthday = bday
             a.gender = g
             a.units = u

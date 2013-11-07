@@ -18,11 +18,11 @@
 
 <div class="row-fluid">
 <form class="form-horizontal" method="post" action="{% url 'accounts:index' %}">{% csrf_token %}
-  {% as_controls 'birthday'    'Birthday:'            form.birthday    form.errors.birthday.as_text %}
-  {% as_controls 'gender'      'Gender:'              form.gender      form.errors.gender.as_text %}
-  {% as_controls 'units'       'Units:'               form.units       form.errors.units.as_text %}
-  {% as_controls 'height'      'Height:'              form.height      form.errors.height.as_text %}
-  {% as_controls 'multipliers' 'Activity Multiplier:' form.multipliers form.errors.multipliers.as_text %}
+  {% as_controls 'birthday'    'Birthday:'            form.birthday            form.errors.birthday.as_text %}
+  {% as_controls 'gender'      'Gender:'              form.gender              form.errors.gender_errs.as_text %}
+  {% as_controls 'units'       'Units:'               form.units               form.errors.units_errs.as_text %}
+  {% as_controls 'height'      'Height:'              form.height              form.errors.height.as_text %}
+  {% as_controls 'activity_multiplier' 'Activity Multiplier:' form.activity_multiplier form.errors.multipliers_errs.as_text %}
   {% as_submit 'Update' True disable %}
 </form>
 </div>

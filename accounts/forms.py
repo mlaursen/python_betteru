@@ -9,33 +9,6 @@ from django.utils.timezone import utc
 from accounts.models import TempAccount, Account
 from utils.util import valid_user, createcode, create_birthday_time, birthday_time_as_str
 
-def gender_choices():
-    GENDER_CHOICES = (
-            ('select_gender', 'Select Gender'),
-            ('m', 'Male'),
-            ('f', 'Female'),
-    )
-    return GENDER_CHOICES
-
-def unit_choices():
-    UNIT_CHOICES = (
-            ('select_units', 'Select Units'),
-            ('imperial', 'Imperial'),
-            ('metric', 'Metric'),
-    )
-    return UNIT_CHOICES
-
-def multiplier_choices():
-    MULTIPLIERS = (
-            ('select_multiplier', 'Select Activity Multiplier'),
-            ('sedentary', 'Sedentary - 1.2'),
-            ('lightly', 'Lightly Active - 1.375'),
-            ('moderately', 'Moderately Active - 1.55'),
-            ('very', 'Very Active - 1.725'),
-            ('extremely','Extremely Active - 1.9'),
-    )
-    return MULTIPLIERS
-
 class CreateForm(ModelForm):
     password_confirm = forms.CharField(max_length=128,
             min_length=8,
@@ -96,20 +69,28 @@ class LoginForm(Form):
         return valid
 
 class EditAccountForm(ModelForm):
-    gender = forms.ChoiceField(choices=gender_choices())
-    units = forms.ChoiceField(choices=unit_choices())
-    multipliers = forms.ChoiceField(choices=multiplier_choices())
 
     def is_valid(self):
         valid = super(EditAccountForm, self).is_valid()
         MULTIPLIERS = ('sedentary', 'lightly', 'moderately', 'very', 'extremely')
-        mult = self.cleaned_data.get('multipliers')
+        GENDERS = ('m', 'f')
+        UNITS = ('imperial', 'metric')
+        mult = self.cleaned_data.get('activity_multiplier')
         birthday = birthday_time_as_str(self.cleaned_data.get('birthday'))
         height = self.cleaned_data.get('height')
+        gender = self.cleaned_data.get('gender')
+        units = self.cleaned_data.get('units')
+
+        if gender not in GENDERS:
+            self._errors['gender_errs'] = ErrorList([u"You must select a gender."])
+            valid = False
+
+        if units not in UNITS:
+            self._errors['units_errs'] = ErrorList([u"You must select a unit."])
+            valid = False
 
         if mult not in MULTIPLIERS:
-            e1 = u"A valid multiplier must be selected. %s is not valid" % mult
-            self._errors['multipliers'] = ErrorList([e1])
+            self._errors['multipliers_errs'] = ErrorList([u"A valid multiplier must be selected."])
             valid = False
 
         if not re.findall('^\d\d/\d\d/\d\d\d\d', birthday):
@@ -125,11 +106,14 @@ class EditAccountForm(ModelForm):
 
     class Meta:
         model = Account
-        fields = ['birthday', 'height']
+        fields = ['birthday', 'height', 'gender', 'units', 'activity_multiplier']
         widgets = { 
             'birthday': forms.DateInput(format=('%m/%d/%Y'),
-                                        attrs={'placeholder': 'Select a date'}),
-            'height': forms.TextInput(attrs={'placeholder': 'Enter your height'},)
+                                        attrs={'placeholder': 'Select a date',
+                                               'maxlength': 10,},),
+            'height': forms.TextInput(attrs={'placeholder': 'Enter your height'},),
     }
+
+
 
 
