@@ -14,7 +14,7 @@
   <form class="form-horizontal" method='post' action="{% url 'ingredients:create' %}">{% csrf_token %}
     {% load util_tags %}
     {% as_controls 'name'                 'Ingredient Name:'        form.name                 form.errors.name.as_text %}
-    {% as_controls 'brand'                'Brand:'                  form.brand                form.errors.brand.as_text %}
+    {% as_text_action 'brand' brands form.errors.brand.as_text 'Brand Name' 'selectItem' %}
     {% as_controls 'category'             'Category:'               form.category             form.errors.category.as_text %}
     {% as_controls 'default_serving_size' 'Default Serving Size:'   form.default_serving_size form.errors.default_serving_size.as_text %}
     {% as_controls 'default_serving_size' 'Default Serving Unit:'   form.default_serving_unit form.errors.default_serving_unit.as_text %}
@@ -27,4 +27,17 @@
 
     {% block submit %}{% endblock %}
   </form>
+<script type="text/javascript">
+function selectItem(id, name) {
+  $('#' + name + '_button').html(id + ' <span class="caret"></span>');
+    if(id === 'New Brand') {
+      $('input[name=' + name + ']').val('');
+      $('input[name=' + name + ']').removeAttr('readonly');
+    }
+    else {
+      $('input[name=' + name + ']').val(id);
+      $('input[name=' + name + ']').attr('readonly', 'readonly');
+    }
+}
+</script>
 {% block formend %}{% endblock %}

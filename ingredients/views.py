@@ -30,11 +30,33 @@ def home(request):
             context_instance=RequestContext(request))
 
 def create(request):
+    b = list(Brand.objects.all())
+    b.reverse()
+    b.append('New Brand')
+    b.reverse()
+    c = Category.objects.all()
     if request.method == 'POST':
         f = CreateForm(request.POST)
+        if f.is_valid():
+            n = f.cleaned_data.get('name')
+            b = f.cleaned_data.get('brand')
+            c = f.cleaned_data.get('category')
+            dss = f.cleaned_data.get('default_serving_size')
+            dsu = f.cleaned_data.get('default_serving_unit')
+            ass = f.cleaned_data.get('alt_serving_size')
+            asu = f.cleaned_data.get('alt_serving_unit')
+            cs = f.cleaned_data.get('calories')
+            f = f.cleaned_data.get('fat')
+            carbs = f.cleaned_data.get('carbohydrates')
+            p = f.cleaned_data.get('protein')
+            i = Ingredient.objects.create_ingredient(n, b, c, dss, dsu, ass, asu, cs, f, carbs, p)
+            i.save()
+            return HttpResponseRedirect(reverse('ingredients:index'))
     else:
         f = CreateForm()
-    return render(request, 'ingredients/create.html', {'form': f},)
+    return render(request, 'ingredients/create.html', {'form': f,
+        'categories': c,
+        'brands': b},)
 
 def load_table(request):
     brands = Brand.objects.all().order_by('name')

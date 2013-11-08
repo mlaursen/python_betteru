@@ -11,10 +11,7 @@ def as_controls(name, label, input, error, d=False):
     if label:
         h += "  <label class=\"control-label\" for=\"%s\">%s</label>\n" % (name, label)
     h += "  <div class=\"controls\">\n"
-    if d:
-        h += "    <input id=\"id_%s\" name=\"%s\" placeholder=\"%s\" type=\"text\" value=\"%s\" />\n" % (name, name, label, d)
-    else:
-        h += "    %s\n" % input
+    h += "    %s\n" % input
     h += "    <span class=\"error help-inline\" id=\"%s_help\">%s</span>\n" % (name, error)
     h += "  </div>\n"
     h += "</div>\n"
@@ -85,3 +82,26 @@ def display_success(text):
     h += "    </div>\n"
     h += "  </div>\n"
     return h
+
+@register.simple_tag
+def as_text_action(name, itms, error, label=False, func=False):
+    h  = "<div class=\"input-append\">\n"
+    h += "  <input type=\"text\" id=\"%s\" name=\"%s\" placeholder=\"%s\" class=\"span7\">\n" % (name, name, label)
+    h += "  <div class=\"btn-group\">\n"
+    h += "    <button id=\"%s_button\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\">%s <span class=\"caret\"></span></button>\n" % (name, itms[0])
+    h += "    <ul class=\"dropdown-menu\">\n"
+    divider = True
+    for i in itms:
+        h += "      <li><a href=\"#\""
+        if func:
+            h += " onclick=\"%s('%s', '%s')\"" % (func, i, name)
+        h += ">%s</a></li>\n" % i
+        if divider:
+            h += "      <li class=\"divider\"></li>\n"
+        divider = False
+
+    h += "    </ul>\n"
+    h += "  </div>\n"
+    h += "</div>\n"
+    return as_controls(name, label, h, error)
+
