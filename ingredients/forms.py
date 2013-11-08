@@ -24,7 +24,3 @@ class CreateForm(ModelForm):
                 'fat',
                 'carbohydrates',
                 'protein']
-        #widgets = { 
-        #    'username': forms.TextInput(attrs={'placeholder': 'Username'}),
-        #    'email': forms.TextInput(attrs={'placeholder': 'Email'}),
-        #}
