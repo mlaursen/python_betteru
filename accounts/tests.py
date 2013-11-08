@@ -42,6 +42,15 @@ class AccountsModuleTests(TestCase):
         self.assertEqual(a.gender, None)
 
 
+    def test_settings_complete_empty_fields(self):
+        """
+        Testing that the settings are not complete when an account
+        was created from a base temp_account
+        """
+        ta = TempAccount.objects.create_tempaccount('test', 'abcd1234', 'abcd@ef.g', createcode())
+        a = Account.objects.create_account_from_temp(ta)
+        self.assertEqual(a.settings_complete(), None)
+
     """
     Starting the forms tests
     """

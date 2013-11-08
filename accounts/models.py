@@ -67,6 +67,10 @@ class Account(models.Model):
         str += "email: " + self.email + "\n"
         return str
 
+    def settings_complete(self):
+        return self.birthday and self.gender and self.units and self.height and self.activity_multiplier
+
+
 
 class TempAccountManager(models.Manager):
     def create_tempaccount(self, user, pswd, email, code):

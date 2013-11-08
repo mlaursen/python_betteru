@@ -41,14 +41,6 @@ class UtilTest(TestCase):
         self.assertEqual(valid_user('test', 'abcd1234buffalo'), False)
 
 
-    def test_settings_complete_empty_fields(self):
-        """
-        Testing that the settings are not complete when an account
-        was created from a base temp_account
-        """
-        ta = TempAccount.objects.create_tempaccount('test', 'abcd1234', 'abcd@ef.g', createcode())
-        a = Account.objects.create_account_from_temp(ta)
-        self.assertEqual(settings_complete(a), None)
 
     def test_get_index_of_account_genders(self):
         """

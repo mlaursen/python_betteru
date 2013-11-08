@@ -8,6 +8,9 @@ from accounts.forms import CreateForm, LoginForm, EditAccountForm
 
 
 def login(request):
+    """
+    Handles a user trying to log in.
+    """
     if request.method == 'POST':
         f = LoginForm(request.POST)
         if f.is_valid():
@@ -16,7 +19,10 @@ def login(request):
             if valid_user(cuser, cpass):
                 a = Account.objects.get(username=cuser)
                 request.session['uid'] = a.id
-                return HttpResponseRedirect(reverse('accounts:index'))
+                if a.settings_complete():
+                    return HttpResponseRedirect(reverse('stats:index'))
+                else:
+                    return HttpResponseRedirect(reverse('accounts:index'))
     else:
         f = LoginForm()
     return render(request,
@@ -24,7 +30,11 @@ def login(request):
             {'form': f, 'create_form': CreateForm()}
     )
 
+
 def logout(request):
+    """
+    Handles the user trying to log out.  Deletes the session for the user and redirec tto the index page
+    """
     try:
         del request.session['uid']
     except KeyError:
@@ -92,7 +102,7 @@ def create_temp(request):
     return render(request, 'accounts/create.html', {'create_form': f,})
 
 
-def confirm(request):
+def confirm_email(request):
     conf = {'pagename': 'Confirm Email', 
             'message': 'You have successfully confirmed your email!  Redirecting to login page in 3 seconds.',
             'location': '/',
