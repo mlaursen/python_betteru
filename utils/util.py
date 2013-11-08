@@ -128,6 +128,14 @@ def valid_user(user, pswd):
 def logged_in(request):
     return 'uid' in request.session
 
+def settings_complete(a):
+    b = a.birthday
+    g = a.gender
+    u = a.units
+    h = a.height
+    am = a.activity_multiplier
+    return b and g and u and h and am
+
 
 
 def get_index_of(ttuples, itm):

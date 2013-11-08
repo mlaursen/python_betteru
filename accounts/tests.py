@@ -6,6 +6,8 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from accounts.models import *
+from utils.util import createcode
 
 
 class SimpleTest(TestCase):
@@ -16,12 +18,30 @@ class SimpleTest(TestCase):
         self.assertEqual(1 + 1, 2)
 
 
-class EditAccountTests(TestCase):
-    def test_valid_form_no_multiplier(self):
+class TempAccountTest(TestCase):
+    def test_temp_account_create(self):
         """
-        is_valid should return False if no activity multiplier
-        is selected.
+        Tests that you can create a simple account
         """
-        return True
+        ta = TempAccount.objects.create_tempaccount('test', 'abcd1234', 'abcd@g.c', createcode())
+        self.assertEqual(ta.username, 'test')
+        self.assertEqual(ta.email, 'abcd@g.c')
+
+
+class AccountTest(TestCase):
+    def test_create_account_from_temp(self):
+        """
+        Tests that you can create an account from a temp account.
+        Assumes that the TempAccountTest class has no failures
+
+        Fails because you can't insert NULL into id..
+        """
+        ta = TempAccount.objects.create_tempaccount('test', 'abcd1234', 'abcd@g.c', createcode())
+        a = Account.objects.create_account_from_temp(ta)
+        self.assertEqual(a.username, ta.username)
+        self.assertEqual(a.password, ta.password)
+        self.assertEqual(a.email, ta.email)
+
+
 
 

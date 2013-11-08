@@ -20,6 +20,10 @@ class AccountManager(models.Manager):
         account = self.create(username=tmp.username,
                 password=tmp.password,
                 email=tmp.email,
+				gender=None,
+				units=None,
+				height=None,
+				activity_multiplier=None,
         )
         del tmp
         return account
@@ -44,16 +48,16 @@ class Account(models.Model):
             ('very', 'Very Active - 1.725'),
             ('extremely','Extremely Active - 1.9'),
     )
-    id       = models.IntegerField(primary_key=True)
+
     username = models.CharField(max_length=40)
     password = models.CharField(max_length=128)
-    birthday = models.DateTimeField('birthday')
+    birthday = models.DateTimeField('birthday', default=None, null=True)
     gender   = models.CharField(max_length=1, choices=GENDER_CHOICES, default='select_gender')
     units    = models.CharField(max_length=8, choices=UNIT_CHOICES, default='select_unit')
-    height   = models.IntegerField()
+    height   = models.IntegerField(default=None, null=True)
     activity_multiplier = models.CharField(max_length=10, choices=MULTIPLIER_CHOICES, default='select_multiplier')
-    email    = models.CharField(max_length=40)
-    active_since = models.DateTimeField(auto_now_add=True, blank=True)
+    email    = models.CharField(max_length=40, default=None, null=True)
+    active_since = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     objects = AccountManager()
 
