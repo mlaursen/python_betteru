@@ -14,3 +14,21 @@ class SimpleTest(TestCase):
         Tests that 1 + 1 always equals 2.
         """
         self.assertEqual(1 + 1, 2)
+
+    """
+    Starting Models testing here
+    """
+
+
+
+    """
+    Starting forms testing here
+    """
+
+
+
+
+    """
+    Starting views testing here
+    """
+

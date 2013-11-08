@@ -5,12 +5,16 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 
+from django.http import HttpRequest
 from django.test import TestCase
-from accounts.models import *
+
 from utils.util import createcode
 
+from accounts.models import *
+from accounts.forms import *
+from accounts.views import *
 
-class TempAccountTest(TestCase):
+class AccountsModuleTests(TestCase):
     def test_temp_account_create(self):
         """
         Tests that you can create a simple account
@@ -20,7 +24,6 @@ class TempAccountTest(TestCase):
         self.assertEqual(ta.email, 'abcd@g.c')
 
 
-class AccountTest(TestCase):
     def test_create_account_from_temp(self):
         """
         Tests that you can create an account from a temp account.
@@ -39,5 +42,62 @@ class AccountTest(TestCase):
         self.assertEqual(a.gender, None)
 
 
+    """
+    Starting the forms tests
+    """
+    def test_createform_valid(self):
+        """
+        Test that the create form
+        """
+        self.assertEqual(1, 1)
+
+
+    def test_createform_invalid(self):
+        """
+        Test that the create form
+        """
+        self.assertEqual(1, 1)
+
+
+    def test_loginform_valid(self):
+        """
+        Test that the login form
+        """
+        self.assertEqual(1, 1)
+
+
+    def test_loginform_invalid(self):
+        """
+        Test that the login form
+        """
+        self.assertEqual(1, 1)
+
+
+    def test_editform_valid(self):
+        """
+        Test that the edit form
+        """
+        self.assertEqual(1, 1)
+
+    def test_editform_invalid(self):
+        """
+        Test that the edit form
+        """
+        self.assertEqual(1, 1)
+
+
+
+
+    """
+    Starting the views tests
+    """
+    def test_create_view_valid(self):
+        """
+        Testing that the create view works with all valid
+        information.
+
+        Assumes that the CreateForm tests have passed
+        """
+        self.assertEqual(1, 1)
 
 
