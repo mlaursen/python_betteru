@@ -6,7 +6,7 @@ from django.utils.timezone import utc
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 
-import uuid, hashlib
+import uuid, hashlib, datetime
 
 class Redirect(object):
     msg = {}
@@ -142,6 +142,8 @@ def get_index_of(ttuples, itm):
     for x,y in enumerate(ttuples):
         if(y[0] == itm):
             return x
+			
+    return False
 
 def create_birthday_time(date):
     return datetime.datetime.strptime(date, '%m/%d/%Y').replace(tzinfo=utc)

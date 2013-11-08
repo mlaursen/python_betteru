@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from accounts.models import TempAccount, Account
-from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email, get_index_of
+from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
 from accounts.forms import CreateForm, LoginForm, EditAccountForm 
 
 

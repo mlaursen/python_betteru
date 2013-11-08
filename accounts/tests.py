@@ -10,14 +10,6 @@ from accounts.models import *
 from utils.util import createcode
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
-
-
 class TempAccountTest(TestCase):
     def test_temp_account_create(self):
         """
@@ -41,6 +33,10 @@ class AccountTest(TestCase):
         self.assertEqual(a.username, ta.username)
         self.assertEqual(a.password, ta.password)
         self.assertEqual(a.email, ta.email)
+        self.assertEqual(a.birthday, None)
+        self.assertEqual(a.activity_multiplier, None)
+        self.assertEqual(a.units, None)
+        self.assertEqual(a.gender, None)
 
 
 
