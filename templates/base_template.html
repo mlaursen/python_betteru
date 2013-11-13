@@ -4,12 +4,13 @@
   <head>
     {% block refresh %}{% endblock %}
     <title>{% block title %}BASE_TEMP{% endblock %}</title>
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap/bootstrap-responsive.css' %}" rel="stylesheet" />
     <link href="{% static 'css/main.css' %}" rel="stylesheet" />
-    <script src="{% static 'js/jquery-2.0.3.min.js' %}"></script>
+    <script src="{% static 'js/jquery/jquery-2.0.3.js' %}"></script>
     <script src="{% static 'js/util.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/form_validation.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.js' %}"></script>
     {% block extrahead %}{% endblock %}
   </head>
   {% block body %}<body>{% endblock %}
@@ -36,18 +37,6 @@
     </div><!-- end navbar navbar-inverse -->
     <!-- end title bar -->
     {% block container %}<div class='container'>{% endblock %}
-    {% comment %}
-    {% if not request.session.uid and not request.POST %}
-    <div class="container">
-      <div class="row-fluid">
-        <div class="span8 offset2 alert alert-info alert-block">
-          <button type='button' class='close' data-dismiss='alert'>&times;</button>
-          <strong>Heads up!</strong> You are currently not logged in, but you can browse the website as an example user to get a feel.
-        </div>
-      </div>
-    </div>
-    {% endif %}
-    {% endcomment %}
       {% block content %}
       {% endblock %}
     </div>
