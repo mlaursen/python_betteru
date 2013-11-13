@@ -6,14 +6,9 @@ from django.http import HttpResponseRedirect
 from utils.util import logged_in
 
 def info(request):
-    if logged_in(request):
-        return render(request, 'info.html',)
-    else:
-        #msg = {'message': 'You are not logged in.  However, you can browse the website as an example user to get the feel.',
-        #        'type': 'info',
-        #}
-        #return render(request,
-        #        reverse('accounts:login'),
-        #        {'msg': msg}
-        #)
-        return HttpResponseRedirect(reverse('accounts:login'))
+    return render(request, 'info.html',)
+
+
+
+
+
