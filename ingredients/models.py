@@ -141,3 +141,36 @@ class Meal(models.Model):
 
 
 
+class IngredientView(models.Model):
+    ingredient_name = models.CharField(max_length=128)
+    brand_name = models.CharField(max_length=40)
+    category_name = models.CharField(max_length=40)
+    default_serving_size = models.IntegerField()
+    default_serving_unit = models.CharField(max_length=8)
+    alt_serving_size = models.IntegerField()
+    alt_serving_unit = models.CharField(max_length=8)
+    calories = models.IntegerField()
+    fat = models.IntegerField()
+    carbohydrates = models.IntegerField()
+    protein = models.IntegerField()
+
+    def __str__(self):
+        s  = "ID: %s\n" % self.id
+        s += "Ingredient: %s\n" % self.ingredient_name
+        s += "Brand: %s\n" % self.brand_name
+        s += "Category: %s\n" % self.category_name
+        s += "DefServ: %s\n" % self.default_serving_size
+        s += "DefUnit: %s\n" % self.default_serving_unit
+        s += "AltServ: %s\n" % self.alt_serving_size
+        s += "AltUnit: %s\n" % self.alt_serving_unit
+        s += "Calories: %s\n" % self.calories
+        s += "Fat: %s\n" % self.fat
+        s += "Carbohydrates: %s\n" % self.carbohydrates
+        s += "Protein: %s\n" % self.protein
+        return s
+    class Meta:
+        managed = False
+
+class MealPartsView(models.Model):
+    class Meta:
+        managed = False
