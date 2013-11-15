@@ -7,9 +7,11 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from meals.models import *
+from ingredients.models import *
+from ingredients.tests import IngredientsTests
 
 
-class SimpleTest(TestCase):
+class MealsTest(TestCase):
     """
     Starting the Meal tests
     """
@@ -31,7 +33,7 @@ class SimpleTest(TestCase):
         d = 'Test Meal descr'
         m = Meal.objects.create_meal(n, d)
         mid = m.id
-        self.test_create_ingredient_valid_all()
+        IngredientsTests().test_create_ingredient_valid_all()
         i = Ingredient.objects.all()[0]
         mp = MealPart.objects.create_mealpart(mid, i.id, 4, 0)
         self.assertEqual(mp.mealid, mid)
@@ -41,7 +43,7 @@ class SimpleTest(TestCase):
         Test that you can't create a meal part even if a meal doesn't exist.
         Doesn't make sense to. 
         """
-        self.test_create_mealpart()
+        self().test_create_mealpart()
         m = Meal.objects.all()[0]
         i = Ingredient.objects.all()[0]
         mp = MealPart.objects.create_mealpart(-1, i.id, 4, 0)

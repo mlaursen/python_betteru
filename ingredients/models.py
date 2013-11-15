@@ -88,57 +88,6 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
-class MealPartManager(models.Manager):
-    def create_mealpart(self, mealid, ingredientid, amount, unit):
-        if not Meal.objects.filter(id=mealid) or not Meal.objects.filter(id=ingredientid) or not in_ttuple(MealPart.UNITS, unit):
-            return False
-        else:
-            i = Ingredient.objects.get(id=ingredientid)
-            return self.create(mealid=mealid, ingredient=i, amount=amount, unit=unit)
-
-
-class MealManager(models.Manager):
-    def create_meal(self, name, description):
-        m = self.create(name=name,
-                description=description
-                )
-        return m
-
-class MealPart(models.Model):
-    UNITS = (
-        (0, 'Default'),
-        (1, 'Alternate'),
-    )
-    mealid = models.IntegerField()
-    ingredient = models.ForeignKey(Ingredient)
-    amount = models.IntegerField(default=0)
-    unit = models.IntegerField(max_length=1, choices=UNITS)
-
-    objects = MealPartManager()
-
-    def __str__(self):
-        s = "id: " + str(self.id)
-        s += ", mealid: " + str(self.mealid)
-        s += ", ingredient: " + str(self.ingredient)
-        s += ", amt: " + str(self.amount)
-        s += ", unit: " + str(self.unit)
-        return s
-    
-
-
-class Meal(models.Model):
-    name = models.CharField(max_length=128)
-    description = models.TextField()
-    objects = MealManager()
-
-    def __str__(self):
-        s  = "id: %s\nname: %s\ndescription: %s\nparts: (\n" % (self.id, self.name, self.description)
-        parts = MealPart.objects.filter(mealid=self.id)
-        for p in parts:
-            s += "\t(%s),\n" % str(p)
-        s += ")\n"
-        return s
-
 
 
 class IngredientView(models.Model):

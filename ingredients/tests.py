@@ -11,7 +11,7 @@ from django.http import HttpRequest
 from ingredients.models import *
 from ingredients.forms import *
 
-class IngredientsModuleTests(TestCase):
+class IngredientsTests(TestCase):
     def test_create_brand(self):
         """
         Test that you can create a brand.
