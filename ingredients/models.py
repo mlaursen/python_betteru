@@ -1,4 +1,5 @@
 from django.db import models
+from utils.util import in_ttuple
 
 
 def class_default(str):
@@ -89,7 +90,7 @@ class Ingredient(models.Model):
 
 class MealPartManager(models.Manager):
     def create_mealpart(self, mealid, ingredientid, amount, unit):
-        if not Meal.objects.filter(id=mealid) or not Meal.objects.filter(id=ingredientid):
+        if not Meal.objects.filter(id=mealid) or not Meal.objects.filter(id=ingredientid) or not in_ttuple(MealPart.UNITS, unit):
             return False
         else:
             i = Ingredient.objects.get(id=ingredientid)

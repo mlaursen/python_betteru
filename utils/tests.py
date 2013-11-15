@@ -69,3 +69,16 @@ class UtilTest(TestCase):
         """
         self.assertEqual(birthday_time_as_str(create_birthday_time('01/01/1900')), '01/01/1900')
 
+    def test_in_ttuple_exists(self):
+        """
+        Test that it returns true if an item exists in a tuple of tuples
+        """
+        ttuple = ((0, 0), (1, 1))
+        self.assertTrue(in_ttuple(ttuple, 0))
+
+    def test_in_ttuple_not_exist(self):
+        """
+        Test that it returns false if an item is not in a tuple of tuples
+        """
+        ttuple = ((0, 0), (1, 1))
+        self.assertFalse(in_ttuple(ttuple, 100))

@@ -135,6 +135,16 @@ def get_index_of(ttuples, itm):
 			
     return False
 
+def in_ttuple(ttuple, itm):
+    """
+    Return true if the item is in a tuple of tuples
+    """
+    for x in ttuple:
+        if(x[0] == itm):
+            return True
+
+    return False
+
 def create_birthday_time(date):
     return datetime.datetime.strptime(date, '%m/%d/%Y').replace(tzinfo=utc)
 
