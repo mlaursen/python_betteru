@@ -172,5 +172,7 @@ class IngredientView(models.Model):
         managed = False
 
 class MealPartsView(models.Model):
+    
+    
     class Meta:
         managed = False
