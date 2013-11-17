@@ -4,7 +4,7 @@ from ingredients.models import Ingredient
 
 class MealPartManager(models.Manager):
     def create_mealpart(self, mealid, ingredientid, amount, unit):
-        if not Meal.objects.filter(id=mealid) or not Meal.objects.filter(id=ingredientid) or not in_ttuple(MealPart.UNITS, unit):
+        if not Meal.objects.filter(id=mealid) or not Ingredient.objects.filter(id=ingredientid) or not in_ttuple(MealPart.UNITS, unit):
             return False
         else:
             i = Ingredient.objects.get(id=ingredientid)

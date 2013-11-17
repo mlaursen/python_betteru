@@ -50,6 +50,13 @@ class MealsTest(TestCase):
         self.assertFalse( MealPart.objects.create_mealpart(m.id, -1, 4, 0) )
 
     """
+    Starting the database view model tests
+    """
+    def test_meal_view(self):
+        self.assertEqual(1, 1)
+
+
+    """
     Starting the forms tests
     """
 
