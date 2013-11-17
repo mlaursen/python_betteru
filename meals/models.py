@@ -4,19 +4,12 @@ from ingredients.models import Ingredient
 
 class MealPartManager(models.Manager):
     def create_mealpart(self, mealid, ingredientid, amount, unit):
-        if not Meal.objects.filter(id=mealid) or not Meal.objects.filter(id=ingredientid) or not in_ttuple(MealPart.UNITS, unit):
+        if not Meal.objects.filter(id=mealid) or not Meal.objects.filter(id=ingredientid):# or not in_ttuple(MealPart.UNITS, unit):
             return False
         else:
             i = Ingredient.objects.get(id=ingredientid)
             return self.create(mealid=mealid, ingredient=i, amount=amount, unit=unit)
 
-
-class MealManager(models.Manager):
-    def create_meal(self, name, description):
-        m = self.create(name=name,
-                description=description
-                )
-        return m
 
 class MealPart(models.Model):
     UNITS = (
@@ -38,6 +31,13 @@ class MealPart(models.Model):
         s += ", unit: " + str(self.unit)
         return s
     
+class MealManager(models.Manager):
+    def create_meal(self, name, description):
+        m = self.create(name=name,
+                description=description
+                )
+        return m
+
 
 
 class Meal(models.Model):
