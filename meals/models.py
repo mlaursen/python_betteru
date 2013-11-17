@@ -71,6 +71,7 @@ class MealPartsView(models.Model):
     
     class Meta:
         managed = False
+        db_table = 'MEALPARTS_VIEW'
 
 
 class MealView(models.Model):
@@ -89,3 +90,4 @@ class MealView(models.Model):
     
     class Meta:
         managed = False
+        db_table = 'MEAL_VIEW'

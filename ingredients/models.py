@@ -119,4 +119,5 @@ class IngredientView(models.Model):
         return s
     class Meta:
         managed = False
+        db_table = 'INGREDIENT_VIEW'
 
