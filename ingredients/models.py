@@ -41,9 +41,30 @@ class Category(models.Model):
 
 
 class IngredientManager(models.Manager):
+    def create_ingredient_from_form(self, f):
+        name = f.cleaned_data.get('name')
+        brand = f.cleaned_data.get('brand')
+        catg = f.cleaned_data.get('category')
+        dss = f.cleaned_data.get('default_serving_size')
+        dsu = f.cleaned_data.get('default_serving_unit')
+        ass = f.cleaned_data.get('alt_serving_size')
+        asu = f.cleaned_data.get('alt_serving_unit')
+        calories = f.cleaned_data.get('calories')
+        fat = f.cleaned_data.get('fat')
+        carbs = f.cleaned_data.get('carbohydrates')
+        prot = f.cleaned_data.get('protein')
+        print(brand)
+
+
     def create_ingredient(self, name, brand, catg, dservingsize, dservingunit, aservingsize, aservingunit, cal, fat, carb, prot):
-        brand = Brand.objects.get(name=brand)
-        catg  = Category.objects.get(name=catg)
+        if isinstance(brand, str):
+            brand = Brand.objects.get(name=brand)
+        if isinstance(brand, int):
+            brand = Brand.objects.get(id=brand)
+        if isinstance(catg, str):
+            catg  = Category.objects.get(name=catg)
+        if isinstance(catg, int):
+            brand = Category.objects.get(id=brand)
         ingredient = self.create(name=name,
                 brand=brand,
                 category=catg,
@@ -57,6 +78,7 @@ class IngredientManager(models.Manager):
                 protein=prot
         )
         return ingredient
+
 
 
 class Ingredient(models.Model):

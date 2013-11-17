@@ -10,6 +10,7 @@ from django.utils.timezone import utc
 from django.test import TestCase
 
 from accounts.models import Account, TempAccount
+from ingredients.models import Brand
 from utils.util import *
 
 
@@ -82,3 +83,21 @@ class UtilTest(TestCase):
         """
         ttuple = ((0, 0), (1, 1))
         self.assertFalse(in_ttuple(ttuple, 100))
+
+    def test_almost_match(self):
+        """
+        Test that almost_match works correctly
+        """
+        Brand.objects.create_brand('Boop')
+        Brand.objects.create_brand('Test2')
+        Brand.objects.create_brand('This I s a T n')
+
+        objs = Brand.objects.all()
+        self.assertTrue(almost_match('Boop', objs))
+        self.assertTrue(almost_match('boop', objs))
+        self.assertTrue(almost_match('bOOp', objs))
+        self.assertTrue(almost_match('Test2', objs))
+        self.assertTrue(almost_match('TeSt2', objs))
+        self.assertTrue(almost_match('This i s a t n', objs))
+        self.assertFalse(almost_match('This i t n', objs))
+

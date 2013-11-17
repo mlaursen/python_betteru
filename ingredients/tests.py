@@ -14,6 +14,20 @@ from meals.models import *
 
 
 
+def create_test_form():
+    data = {'name': 'Chicken Breast',
+            'brand': 'Food City',
+            'category': 1,
+            'default_serving_size': 4,
+            'default_serving_unit': 'oz',
+            'alt_serving_size': 112,
+            'alt_serving_unit': 'g',
+            'calories': 140,
+            'fat': 4,
+            'carbohydrates': 0,
+            'protein': 25,
+            }
+    return CreateForm(data)
 
 
 def create_test_ingredient():
@@ -98,6 +112,22 @@ class IngredientsTests(TestCase):
         self.assertEqual(i.fat, fat)
         self.assertEqual(i.carbohydrates, carb)
         self.assertEqual(i.protein, prot)
+
+        brand = 'Test Brand'
+        catg = 'Test Category'
+        i = Ingredient.objects.create_ingredient(n, brand, catg, def_size, def_unit, alt_size, alt_unit, cal, fat, carb, prot)
+        self.assertEqual(i.name, n)
+        self.assertEqual(i.brand, b)
+        self.assertEqual(i.category, c)
+        self.assertEqual(i.default_serving_size, def_size)
+        self.assertEqual(i.default_serving_unit, def_unit)
+        self.assertEqual(i.alt_serving_size, alt_size)
+        self.assertEqual(i.alt_serving_unit, alt_unit)
+        self.assertEqual(i.calories, cal)
+        self.assertEqual(i.fat, fat)
+        self.assertEqual(i.carbohydrates, carb)
+        self.assertEqual(i.protein, prot)
+
 
 
     """

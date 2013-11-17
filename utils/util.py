@@ -6,7 +6,7 @@ from django.utils.timezone import utc
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 
-import uuid, hashlib, datetime
+import uuid, hashlib, datetime, re
 
 class Redirect(object):
     msg = {}
@@ -150,4 +150,11 @@ def create_birthday_time(date):
 
 def birthday_time_as_str(bday):
     return bday.strftime("%m/%d/%Y")
+
+
+def almost_match(name, objs):
+    for o in objs:
+        if re.match(o.name, name, re.IGNORECASE):
+            return True
+    return False
 
