@@ -32,6 +32,7 @@ class MealPart(models.Model):
         return s
     
 class MealManager(models.Manager):
+
     def create_meal(self, name, description):
         m = self.create(name=name,
                 description=description
@@ -91,3 +92,39 @@ class MealView(models.Model):
     class Meta:
         managed = False
         db_table = 'MEAL_VIEW'
+
+
+
+
+def create_full_meal(name, description, meal_parts):
+    """
+    Creates a 'full' meal.
+    Creates a meal with name and description and then creates
+    each and every mealpart to that associated meal
+    """
+    INGREDIENT_ID = 0
+    AMOUNT = 1
+    UNIT = 2
+
+    m = Meal.objects.create_meal(name, description)
+    mid = m.id
+    mps = []
+    for meal_part in meal_parts:
+        mp = MealPart.objects.create_mealpart(mid,
+                meal_part[INGREDIENT_ID],
+                meal_part[AMOUNT],
+                meal_part[UNIT]
+        )
+        mps.append(mp)
+
+    return [m, mps]
+
+
+
+
+
+
+
+
+
+
