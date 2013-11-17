@@ -8,7 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from meals.models import *
 from ingredients.models import *
-from ingredients.tests import IngredientsTests, create_test_ingredient
+from ingredients.tests import create_test_ingredient
 
 
 class MealsTest(TestCase):
