@@ -4,10 +4,15 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from stats.models import Stats
+from meals.models import *
 
 class IndexView(generic.base.TemplateView):
     template_name = 'meals/index.html'
 
 class AddView(generic.base.TemplateView):
     template_name = 'meals/add.html'
+
+def index(request):
+    meals = MealView.objects.all()
+    return render(request, 'meals/index.html', {'meals': meals,})
+

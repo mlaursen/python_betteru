@@ -84,10 +84,10 @@ class MealView(models.Model):
     category_name = models.CharField(max_length=40)
     serving_size = models.IntegerField()
     serving_unit = models.CharField(max_length=8)
-    calories = models.IntegerField()
-    fat = models.IntegerField()
-    carbohydrates = models.IntegerField()
-    protein = models.IntegerField()
+    total_calories = models.IntegerField()
+    total_fat = models.IntegerField()
+    total_carbohydrates = models.IntegerField()
+    total_protein = models.IntegerField()
     
     class Meta:
         managed = False
@@ -101,6 +101,8 @@ def create_full_meal(name, description, meal_parts):
     Creates a 'full' meal.
     Creates a meal with name and description and then creates
     each and every mealpart to that associated meal
+    Useage:
+    create_full_meal('Example', 'Example desc', [[2, 300, 1], [1, 2, 0]])
     """
     INGREDIENT_ID = 0
     AMOUNT = 1

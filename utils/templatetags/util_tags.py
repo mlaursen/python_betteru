@@ -105,3 +105,31 @@ def as_text_action(name, itms, error, label=False, func=False):
     h += "</div>\n"
     return as_controls(name, label, h, error)
 
+@register.simple_tag
+def as_meal_table(meals):
+    h  = "<table class=\"table table-striped table-bordered table-hover table-condensed\">\n"
+    h += "<tr>\n"
+    h += "  <th>Amount</th>\n"
+    h += "</tr>\n"
+    for meal in meals:
+        h += as_meal_row(meal)
+    h += "</table>\n"
+    return h
+
+
+@ register.simple_tag
+def as_meal_row(meal):
+    h  = "<tr>\n"
+    h += "  <td>%s</td>\n" % meal.amount
+    h += "  <td>%s</td>\n" % meal.unit
+    h += "  <td>%s</td>\n" % meal.ingredient_name
+    h += "  <td>%s</td>\n" % meal.brand_name
+    h += "  <td>%s</td>\n" % meal.category_name
+    h += "  <td>%s</td>\n" % meal.serving_size
+    h += "  <td>%s</td>\n" % meal.serving_unit
+    h += "  <td>%s</td>\n" % meal.total_calories
+    h += "  <td>%s</td>\n" % meal.total_fat
+    h += "  <td>%s</td>\n" % meal.total_carbohydrates
+    h += "  <td>%s</td>\n" % meal.total_protein
+    h += "</tr>\n"
+    return h
