@@ -69,6 +69,12 @@ class MealPartsView(models.Model):
     fat = models.IntegerField()
     carbohydrates = models.IntegerField()
     protein = models.IntegerField()
+    total_calories = models.IntegerField()
+    total_fat = models.IntegerField()
+    total_carbohydrates = models.IntegerField()
+    total_protein = models.IntegerField()
+    serving_size = models.IntegerField()
+    serving_unit = models.CharField(max_length=8)
     
     class Meta:
         managed = False
@@ -76,18 +82,12 @@ class MealPartsView(models.Model):
 
 
 class MealView(models.Model):
-    mealid = models.IntegerField()
-    amount = models.IntegerField()
-    unit   = models.IntegerField()
-    ingredient_name = models.CharField(max_length=128)
-    brand_name = models.CharField(max_length=40)
-    category_name = models.CharField(max_length=40)
-    serving_size = models.IntegerField()
-    serving_unit = models.CharField(max_length=8)
-    total_calories = models.IntegerField()
-    total_fat = models.IntegerField()
-    total_carbohydrates = models.IntegerField()
-    total_protein = models.IntegerField()
+    name = models.CharField(max_length=128)
+    description = models.TextField()
+    total_calories = models.DecimalField(max_digits=8, decimal_places=2)
+    total_fat = models.DecimalField(max_digits=8, decimal_places=2)
+    total_carbohydrates = models.DecimalField(max_digits=8, decimal_places=2)
+    total_protein = models.DecimalField(max_digits=8, decimal_places=2)
     
     class Meta:
         managed = False

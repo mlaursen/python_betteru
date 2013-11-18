@@ -109,7 +109,12 @@ def as_text_action(name, itms, error, label=False, func=False):
 def as_meal_table(meals):
     h  = "<table class=\"table table-striped table-bordered table-hover table-condensed\">\n"
     h += "<tr>\n"
-    h += "  <th>Amount</th>\n"
+    h += "  <th>Name</th>\n"
+    h += "  <th>Description</th>\n"
+    h += "  <th>Total Calories</th>\n"
+    h += "  <th>Total Fat</th>\n"
+    h += "  <th>Total Carbohydrates</th>\n"
+    h += "  <th>Total Protein</th>\n"
     h += "</tr>\n"
     for meal in meals:
         h += as_meal_row(meal)
@@ -120,13 +125,8 @@ def as_meal_table(meals):
 @ register.simple_tag
 def as_meal_row(meal):
     h  = "<tr>\n"
-    h += "  <td>%s</td>\n" % meal.amount
-    h += "  <td>%s</td>\n" % meal.unit
-    h += "  <td>%s</td>\n" % meal.ingredient_name
-    h += "  <td>%s</td>\n" % meal.brand_name
-    h += "  <td>%s</td>\n" % meal.category_name
-    h += "  <td>%s</td>\n" % meal.serving_size
-    h += "  <td>%s</td>\n" % meal.serving_unit
+    h += "  <td>%s</td>\n" % meal.name
+    h += "  <td>%s</td>\n" % meal.description
     h += "  <td>%s</td>\n" % meal.total_calories
     h += "  <td>%s</td>\n" % meal.total_fat
     h += "  <td>%s</td>\n" % meal.total_carbohydrates

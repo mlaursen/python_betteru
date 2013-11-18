@@ -11,7 +11,7 @@ from ingredients.models import Ingredient, Category, Brand
 import sys, re
 
 def index(request):
-    ingredients = Ingredient.objects.all().order_by('id')
+    ingredients = Ingredient.objects.all().order_by('name')
     brands = Brand.objects.all().order_by('name')
     categories = Category.objects.all()
     return render_to_response('ingredients/index.html',
@@ -70,7 +70,7 @@ def load_table(request):
         else:
             ingredients = Ingredient.objects.all()
         return render_to_response('ingredients/ingredient_table.html',
-            {'ingredients': ingredients.order_by('id'),
+            {'ingredients': ingredients.order_by('name'),
                 'brands': brands,
                 'categories': categories},
             context_instance=RequestContext(request))
