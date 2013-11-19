@@ -8,6 +8,7 @@
 <h4>All Meals</h4>
 <div class="row-fluid">
 {% for meal in meals %}
+{% another_row forloop.counter %}
 <div class="box" id="meal_{{ meal.id }}">
   <a href="{% url 'goals:add' %}/{{ meal.id }}"></a>
   <div class="contents">

@@ -201,3 +201,10 @@ def ingredient_list(mealid):
         h += "<li>%s - %s %s</li>\n" % (ing_name, ing_amt, ing_unit)
     return h + "</ul>\n"
 
+@register.simple_tag
+def another_row(counter, amt=5):
+    if counter % 5 == amt:
+        return "</div>\n<div class=\"row-fluid\">\n"
+    else:
+        return ""
+
