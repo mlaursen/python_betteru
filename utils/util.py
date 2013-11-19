@@ -158,3 +158,16 @@ def almost_match(name, objs):
             return True
     return False
 
+def display_unit(unit, size, name):
+    #import inflect
+    #p = inflect.engine()
+    if unit == 'unit':
+        unit = name
+
+    if size > 1 and len(unit) > 2:
+        # super lazy until i install inflect
+        return unit + "s"
+        #return p.plural(unit)
+    else:
+        return unit
+

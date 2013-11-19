@@ -1,6 +1,6 @@
 from django import template
 
-from utils.util import HtmlTag
+from utils.util import HtmlTag, display_unit
 from meals.models import MealPartsView
 
 register = template.Library()
@@ -189,4 +189,15 @@ def as_meal_divs(meals):
         h += "</div>\n"
     h += "</div>\n"
     return h
+
+@register.simple_tag
+def ingredient_list(mealid):
+    meal_parts = MealPartsView.objects.filter(mealid=mealid)
+    h  = "<ul>\n"
+    for meal_part in meal_parts:
+        ing_name = meal_part.ingredient_name
+        ing_amt  = meal_part.amount
+        ing_unit = display_unit(meal_part.serving_unit, ing_amt, ing_name)
+        h += "<li>%s - %s %s</li>\n" % (ing_name, ing_amt, ing_unit)
+    return h + "</ul>\n"
 
