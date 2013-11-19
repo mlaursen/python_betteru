@@ -1,7 +1,8 @@
 {% extends 'base_template.html' %}
 {% block title %}{% block which-page %}View{% endblock %} Meals{% endblock %}
+{% block container %}<div class="container-fluid">{% endblock %}
 {% block content %}
-This is the meals page.
+<h4>All Meals</h4>
 {% load util_tags %}
 {% as_meal_table meals %}
 {% endblock %}

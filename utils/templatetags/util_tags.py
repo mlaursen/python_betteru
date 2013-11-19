@@ -1,6 +1,7 @@
 from django import template
 
 from utils.util import HtmlTag
+from meals.models import MealPartsView
 
 register = template.Library()
 
@@ -111,6 +112,7 @@ def as_meal_table(meals):
     h += "<tr>\n"
     h += "  <th>Name</th>\n"
     h += "  <th>Description</th>\n"
+    h += "  <th>Ingredients</th>\n"
     h += "  <th>Total Calories</th>\n"
     h += "  <th>Total Fat</th>\n"
     h += "  <th>Total Carbohydrates</th>\n"
@@ -122,11 +124,16 @@ def as_meal_table(meals):
     return h
 
 
-@ register.simple_tag
+@register.simple_tag
 def as_meal_row(meal):
+    meal_parts = MealPartsView.objects.filter(mealid=meal.id)
     h  = "<tr>\n"
     h += "  <td>%s</td>\n" % meal.name
     h += "  <td>%s</td>\n" % meal.description
+    h += "  <td>"
+    for meal_part in meal_parts:
+        h += "%s %s - %s<br />" % (meal_part.serving_size, meal_part.serving_unit, meal_part.ingredient_name)
+    h += "</td>\n"
     h += "  <td>%s</td>\n" % meal.total_calories
     h += "  <td>%s</td>\n" % meal.total_fat
     h += "  <td>%s</td>\n" % meal.total_carbohydrates
