@@ -140,3 +140,53 @@ def as_meal_row(meal):
     h += "  <td>%s</td>\n" % meal.total_protein
     h += "</tr>\n"
     return h
+
+@register.simple_tag
+def as_meal_table_v2(meals):
+    h  = "<table class=\"meals\">\n"
+    counter = 0
+    for meal in meals:
+        if counter == 0:
+            h += "<tr>\n"
+        elif counter == 5:
+            h += "</tr>\n"
+            counter = 0
+        h += "  <td>\n"
+        h += "    <div class=\"meal-name\">%s</div>\n" % meal.name
+        h += "    <hr />\n"
+        h += "    <div class=\"meal-description\">%s</div>\n" % meal.description
+        h += "    <div class=\"nutritional-facts\">\n"
+        h += "      <div class=\"header\">Nutritional facts</div>\n"
+        h += "      <div class=\"body\">\n"
+        h += "        Calories: %s\n" % meal.total_calories
+        h += "        Fat: %s<br />\n" % meal.total_fat
+        h += "        Carbs: %s <br />\n" % meal.total_carbohydrates
+        h += "        Protein: %s\n" % meal.total_protein
+        h += "      </div>\n"
+        h += "    </div>\n"
+        h += "  </td>\n"
+        counter = counter + 1
+    h += "</table>\n"
+    return h
+
+@register.simple_tag
+def as_meal_divs(meals):
+    h  = "<div class=\"meals\">\n"
+    for meal in meals:
+        h += "<div class=\"meal\">\n"
+        h += "   <div class=\"meal-name\">%s</div>\n" % meal.name
+        h += "    <hr />\n"
+        h += "    <div class=\"meal-description\">%s</div>\n" % meal.description
+        h += "    <div class=\"nutritional-facts\">\n"
+        h += "      <div class=\"header\">Nutritional facts</div>\n"
+        h += "      <div class=\"body\">\n"
+        h += "        Calories: %s\n" % meal.total_calories
+        h += "        Fat: %s<br />\n" % meal.total_fat
+        h += "        Carbs: %s <br />\n" % meal.total_carbohydrates
+        h += "        Protein: %s\n" % meal.total_protein
+        h += "      </div>\n"
+        h += "    </div>\n"
+        h += "</div>\n"
+    h += "</div>\n"
+    return h
+

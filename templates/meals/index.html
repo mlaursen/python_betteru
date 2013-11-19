@@ -1,9 +1,11 @@
 {% extends 'base_template.html' %}
+{% load static %}
+{% load util_tags %}
 {% block title %}{% block which-page %}View{% endblock %} Meals{% endblock %}
+{% block additional_css %}<link href="{% static 'css/meals.css' %}" rel="stylesheet" />{% endblock %}
 {% block container %}<div class="container-fluid">{% endblock %}
 {% block content %}
 <h4>All Meals</h4>
-{% load util_tags %}
-{% as_meal_table meals %}
+{% as_meal_table_v2 meals %}
 {% endblock %}
 
