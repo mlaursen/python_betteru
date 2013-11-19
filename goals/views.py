@@ -8,3 +8,5 @@ from django.utils import timezone
 class IndexView(TemplateView):
     template_name = 'goals/index.html'
 
+class AddView(TemplateView):
+    template_name = 'goals/index.html'
