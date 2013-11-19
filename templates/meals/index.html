@@ -16,13 +16,18 @@
   <div class="contents">
     <div class="name">
       {{ meal.name }}
+    </div>
+    <hr />
+    <div class="block nutritional-facts">
+      <div class="head">Nutritional Facts</div>
       <hr />
+      <div class="">Calories: {{ meal.total_calories }}</div>
+      <div class="">Fat: {{ meal.total_fat }}g</div>
+      <div class="">Carbohydrates: {{ meal.total_carbohydrates }}g</div>
+      <div class="">Protein: {{ meal.total_protein }}g</div>
     </div>
-    <div class="description">
-      {{ meal.description }}
-    </div>
-    <div class="nutritional-facts">
-    </div>
+    <hr />
+    <strong>Description:</strong> {{ meal.description }}
   </div>
 </div>
 {% endfor %}

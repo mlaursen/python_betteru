@@ -41,6 +41,7 @@ div.box {
     overflow: hidden;
     text-overflow: ellipsis;
     background-color: #F0F0F0;
+    box-shadow: 5px 5px 5px #888888;
 }
 
 div.box:hover {
@@ -52,24 +53,31 @@ div.box:hover {
 .box .contents {
     text-align: left;
     font-family: Verdana, Geneva, sans-serif;
+    font-size: 14px;
+    width: 95%;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 14px;
+    margin-top: 10px;
 }
 
 .contents .name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.contents .nutritional-facts {
+    display: block;
+}
+
+.nutritional-facts .head {
     font-size: 16px;
     font-weight: bold;
 }
 
-.contents .description {
-    font-size: 14px;
-}
-
-.contents .nutritional-facts {
-    font-size: 14px;
-    display: block;
-}
-
-hr {
+.box hr {
     border-color: black;
     background-color: black;
-    height: 1px;
 }
