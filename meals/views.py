@@ -7,10 +7,14 @@ from django.utils import timezone
 from meals.models import *
 from meals.forms import *
 
+from django.forms.formsets import formset_factory
+
 class IndexView(generic.base.TemplateView):
     template_name = 'meals/index.html'
 
 def add(request):
+    MealPartFormSet = formset_factory(AddMealPartForm, formset=BaseMealPartForm, can_delete=True, extra=2)
+    formset = MealPartFormSet()
     if request.method == 'POST':
         mf = AddMealForm(request.POST)
         mp_f = AddMealPartForm(request.POST)
@@ -20,7 +24,8 @@ def add(request):
         mf = AddMealForm()
         mp_f = AddMealPartForm()
     return render(request, 'meals/add.html', {'mp_form': mp_f,
-        'm_form': mf,})
+        'm_form': mf,
+        'formset': formset,})
 
 
 def index(request):

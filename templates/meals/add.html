@@ -5,10 +5,19 @@
 <div class="row-fluid">
   <div class="span8 offset1">
     <form class="form-horizontal" method='post' action="{% url 'meals:add' %}">{% csrf_token %}
-    {% as_controls 'name' 'Meal Name:' m_form.name m_form.errors.name.as_text %}
-    {% as_controls 'description' 'Description:' m_form.description m_form.errors.description.as_text %}
-    {% include 'meals/mealpartform.html' %}
-    {% as_submit 'Submit' %}
+      {% as_controls 'name' 'Meal Name:' m_form.name m_form.errors.name.as_text %}
+      {% as_controls 'description' 'Description:' m_form.description m_form.errors.description.as_text %}
+
+      {{ formset.management_form }}
+      {% for form in formset %}
+      <div name="mealparts">
+        {{ form.hiddenid }}
+        {% as_controls 'ingredient' 'Ingredient:' form.ingredient form.errors.ingredient.as_text %}
+        {% as_controls 'amount' 'Amount:' form.amount form.errors.amount.as_text %}
+        {% as_controls 'unit' 'Serving Unit:' form.unit form.errors.unit.as_text %}
+      </div>
+      {% endfor %}
+      {% as_submit 'Submit' %}
     </form>
   </div>
 </div>

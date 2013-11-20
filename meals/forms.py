@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm, Form
+from django.forms.formsets import BaseFormSet
 from django.forms.util import ErrorList
 
 from meals.models import MealPart, Meal
@@ -28,3 +29,19 @@ class AddMealForm(ModelForm):
         fields = ['name', 'description']
         widgets = {}
 
+class BaseMealPartForm(BaseFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+
+        hiddenids = []
+        ingredients = []
+        for form in self.forms:
+            hiddenid = form.cleaned_data['hiddenid']
+            if hiddenid in hiddenids:
+                raise forms.ValidationError("Meal Parts in a set must have different ids")
+            hiddenids.append(hiddenid)
+            ingredient = form.cleaned_data['ingredient']
+            if ingredient in ingredients:
+                raise forms.ValidationError("Two of the same ingredient. SHould combine")
+            ingredients.append(ingredient)
