@@ -203,7 +203,7 @@ def ingredient_list(mealid):
 
 @register.simple_tag
 def another_row(counter, amt=5):
-    if counter % 5 == amt:
+    if (counter-1) % amt == 0:
         return "</div>\n<div class=\"row-fluid\">\n"
     else:
         return ""

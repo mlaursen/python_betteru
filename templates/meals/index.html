@@ -10,7 +10,6 @@
 {% for meal in meals %}
 {% another_row forloop.counter %}
 <div class="box" id="meal_{{ meal.id }}">
-  <a href="{% url 'goals:add' %}/{{ meal.id }}"></a>
   <div class="contents">
     <div class="name">
       {{ meal.name }}

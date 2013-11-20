@@ -159,15 +159,15 @@ def almost_match(name, objs):
     return False
 
 def display_unit(unit, size, name):
-    #import inflect
-    #p = inflect.engine()
+    import inflect
+    from ingredients.models import Ingredient
+    p = inflect.engine()
     if unit == 'unit':
-        unit = name
-
-    if size > 1 and len(unit) > 2:
-        # super lazy until i install inflect
-        return unit + "s"
-        #return p.plural(unit)
+        new_unit = re.sub(r'\([^)]*\)', '', name).strip()
     else:
-        return unit
+        new_unit = unit
+    if not in_ttuple(Ingredient.UNITS, new_unit) or unit == 'scoop':
+        return p.plural(new_unit, size)
+    else:
+        return new_unit
 
