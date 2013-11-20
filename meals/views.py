@@ -12,12 +12,15 @@ class IndexView(generic.base.TemplateView):
 
 def add(request):
     if request.method == 'POST':
-        f = CreateForm(request.POST)
+        mf = AddMealForm(request.POST)
+        mp_f = AddMealPartForm(request.POST)
         if f.is_valid():
             return HttpResponseRedirect(reverse('meals:index'))
     else:
-        f = CreateForm()
-    return render(request, 'meals/add.html', {'form': f,})
+        mf = AddMealForm()
+        mp_f = AddMealPartForm()
+    return render(request, 'meals/add.html', {'mp_form': mp_f,
+        'm_form': mf,})
 
 
 def index(request):

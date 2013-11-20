@@ -46,16 +46,11 @@ def as_dropdown(name, choices, error, onclick=False, d=0, label=False):
 
 
 @register.simple_tag
-def as_submit(value, primary=True, disable=False):
+def as_submit(value, primary='primary', disable=False):
     h  = "<div class=\"control-group\">\n"
     h += "  <div class=\"controls\">\n"
     h += "    <button type=\"submit\" class=\"btn"
-    if primary:
-        if primary is True:
-            h += " btn-primary"
-        else:
-            h += " btn-%s" % primary
-    
+    h += " btn-%s" % primary
     h += "\" name=\"submit\""
     if disable:
         h += " disabled"
@@ -143,4 +138,5 @@ def another_row(counter, amt=5):
         return "</div>\n<div class=\"row-fluid\">\n"
     else:
         return ""
+
 

@@ -1,5 +1,18 @@
-{% extends 'meals/index.html' %}
-{% block which_page %}View{% endblock %}
+{% extends 'base_template.html' %}
+{% block title %}Add Meal{% endblock %}
 {% block content %}
-{{ form.as_p }}
+{% load util_tags %}
+<div class="row-fluid">
+  <div class="span8 offset1">
+    <form class="form-horizontal" method='post' action="{% url 'meals:add' %}">{% csrf_token %}
+    {% as_controls 'name' 'Meal Name:' m_form.name m_form.errors.name.as_text %}
+    {% as_controls 'description' 'Description:' m_form.description m_form.errors.description.as_text %}
+    <br />
+    <hr />
+    <br />
+    {% include 'meals/mealpartform.html' %}
+    {% as_submit 'Submit' %}
+    </form>
+  </div>
+</div>
 {% endblock %}

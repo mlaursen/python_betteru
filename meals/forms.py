@@ -4,7 +4,9 @@ from django.forms.util import ErrorList
 
 from meals.models import MealPart, Meal
 
-class CreateForm(ModelForm):
+class AddMealPartForm(ModelForm):
+    hiddenid = forms.IntegerField(widget=forms.HiddenInput())
+
     def is_valid(self):
         valid = super(CreateForm, self).is_valid()
         return valid
@@ -19,3 +21,10 @@ class CreateForm(ModelForm):
 
         widgets = { 
         }
+class AddMealForm(ModelForm):
+    
+    class Meta:
+        model = Meal
+        fields = ['name', 'description']
+        widgets = {}
+
