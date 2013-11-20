@@ -139,4 +139,7 @@ def another_row(counter, amt=5):
     else:
         return ""
 
+@register.simple_tag
+def as_hidden(name, value=0):
+    return "<input type=\"hidden\" name=\"%s\" id=\"id_%s\" value=\"%s\" />\n" % (name, name, value)
 

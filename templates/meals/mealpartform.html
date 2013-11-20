@@ -1,4 +1,7 @@
+<div name="mealparts">
 {% load util_tags %}
+{{ mp_form.hiddenid }}
 {% as_controls 'ingredient' 'Ingredient:' mp_form.ingredient mp_form.errors.ingredient.as_text %}
 {% as_controls 'amount' 'Amount:' mp_form.amount mp_form.errors.amount.as_text %}
 {% as_controls 'unit' 'Serving Unit:' mp_form.unit mp_form.errors.unit.as_text %}
+</div>
