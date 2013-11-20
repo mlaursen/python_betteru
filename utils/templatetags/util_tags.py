@@ -117,12 +117,10 @@ def as_meal_divs(meals):
         h += "    <div class=\"meal-description\">%s</div>\n" % meal.description
         h += "    <div class=\"nutritional-facts\">\n"
         h += "      <div class=\"header\">Nutritional facts</div>\n"
-        h += "      <div class=\"body\">\n"
-        h += "        Calories: %s\n" % meal.total_calories
-        h += "        Fat: %s<br />\n" % meal.total_fat
-        h += "        Carbs: %s <br />\n" % meal.total_carbohydrates
-        h += "        Protein: %s\n" % meal.total_protein
-        h += "      </div>\n"
+        h += "      Calories: %s<br />\n" % meal.total_calories
+        h += "      Fat: %s<br />\n" % meal.total_fat
+        h += "      Carbs: %s <br />\n" % meal.total_carbohydrates
+        h += "      Protein: %s\n" % meal.total_protein
         h += "    </div>\n"
         h += "</div>\n"
     h += "</div>\n"
