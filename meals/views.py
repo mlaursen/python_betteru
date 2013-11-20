@@ -14,7 +14,7 @@ def add(request):
     if request.method == 'POST':
         mf = AddMealForm(request.POST)
         mp_f = AddMealPartForm(request.POST)
-        if f.is_valid():
+        if mf.is_valid() and mp_f.is_valid():
             return HttpResponseRedirect(reverse('meals:index'))
     else:
         mf = AddMealForm()

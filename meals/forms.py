@@ -8,7 +8,7 @@ class AddMealPartForm(ModelForm):
     hiddenid = forms.IntegerField(widget=forms.HiddenInput())
 
     def is_valid(self):
-        valid = super(CreateForm, self).is_valid()
+        valid = super(AddMealPartForm, self).is_valid()
         return valid
 
     class Meta:
