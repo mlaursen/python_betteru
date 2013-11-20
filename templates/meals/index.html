@@ -41,7 +41,7 @@
   });
   $(".box").click(function () {
       id = $(this).attr('id');
-      window.location = "{% url 'goals:add' %}" + id;
+      window.location = "/goals/add/" + id;
   });
 </script>
 {% endblock %}

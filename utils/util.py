@@ -159,6 +159,9 @@ def almost_match(name, objs):
     return False
 
 def display_unit(unit, size, name):
+    """
+    Broken on lappy
+
     import inflect
     from ingredients.models import Ingredient
     p = inflect.engine()
@@ -170,4 +173,5 @@ def display_unit(unit, size, name):
         return p.plural(new_unit, size)
     else:
         return new_unit
-
+    """
+    return unit

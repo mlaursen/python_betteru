@@ -8,5 +8,9 @@ from django.utils import timezone
 class IndexView(TemplateView):
     template_name = 'goals/index.html'
 
-class AddView(TemplateView):
-    template_name = 'goals/index.html'
+def add(request, meal_id):
+    """
+    Adds a meal to the current day and user
+    Will need to check if logged in
+    """
+    return render(request, 'goals/index.html', {'mid': meal_id,})
