@@ -3,21 +3,18 @@
 {% block container %}<div class="container-fluid">{% endblock %}
 {% block content %}
 <div class="row-fluid">
-  <div class="well sidebar-nav">
+  <div class="well sidebar-nav span2">
     <ul name="category-nav" class="nav nav-list">
       <li class="nav-header">View By</li>
       <li id="bymonth" class="active" name="view" onClick="loadTable('By  Month', 'bymonth', 'view');"><a href="#">By Month</a></li>
       <li id="byweek" name="view" onClick="loadTable('By  Week', 'byweek', 'view');"><a href="#">By Week</a></li>
       <li id="today" name="view" onClick="loadTable('Today', 'today', 'view');"><a href="#">Today</a></li>
   </div>
+  <div class="span8">
+  {% for goal in goals %}
+    {{ goal }}
+  {% endfor %}
+  </div>
 </div>
 
-
-<div id='table-content'>
-  {% comment %}
-  {% for table in goals.tables %}
-    {{ print_goal_table table }}
-  {% endfor %}
-  {% endcomment %}
-</div> 
 {% endblock %}

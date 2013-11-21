@@ -10,6 +10,11 @@ from django.utils import timezone
 
 class Goal(Model):
     """
+    so this is wrong.
+    damn
+
+
+
     So what is in a goal.
 
     date
@@ -34,6 +39,10 @@ class Goal(Model):
     def __str__(self):
         s  = "id: %s\n" % self.id
         s += "date: %s\n" % self.date
+        s += "Calories: %s\n" % str(self.expected_calories)
+        s += "Fat: %s\n" % str(self.expected_fat)
+        s += "Carbohydrates: %s\n" % str(self.expected_carbohydrates)
+        s += "Protein: %s\n" % str(self.expected_protein)
         return s
 
 
