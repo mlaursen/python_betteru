@@ -95,3 +95,33 @@ class TempAccount(models.Model):
         str += "email: " + self.email + "\n"
         str += "code: " + self.code + "\n"
         return str
+
+class SlowlyChangingSettings(models.Model):
+    MULTIPLIER_CHOICES = (
+            ('select_multiplier', 'Select Activity Multiplier'),
+            ('sedentary', 'Sedentary - 1.2'),
+            ('lightly', 'Lightly Active - 1.375'),
+            ('moderately', 'Moderately Active - 1.55'),
+            ('very', 'Very Active - 1.725'),
+            ('extremely','Extremely Active - 1.9'),
+    )
+    recalculate_date = models.IntegerField()
+    date_changed     = models.DateField('date changed', auto_now_add=True, blank=True)
+    account          = models.ForeignKey(Account)
+    activity_multiplier = models.CharField(max_length=10, choices=MULTIPLIER_CHOICES, default='select_multiplier')
+
+class ConstantSettings(models.Model):
+    UNIT_CHOICES = (
+            ('select_unit', 'Select a unit'),
+            ('imperial', 'Imperial'),
+            ('metric', 'Metric'),
+    )
+    GENDER_CHOICES = (
+            ('select_gender', 'Select a gender'),
+            ('m', 'Male'),
+            ('f', 'Female'),
+    )
+    account          = models.ForeignKey(Account)
+    gender   = models.CharField(max_length=1, choices=GENDER_CHOICES, default='select_gender')
+    units    = models.CharField(max_length=8, choices=UNIT_CHOICES, default='select_unit')
+
