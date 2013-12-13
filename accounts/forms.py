@@ -6,7 +6,7 @@ from django.forms.util import ErrorList
 from django.utils.timezone import utc
 
 
-from accounts.models import TempAccount, Account
+from accounts.models import TempAccount, Account, AccountSettings
 from utils.util import valid_user, createcode, create_birthday_time, birthday_time_as_str
 
 class CreateForm(ModelForm):
@@ -115,5 +115,16 @@ class EditAccountForm(ModelForm):
     }
 
 
+
+class EditAccountSettingsForm(ModelForm):
+
+    class Meta:
+        model = AccountSettings
+        fields = ['recalculate_day_of_week', 'height', 'activity_multiplier']
+        widgets = {
+            'height': forms.TextInput(attrs={'placeholder': 'Enter your height'},),
+            #'recalculate_day_of_week': forms.TextInput(attrs={'placeholder': 'Enter the day you want to recalculate TDEE'},),
+        }
+        
 
 

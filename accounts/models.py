@@ -99,10 +99,12 @@ class TempAccount(models.Model):
 
 
 class AccountSettingsManager(models.Manager):
-    def create_account_settings(self, account):
+    def create_account_settings(self, account, recalc=1, height=0, activity_multiplier='sedentary'):
         return self.create(
                 account=account,
-                recalculate_day_of_week=1
+                recalculate_day_of_week=recalc,
+                height=height,
+                activity_multiplier=activity_multiplier
         )
 
 
@@ -167,8 +169,18 @@ class AccountSettings(models.Model):
             ('very', 'Very Active - 1.725'),
             ('extremely','Extremely Active - 1.9'),
     )
+    DOW_CHOICES = (
+            (0, 'Select the day of week to recalculate TDEE'),
+            (1, 'Sunday'),
+            (2, 'Monday'),
+            (3, 'Tuesday'),
+            (4, 'Wednesday'),
+            (5, 'Thursday'),
+            (6, 'Friday'),
+            (7, 'Saturday'),
+    )
     account                 = models.ForeignKey(Account)
-    recalculate_day_of_week = models.IntegerField()
+    recalculate_day_of_week = models.IntegerField(choices=DOW_CHOICES, default=0)
     activity_multiplier     = models.CharField(max_length=17, choices=MULTIPLIER_CHOICES, default='select_multiplier')
     height                  = models.IntegerField(default=None, null=True)
     date_changed            = models.DateField('date changed', auto_now_add=True, blank=True)
@@ -207,7 +219,7 @@ class AccountView(models.Model):
     birthday = models.DateField('birthday')
     gender   = models.CharField(max_length=1, choices=Account.GENDER_CHOICES, default='select_gender')
     units    = models.CharField(max_length=8, choices=Account.UNIT_CHOICES, default='select_unit')
-    recalculate_day_of_week = models.IntegerField()
+    recalculate_day_of_week = models.IntegerField(choices=AccountSettings.DOW_CHOICES, default=0)
     activity_multiplier     = models.CharField(max_length=17, choices=AccountSettings.MULTIPLIER_CHOICES, default='select_multiplier')
     height                  = models.IntegerField(default=None, null=True)
     active_since = models.DateField('active since')

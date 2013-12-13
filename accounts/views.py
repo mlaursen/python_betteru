@@ -2,9 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from accounts.models import TempAccount, Account
+from accounts.models import TempAccount, Account, AccountSettings
 from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
-from accounts.forms import CreateForm, LoginForm, EditAccountForm 
+from accounts.forms import CreateForm, LoginForm, EditAccountSettingsForm, EditAccountForm 
 
 
 def login(request):
@@ -51,27 +51,39 @@ def index(request):
         a = example
         disable = True
 
+
     success=False
 
     if request.method == 'POST' and a != example:
         f = EditAccountForm(request.POST)
-        if f.is_valid():
+        f2 = EditAccountSettingsForm(request.POST)
+        if f.is_valid() and f2.is_valid():
             bday = f.cleaned_data.get('birthday')
-            g = f.cleaned_data.get('gender')
-            u = f.cleaned_data.get('units')
-            #h = f.cleaned_data.get('height')
-            #m = f.cleaned_data.get('activity_multiplier')
+            gender = f.cleaned_data.get('gender')
+            units = f.cleaned_data.get('units')
+            height = f2.cleaned_data.get('height')
+            mult   = f2.cleaned_data.get('activity_multiplier')
+            recalc = f2.cleaned_data.get('recalculate_day_of_week')
             a.birthday = bday
-            a.gender = g
-            a.units = u
-            #a.height = h
-            #a.activity_multiplier = m
+            a.gender = gender
+            a.units = units
             a.save()
+            acts = AccountSettings.create_account_settings(a, recalc, height, mult)
+            acts.save()
             success = 'You have successfully updated your account information!'
+        else:
+            success = "NOPEEEEE"
     else:
         f = EditAccountForm(instance=a)
+        accounts = AccountSettings.objects.filter(account=a)
+        if accounts:
+            account_settings = get_object_or_404(AccountSettings, account=a)
+            f2 = EditAccountSettingsForm(instance=account_settings)
+        else:
+            f2 = EditAccountSettingsForm()
 
     return render(request,'accounts/index.html', {'form': f,
+        'settings': f2,
         'account': a,
         'success': success,
         'disable': disable,
