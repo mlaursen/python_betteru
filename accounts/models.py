@@ -138,10 +138,10 @@ class AccountT(models.Model):
     username = models.CharField(max_length=40)
     password = models.CharField(max_length=128)
     email    = models.CharField(max_length=40)
-    birthday = models.DateTimeField('birthday', default=None, null=True)
+    birthday = models.DateField('birthday', default=None, null=True)
     gender   = models.CharField(max_length=1, choices=GENDER_CHOICES, default='select_gender')
     units    = models.CharField(max_length=8, choices=UNIT_CHOICES, default='select_unit')
-    active_since = models.DateTimeField(auto_now_add=True)
+    active_since = models.DateField(auto_now_add=True)
 
     objects = AccountTManager()
 
