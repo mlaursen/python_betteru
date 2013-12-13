@@ -113,7 +113,6 @@ WSGI_APPLICATION = 'betteru.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(DIRNAME, 'templates/'),
-    os.path.join(DIRNAME, 'templates/includes/'),
 )
 
 INSTALLED_APPS = (
