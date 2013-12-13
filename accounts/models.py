@@ -169,6 +169,8 @@ class AccountSettings(models.Model):
     )
     account                 = models.ForeignKey(Account)
     recalculate_day_of_week = models.IntegerField()
+    activity_multiplier     = models.CharField(max_length=10, choices=MULTIPLIER_CHOICES, default='select_multiplier')
+    height                  = models.IntegerField(default=None, null=True)
     date_changed            = models.DateField('date changed', auto_now_add=True, blank=True)
 
     objects = AccountSettingsManager()
@@ -177,4 +179,6 @@ class AccountSettings(models.Model):
         str  = "account: %s\n" % self.account.username
         #str += "recalc: %s\n" % str(self.recalculate_day_of_week)
         #str += "changed: %s\n" % str(self.date_changed)
+        #str += "mult: %s \n" % str(self.activity_multiplier)
+        #str += "height: %s \n" % str(self.height)
         return str
