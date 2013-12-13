@@ -98,6 +98,13 @@ class TempAccount(models.Model):
 
 
 
+class AccountTSettingsManager():
+    def create_account_settings(self, account):
+        return self.create(
+                account=account,
+                recalculate_day_of_week=1
+        )
+
 
 
 
@@ -111,8 +118,10 @@ class AccountTManager(models.Manager):
                 units=None,
                 birthday=None
         )
+        AccountTSettings.objects.create_account_settings(a)
         del tmp
         return a
+
 
 
 class AccountT(models.Model):
@@ -142,6 +151,10 @@ class AccountT(models.Model):
         str += "since: %s\n" % self.active_since
         return str
 
+
+
+
+
 class AccountTSettings(models.Model):
     MULTIPLIER_CHOICES = (
             ('select_multiplier', 'Select Activity Multiplier'),
@@ -151,9 +164,11 @@ class AccountTSettings(models.Model):
             ('very', 'Very Active - 1.725'),
             ('extremely','Extremely Active - 1.9'),
     )
-    account                 = models.ForeignKey(Account)
+    account                 = models.ForeignKey(AccountT)
     recalculate_day_of_week = models.IntegerField()
     date_changed            = models.DateField('date changed', auto_now_add=True, blank=True)
+
+    objects = AccountTSettingsManager()
 
     def __str__(self):
         str  = "account: %s\n" % self.account.username
