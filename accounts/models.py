@@ -145,6 +145,9 @@ class Account(models.Model):
 
     objects = AccountManager()
 
+    def settings_complete(self):
+        return self.birthday and self.gender and self.units
+
     def __str__(self):
         str  = "user: %s\n" % self.username
         str += "email: %s\n" % self.email

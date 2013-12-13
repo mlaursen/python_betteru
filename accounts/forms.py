@@ -75,9 +75,9 @@ class EditAccountForm(ModelForm):
         MULTIPLIERS = ('sedentary', 'lightly', 'moderately', 'very', 'extremely')
         GENDERS = ('m', 'f')
         UNITS = ('imperial', 'metric')
-        mult = self.cleaned_data.get('activity_multiplier')
+        #mult = self.cleaned_data.get('activity_multiplier')
         birthday = birthday_time_as_str(self.cleaned_data.get('birthday'))
-        height = self.cleaned_data.get('height')
+        #height = self.cleaned_data.get('height')
         gender = self.cleaned_data.get('gender')
         units = self.cleaned_data.get('units')
 
@@ -89,29 +89,29 @@ class EditAccountForm(ModelForm):
             self._errors['units_errs'] = ErrorList([u"You must select a unit."])
             valid = False
 
-        if mult not in MULTIPLIERS:
-            self._errors['multipliers_errs'] = ErrorList([u"A valid multiplier must be selected."])
-            valid = False
+        #if mult not in MULTIPLIERS:
+        #    self._errors['multipliers_errs'] = ErrorList([u"A valid multiplier must be selected."])
+        #    valid = False
 
         if not re.findall('^\d\d/\d\d/\d\d\d\d', birthday):
             self._errors['birthday'] = ErrorList([u"Invalid birthday.  The correct format is (mm/dd/yyyy)."])
             valid = False
 
-        if not isinstance(height, (int)):
-            self._errors['height'] = ErrorList([u"The height must be a number in inches or centimeters"])
-            valid = False
+        #if not isinstance(height, (int)):
+        #    self._errors['height'] = ErrorList([u"The height must be a number in inches or centimeters"])
+         #   valid = False
 
 
         return valid
 
     class Meta:
         model = Account
-        fields = ['birthday', 'height', 'gender', 'units', 'activity_multiplier']
+        fields = ['birthday', 'gender', 'units'] #, 'activity_multiplier']
         widgets = { 
             'birthday': forms.DateInput(format=('%m/%d/%Y'),
                                         attrs={'placeholder': 'Select a date',
                                                'maxlength': 10,},),
-            'height': forms.TextInput(attrs={'placeholder': 'Enter your height'},),
+            #'height': forms.TextInput(attrs={'placeholder': 'Enter your height'},),
     }
 
 

@@ -59,13 +59,13 @@ def index(request):
             bday = f.cleaned_data.get('birthday')
             g = f.cleaned_data.get('gender')
             u = f.cleaned_data.get('units')
-            h = f.cleaned_data.get('height')
-            m = f.cleaned_data.get('activity_multiplier')
+            #h = f.cleaned_data.get('height')
+            #m = f.cleaned_data.get('activity_multiplier')
             a.birthday = bday
             a.gender = g
             a.units = u
-            a.height = h
-            a.activity_multiplier = m
+            #a.height = h
+            #a.activity_multiplier = m
             a.save()
             success = 'You have successfully updated your account information!'
     else:
