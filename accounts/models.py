@@ -182,3 +182,32 @@ class AccountSettings(models.Model):
         #str += "mult: %s \n" % str(self.activity_multiplier)
         #str += "height: %s \n" % str(self.height)
         return str
+
+
+
+class AccountSettingsView(models.Model):
+    account = models.ForeignKey(Account)
+    latest_change = models.DateFeld('date changed')
+
+    class Meta:
+        managed = false
+        db_table = 'ACCOUNT_SETTINGS_VIEW'
+
+
+
+
+ACT.ID, USERNAME, PASSWORD, EMAIL, BIRTHDAY, GENDER, UNITS, ACTIVE_SINCE, LATEST_CHANGE
+class AccountView(models.Model):
+    account = models.ForeignKey(Account)
+    username = models.CharField(max_length=40)
+    password = models.CharField(max_length=128)
+    email    = models.CharField(max_length=40)
+    birthday = models.DateField('birthday')
+    gender   = models.CharField(max_length=1, choices=Account.GENDER_CHOICES, default='select_gender')
+    units    = models.CharField(max_length=8, choices=Account.UNIT_CHOICES, default='select_unit')
+    active_since = models.DateField('active since')
+    latest_change = models.DateFeld('date changed')
+
+    class Meta:
+        managed = false
+        db_table = 'ACCOUNT_VIEW'
