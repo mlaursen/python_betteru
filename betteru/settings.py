@@ -180,10 +180,11 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'betteru.webmaster@gmail.com'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'betteru.webmaster@gmail.com'
-SERVER_EMAIL = 'betteru.webmaster@gmail.com'
+DEFAULT_FROM_EMAIL = ''
+SERVER_EMAIL = ''
 
 
 try:
