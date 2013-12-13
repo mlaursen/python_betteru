@@ -169,7 +169,7 @@ class AccountSettings(models.Model):
     )
     account                 = models.ForeignKey(Account)
     recalculate_day_of_week = models.IntegerField()
-    activity_multiplier     = models.CharField(max_length=10, choices=MULTIPLIER_CHOICES, default='select_multiplier')
+    activity_multiplier     = models.CharField(max_length=17, choices=MULTIPLIER_CHOICES, default='select_multiplier')
     height                  = models.IntegerField(default=None, null=True)
     date_changed            = models.DateField('date changed', auto_now_add=True, blank=True)
 
@@ -188,6 +188,9 @@ class AccountSettings(models.Model):
 class AccountSettingsView(models.Model):
     account = models.ForeignKey(Account)
     latest_change = models.DateField('date changed')
+    recalculate_day_of_week = models.IntegerField()
+    activity_multiplier     = models.CharField(max_length=17, choices=AccountSettings.MULTIPLIER_CHOICES, default='select_multiplier')
+    height                  = models.IntegerField(default=None, null=True)
 
     class Meta:
         managed = False
@@ -204,6 +207,9 @@ class AccountView(models.Model):
     birthday = models.DateField('birthday')
     gender   = models.CharField(max_length=1, choices=Account.GENDER_CHOICES, default='select_gender')
     units    = models.CharField(max_length=8, choices=Account.UNIT_CHOICES, default='select_unit')
+    recalculate_day_of_week = models.IntegerField()
+    activity_multiplier     = models.CharField(max_length=17, choices=AccountSettings.MULTIPLIER_CHOICES, default='select_multiplier')
+    height                  = models.IntegerField(default=None, null=True)
     active_since = models.DateField('active since')
     latest_change = models.DateField('date changed')
 
