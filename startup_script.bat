@@ -14,7 +14,6 @@ rename models.py .syncdb.py
 rename models_tmp.py models.py
 cd ..
 
-python manage.py syncdb
 type sql_scripts\accounts.sql | python manage.py dbshell
 type sql_scripts\ingredients.sql | python manage.py dbshell
 type sql_scripts\meals.sql | python manage.py dbshell
