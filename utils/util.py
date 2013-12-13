@@ -159,8 +159,8 @@ def almost_match(name, objs):
     return False
 
 def display_unit(unit, size, name):
-    import inflect
     from ingredients.models import Ingredient
+    import inflect
     p = inflect.engine()
     if unit == 'unit':
         new_unit = re.sub(r'\([^)]*\)', '', name).strip()
