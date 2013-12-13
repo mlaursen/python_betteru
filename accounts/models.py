@@ -25,7 +25,7 @@ class AccountManager(models.Manager):
 				height=None,
 				activity_multiplier=None,
         )
-        del tmp
+        tmp.delete()
         return account
 
 
@@ -98,7 +98,7 @@ class TempAccount(models.Model):
 
 
 
-class AccountTSettingsManager():
+class AccountTSettingsManager(models.Manager):
     def create_account_settings(self, account):
         return self.create(
                 account=account,
@@ -172,6 +172,6 @@ class AccountTSettings(models.Model):
 
     def __str__(self):
         str  = "account: %s\n" % self.account.username
-        str += "recalc: %s\n" % str(self.recalculate_day_of_week)
-        str += "changed: %s\n" % str(self.date_changed)
+        #str += "recalc: %s\n" % str(self.recalculate_day_of_week)
+        #str += "changed: %s\n" % str(self.date_changed)
         return str
