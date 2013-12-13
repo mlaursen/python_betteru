@@ -1,8 +1,3 @@
---------------------------------------------------------
---  File created - Tuesday-November-19-2013   
---------------------------------------------------------
-REM INSERTING into MEALS_MEALPART
-SET DEFINE OFF;
 INSERT INTO MEALS_MEALPART (ID,MEALID,INGREDIENT_ID,AMOUNT,UNIT) VALUES (1,1,1,300,1);
 INSERT INTO MEALS_MEALPART (ID,MEALID,INGREDIENT_ID,AMOUNT,UNIT) VALUES (2,2,6,2,0);
 INSERT INTO MEALS_MEALPART (ID,MEALID,INGREDIENT_ID,AMOUNT,UNIT) VALUES (3,2,8,12,1);

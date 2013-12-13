@@ -1,8 +1,3 @@
---------------------------------------------------------
---  File created - Tuesday-November-19-2013   
---------------------------------------------------------
-REM INSERTING into INGREDIENTS_BRAND
-SET DEFINE OFF;
 Insert into INGREDIENTS_BRAND (ID,NAME) values (1,'Isopure');
 Insert into INGREDIENTS_BRAND (ID,NAME) values (2,'Regal Spring');
 Insert into INGREDIENTS_BRAND (ID,NAME) values (3,'Food City');
