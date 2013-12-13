@@ -26,6 +26,8 @@
   {% as_submit 'Update' True disable %}
 </form>
 </div>
+{% endblock %}
+{% block extra_js %}
 <script type="text/javascript">
   function selectItem(f, name) {
     id = f.getAttribute('id');

@@ -23,7 +23,7 @@ def index(request):
     if logged_in(request):
         a = Account.objects.get(pk=request.session.get('uid'))
     else:
-        a = Account.objjects.get(pk=1)
+        a = Account.objects.get(pk=1)
     goals = Goal.objects.filter(account=a)
     return render(request, 'goals/index.html', {'goals': goals,})
 

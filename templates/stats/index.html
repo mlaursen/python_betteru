@@ -1,5 +1,4 @@
-{% extends 'base_template.html' %}
-{% block extrahead %}{% include 'datepicker.html' %}{% endblock %}
+{% extends 'date_picker.html' %}
 {% block title %}{% block which-page %}View{% endblock %} Meals{% endblock %}
 {% block content %}
 <div class="row-fluid">
@@ -29,4 +28,9 @@
 <div id='graph'>
   And this is where a graph wil; beeeee
 </div>
+<script type="text/javascript">
+$(function() {
+  $('#datepicker').datepicker();
+});
+</script>
 {% endblock %}

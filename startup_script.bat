@@ -1,14 +1,18 @@
 @ECHO ON
-mv ingredients\models.py ingredients\models_tmp.py
-mv ingredients\.syncdb.py ingredients\models.py
-python manage.py syncdb
+cd ingredients
+rename models.py models_tmp.py
+rename .syncdb.py models.py
+cd ..
 
+python manage.py syncdb
 type sql_scripts\procedures.sql | python manage.py dbshell
 type sql_scripts\brands.sql | python manage.py dbshell
 type sql_scripts\categories.sql | python manage.py dbshell
 
-mv ingredients\models.py ingredients\.syncdb.py
-mv ingredients\models_tmp.py ingredients\models.py
+cd ingredients
+rename models.py .syncdb.py
+rename models_tmp.py models.py
+cd ..
 
 python manage.py syncdb
 type sql_scripts\accounts.sql | python manage.py dbshell
