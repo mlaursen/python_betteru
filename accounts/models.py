@@ -2,7 +2,7 @@ from django.db import models
 
 from utils.util import createhash
 
-class AccountManager(models.Manager):
+class AccountManager_old(models.Manager):
     def create_full_account(self, user, pswd, bday, gender, units, height, act_mult, email):
         h = createhash(user, pswd)
         account = self.create(username=user,
@@ -29,7 +29,7 @@ class AccountManager(models.Manager):
         return account
 
 
-class Account(models.Model):
+class Account_old(models.Model):
     GENDER_CHOICES = (
             ('select_gender', 'Select a gender'),
             ('m', 'Male'),
@@ -59,7 +59,7 @@ class Account(models.Model):
     email    = models.CharField(max_length=40, default=None, null=True)
     active_since = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
-    objects = AccountManager()
+    objects = AccountManager_old()
 
     def __str__(self):
         str = "user: " + self.username + "\n"
@@ -98,7 +98,7 @@ class TempAccount(models.Model):
 
 
 
-class AccountTSettingsManager(models.Manager):
+class AccountSettingsManager(models.Manager):
     def create_account_settings(self, account):
         return self.create(
                 account=account,
@@ -108,7 +108,7 @@ class AccountTSettingsManager(models.Manager):
 
 
 
-class AccountTManager(models.Manager):
+class AccountManager(models.Manager):
     def create_account_from_temp(self, tmp):
         a = self.create(
                 username=tmp.username,
@@ -118,13 +118,13 @@ class AccountTManager(models.Manager):
                 units=None,
                 birthday=None
         )
-        AccountTSettings.objects.create_account_settings(a)
-        del tmp
+        AccountSettings.objects.create_account_settings(a)
+        tmp.delete()
         return a
 
 
 
-class AccountT(models.Model):
+class Account(models.Model):
     UNIT_CHOICES = (
             ('select_unit', 'Select a unit'),
             ('imperial', 'Imperial'),
@@ -143,7 +143,7 @@ class AccountT(models.Model):
     units    = models.CharField(max_length=8, choices=UNIT_CHOICES, default='select_unit')
     active_since = models.DateField(auto_now_add=True)
 
-    objects = AccountTManager()
+    objects = AccountManager()
 
     def __str__(self):
         str  = "user: %s\n" % self.username
@@ -155,7 +155,7 @@ class AccountT(models.Model):
 
 
 
-class AccountTSettings(models.Model):
+class AccountSettings(models.Model):
     MULTIPLIER_CHOICES = (
             ('select_multiplier', 'Select Activity Multiplier'),
             ('sedentary', 'Sedentary - 1.2'),
@@ -164,11 +164,11 @@ class AccountTSettings(models.Model):
             ('very', 'Very Active - 1.725'),
             ('extremely','Extremely Active - 1.9'),
     )
-    account                 = models.ForeignKey(AccountT)
+    account                 = models.ForeignKey(Account)
     recalculate_day_of_week = models.IntegerField()
     date_changed            = models.DateField('date changed', auto_now_add=True, blank=True)
 
-    objects = AccountTSettingsManager()
+    objects = AccountSettingsManager()
 
     def __str__(self):
         str  = "account: %s\n" % self.account.username
