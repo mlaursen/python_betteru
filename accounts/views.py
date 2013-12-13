@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from accounts.models import TempAccount, Account, AccountSettings
 from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
 from accounts.forms import CreateForm, LoginForm, EditAccountSettingsForm, EditAccountForm 
+from datetime import date
 
 
 def login(request):
@@ -68,8 +69,11 @@ def index(request):
             a.gender = gender
             a.units = units
             a.save()
-            acts = AccountSettings.create_account_settings(a, recalc, height, mult)
-            acts.save()
+            if AccountSettings.objects.filter(account=a, date_changed=date.today):
+                acts = AccountSettings.update_account_settings(a, date.today, recalc, mult, height)
+            else:
+                acts = AccountSettings.objects.create_account_settings(a, recalc, height, mult)
+                acts.save()
             success = 'You have successfully updated your account information!'
         else:
             success = "NOPEEEEE"

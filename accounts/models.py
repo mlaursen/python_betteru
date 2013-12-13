@@ -109,7 +109,6 @@ class AccountSettingsManager(models.Manager):
 
 
 
-
 class AccountManager(models.Manager):
     def create_account_from_temp(self, tmp):
         a = self.create(
@@ -194,6 +193,16 @@ class AccountSettings(models.Model):
         #str += "mult: %s \n" % str(self.activity_multiplier)
         #str += "height: %s \n" % str(self.height)
         return str
+
+    def update_account_settings(account, date_changed, recalculate_day_of_week=0, activity_multiplier='sedentary', height=0):
+        account_settings = AccountSettings.objects.get(account=account, date_changed=date_changed)
+        account_settings.recalculate_day_of_week=recalculate_day_of_week
+        account_settings.activity_multiplier=activity_multiplier
+        account_settings.height = height
+        account_settings.save()
+        return account_settings
+
+
 
 
 
