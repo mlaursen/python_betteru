@@ -96,21 +96,26 @@ class TempAccount(models.Model):
         str += "code: " + self.code + "\n"
         return str
 
-class SlowlyChangingSettings(models.Model):
-    MULTIPLIER_CHOICES = (
-            ('select_multiplier', 'Select Activity Multiplier'),
-            ('sedentary', 'Sedentary - 1.2'),
-            ('lightly', 'Lightly Active - 1.375'),
-            ('moderately', 'Moderately Active - 1.55'),
-            ('very', 'Very Active - 1.725'),
-            ('extremely','Extremely Active - 1.9'),
-    )
-    recalculate_date = models.IntegerField()
-    date_changed     = models.DateField('date changed', auto_now_add=True, blank=True)
-    account          = models.ForeignKey(Account)
-    activity_multiplier = models.CharField(max_length=10, choices=MULTIPLIER_CHOICES, default='select_multiplier')
 
-class ConstantSettings(models.Model):
+
+
+
+
+class AccountTManager(models.Manager):
+    def create_account_from_temp(self, tmp):
+        a = self.create(
+                username=tmp.username,
+                password=tmp.password,
+                email=tmp.email,
+                gender=None,
+                units=None,
+                birthday=None
+        )
+        del tmp
+        return a
+
+
+class AccountT(models.Model):
     UNIT_CHOICES = (
             ('select_unit', 'Select a unit'),
             ('imperial', 'Imperial'),
@@ -121,7 +126,37 @@ class ConstantSettings(models.Model):
             ('m', 'Male'),
             ('f', 'Female'),
     )
-    account          = models.ForeignKey(Account)
+    username = models.CharField(max_length=40)
+    password = models.CharField(max_length=128)
+    email    = models.CharField(max_length=40)
+    birthday = models.DateTimeField('birthday', default=None, null=True)
     gender   = models.CharField(max_length=1, choices=GENDER_CHOICES, default='select_gender')
     units    = models.CharField(max_length=8, choices=UNIT_CHOICES, default='select_unit')
+    active_since = models.DateTimeField(auto_now_add=True)
 
+    objects = AccountTManager()
+
+    def __str__(self):
+        str  = "user: %s\n" % self.username
+        str += "email: %s\n" % self.email
+        str += "since: %s\n" % self.active_since
+        return str
+
+class AccountTSettings(models.Model):
+    MULTIPLIER_CHOICES = (
+            ('select_multiplier', 'Select Activity Multiplier'),
+            ('sedentary', 'Sedentary - 1.2'),
+            ('lightly', 'Lightly Active - 1.375'),
+            ('moderately', 'Moderately Active - 1.55'),
+            ('very', 'Very Active - 1.725'),
+            ('extremely','Extremely Active - 1.9'),
+    )
+    account                 = models.ForeignKey(Account)
+    recalculate_day_of_week = models.IntegerField()
+    date_changed            = models.DateField('date changed', auto_now_add=True, blank=True)
+
+    def __str__(self):
+        str  = "account: %s\n" % self.account.username
+        str += "recalc: %s\n" % str(self.recalculate_day_of_week)
+        str += "changed: %s\n" % str(self.date_changed)
+        return str
