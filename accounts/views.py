@@ -19,6 +19,7 @@ def login(request):
             cpass = f.cleaned_data.get('password')
             if valid_user(cuser, cpass):
                 a = Account.objects.get(username=cuser)
+                a.update_login()
                 request.session['uid'] = a.id
                 if a.settings_complete():
                     return HttpResponseRedirect(reverse('stats:index'))

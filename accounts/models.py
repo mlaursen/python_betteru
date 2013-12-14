@@ -1,85 +1,13 @@
 from django.db import models
 
 from utils.util import createhash
-
-class AccountManager_old(models.Manager):
-    def create_full_account(self, user, pswd, bday, gender, units, height, act_mult, email):
-        h = createhash(user, pswd)
-        account = self.create(username=user,
-                password=h,
-                birthday=bday,
-                gender=gender,
-                units=units,
-                height=height,
-                activity_multiplier=act_mult,
-                email=email,
-        )
-        return account
-
-    def create_account_from_temp(self, tmp):
-        account = self.create(username=tmp.username,
-                password=tmp.password,
-                email=tmp.email,
-				gender=None,
-				units=None,
-				height=None,
-				activity_multiplier=None,
-        )
-        tmp.delete()
-        return account
-
-
-class Account_old(models.Model):
-    GENDER_CHOICES = (
-            ('select_gender', 'Select a gender'),
-            ('m', 'Male'),
-            ('f', 'Female'),
-    )
-    UNIT_CHOICES = (
-            ('select_unit', 'Select a unit'),
-            ('imperial', 'Imperial'),
-            ('metric', 'Metric'),
-    )
-    MULTIPLIER_CHOICES = (
-            ('select_multiplier', 'Select Activity Multiplier'),
-            ('sedentary', 'Sedentary - 1.2'),
-            ('lightly', 'Lightly Active - 1.375'),
-            ('moderately', 'Moderately Active - 1.55'),
-            ('very', 'Very Active - 1.725'),
-            ('extremely','Extremely Active - 1.9'),
-    )
-
-    username = models.CharField(max_length=40)
-    password = models.CharField(max_length=128)
-    birthday = models.DateTimeField('birthday', default=None, null=True)
-    gender   = models.CharField(max_length=1, choices=GENDER_CHOICES, default='select_gender')
-    units    = models.CharField(max_length=8, choices=UNIT_CHOICES, default='select_unit')
-    height   = models.IntegerField(default=None, null=True)
-    activity_multiplier = models.CharField(max_length=10, choices=MULTIPLIER_CHOICES, default='select_multiplier')
-    email    = models.CharField(max_length=40, default=None, null=True)
-    active_since = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-
-    objects = AccountManager_old()
-
-    def __str__(self):
-        str = "user: " + self.username + "\n"
-        str += "units: " + self.units + "\n"
-        str += "email: " + self.email + "\n"
-        return str
-
-    def settings_complete(self):
-        return self.birthday and self.gender and self.units and self.height and self.activity_multiplier
-
-
+from datetime import date
 
 class TempAccountManager(models.Manager):
     def create_tempaccount(self, user, pswd, email, code):
         h = createhash(user, pswd)
         tmp = self.create(username=user, password=h, email=email, code=code)
         return tmp
-
-
-
 
 class TempAccount(models.Model):
     username = models.CharField(max_length=20)
@@ -142,12 +70,18 @@ class Account(models.Model):
     birthday = models.DateField('birthday', default=None, null=True)
     gender   = models.CharField(max_length=1, choices=GENDER_CHOICES, default='select_gender')
     units    = models.CharField(max_length=8, choices=UNIT_CHOICES, default='select_unit')
+    last_login = models.DateField('last login', auto_now_add=True)
     active_since = models.DateField(auto_now_add=True)
 
     objects = AccountManager()
 
     def settings_complete(self):
         return self.birthday and self.gender and self.units
+
+    def update_login(self):
+        self.last_login = date.today
+        return self
+
 
     def __str__(self):
         str  = "user: %s\n" % self.username
