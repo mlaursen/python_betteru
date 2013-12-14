@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from accounts.models import TempAccount, Account, AccountSettings
+from accounts.models import TempAccount, Account, AccountSettings, AccountSettingsView
 from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
 from accounts.forms import CreateForm, LoginForm, EditAccountSettingsForm, EditAccountForm 
 from datetime import date
@@ -75,13 +75,11 @@ def index(request):
                 acts = AccountSettings.objects.create_account_settings(a, recalc, height, mult)
                 acts.save()
             success = 'You have successfully updated your account information!'
-        else:
-            success = "NOPEEEEE"
     else:
         f = EditAccountForm(instance=a)
-        accounts = AccountSettings.objects.filter(account=a)
-        if accounts:
-            account_settings = get_object_or_404(AccountSettings, account=a)
+        account_settings = AccountSettings.objects.filter(account=a)
+        if account_settings:
+            account_settings = get_object_or_404(AccountSettingsView, account=a)
             f2 = EditAccountSettingsForm(instance=account_settings)
         else:
             f2 = EditAccountSettingsForm()
