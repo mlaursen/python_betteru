@@ -20,6 +20,7 @@
 <form class="form-horizontal" method="post" action="{% url 'accounts:index' %}">{% csrf_token %}
   {% as_controls 'birthday'    'Birthday:'            form.birthday            form.errors.birthday.as_text %}
   {% as_controls 'gender'      'Gender:'              form.gender              form.errors.gender_errs.as_text %}
+  {% as_text_action 'gender' genders form.errors.gender.as_text 'Gender' 'selectItem' %}
   {% as_controls 'units'       'Units:'               form.units               form.errors.units_errs.as_text %}
   {% as_controls 'height'      'Height:'              settings.height          settings.errors.height %}
   {% as_controls 'recalculate_day_of_week' 'Recalculate Day:' settings.recalculate_day_of_week form.errors.recalculate_day_of_week.as_text %}

@@ -55,6 +55,7 @@ def index(request):
 
 
     success=False
+    genders = ['Select Gender', 'Male', 'Female']
 
     if request.method == 'POST' and a != example:
         f = EditAccountForm(request.POST)
@@ -90,6 +91,7 @@ def index(request):
         'account': a,
         'success': success,
         'disable': disable,
+        'genders': genders,
         })
 
 
