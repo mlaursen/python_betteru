@@ -20,3 +20,8 @@ function selectItem(id, name) {
     $('input[name=' + name + ']').attr('readonly', 'readonly');
   }
 }
+
+function selectItemDropdown(id, name) {
+  $('#' + name + '_button').html(id + ' <span class="caret"></span>');
+  $('input[name=' + name + ']').attr('value', id.replace('id_', ''));
+}

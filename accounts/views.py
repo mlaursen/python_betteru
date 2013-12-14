@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from accounts.models import TempAccount, Account, AccountSettings, AccountSettingsView
-from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email
+from utils.util import Redirect, ErrorPage, valid_user, createcode, send_confirmation_email, ttuple_first_item, get_index_of
 from accounts.forms import CreateForm, LoginForm, EditAccountSettingsForm, EditAccountForm 
 from datetime import date
 
@@ -47,15 +47,21 @@ def logout(request):
 def index(request):
     example = Account.objects.get(pk=0)
     disable = False
+    recalc_default = 0
+    mult_default = 0
     if request.session.has_key('uid'):
         a = get_object_or_404(Account, pk=request.session['uid'])
     else:
         a = example
         disable = True
 
-
     success=False
-    genders = ['Select Gender', 'Male', 'Female']
+    genders = Account.GENDER_CHOICES
+    units   = Account.UNIT_CHOICES
+    recalc  = AccountSettings.DOW_CHOICES
+    mults   = AccountSettings.MULTIPLIER_CHOICES
+    gender_default = get_index_of(genders, a.gender)
+    unit_default   = get_index_of(units,   a.units)
 
     if request.method == 'POST' and a != example:
         f = EditAccountForm(request.POST)
@@ -83,6 +89,8 @@ def index(request):
         if account_settings:
             account_settings = get_object_or_404(AccountSettingsView, account=a)
             f2 = EditAccountSettingsForm(instance=account_settings)
+            recalc_default = get_index_of(recalc, account_settings.recalculate_day_of_week)
+            mult_default   = get_index_of(mults,  account_settings.activity_multiplier)
         else:
             f2 = EditAccountSettingsForm()
 
@@ -92,6 +100,13 @@ def index(request):
         'success': success,
         'disable': disable,
         'genders': genders,
+        'gender_default': gender_default,
+        'units': units,
+        'unit_default': unit_default,
+        'recalc': recalc,
+        'recalc_default': recalc_default,
+        'multipliers': mults,
+        'mult_default': mult_default,
         })
 
 

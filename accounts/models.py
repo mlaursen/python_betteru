@@ -103,7 +103,7 @@ class AccountSettings(models.Model):
             ('extremely','Extremely Active - 1.9'),
     )
     DOW_CHOICES = (
-            (0, 'Select the day of week to recalculate TDEE'),
+            (0, 'Select the day of week'),
             (1, 'Sunday'),
             (2, 'Monday'),
             (3, 'Tuesday'),

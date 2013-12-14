@@ -128,11 +128,23 @@ def valid_user(user, pswd):
 def logged_in(request):
     return 'uid' in request.session
 
-def get_index_of(ttuples, itm):
+def get_index_of(ttuples, itm, fail=0):
     for x,y in enumerate(ttuples):
         if(y[0] == itm):
             return x
 			
+    return fail
+
+def ttuple_first_item(ttuple, itm):
+    """
+    Return the first item in a ttuple if the second item matches the item
+    you are searching for.
+    returns False if it does not exist
+    """
+    for x in ttuple:
+        if(x[1] == itm):
+            return x[0]
+
     return False
 
 def in_ttuple(ttuple, itm):

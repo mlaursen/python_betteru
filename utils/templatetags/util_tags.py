@@ -19,7 +19,7 @@ def as_controls(name, label, input, error, d=False):
     return h
 
 @register.simple_tag
-def as_dropdown(name, choices, error, onclick=False, d=0, label=False):
+def as_dropdown(name, choices, error, label=False, d=0, onclick='selectItemDropdown'):
     h  = "<div class=\"input-append\">\n"
     h += "  <div class=\"btn-group\">\n"
     h += "  <button id=\"%s_button\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\">" % name
@@ -31,13 +31,13 @@ def as_dropdown(name, choices, error, onclick=False, d=0, label=False):
         if "Select" in c[1]:
             h += "    <li><a href=\"#\""
             if onclick:
-                h += " id=\"id_%s\" onclick=\"%s\"" % (c[0], onclick)
+                h += " id=\"id_%s\" onclick=\"%s('%s','%s')\"" % (c[0], onclick, c[1], name)
             h += ">%s</a></li>\n" % c[1]
             h += "    <li class=\"divider\"></li>\n"
         else:
             h += "    <li><a href=\"#\""
             if onclick:
-                h += " id=\"id_%s\" onclick=\"%s\"" % (c[0], onclick)
+                h += " id=\"id_%s\" onclick=\"%s('%s','%s')\"" % (c[0], onclick, c[1], name)
             h += ">%s</a></li>\n" % c[1]
     h += "  </ul>\n"
     h += "  </div>\n"
