@@ -26,19 +26,14 @@ def as_dropdown(name, choices, error, label=False, d=0, onclick='selectItemDropd
     h += "%s" % choices[d][1]
     h += " <span class=\"caret\"></span></button>\n"
     h += "  <input type=\"hidden\" name=\"%s\" value=\"%s\" />\n" % (name, choices[d][0])
-    h += "  <ul class=\"dropdown-menu\">\n"
+    h += "  <ul class=\"dropdown-menu\" id=\"%s_choices\">\n" % name
     for c in choices:
+        h += "    <li><a href=\"#\""
+        if onclick:
+            h += " id=\"id_%s\" onclick=\"%s(this)\"" % (c[0], onclick)
+        h += ">%s</a></li>\n" % c[1]
         if "Select" in c[1]:
-            h += "    <li><a href=\"#\""
-            if onclick:
-                h += " id=\"id_%s\" onclick=\"%s('%s','%s')\"" % (c[0], onclick, c[1], name)
-            h += ">%s</a></li>\n" % c[1]
             h += "    <li class=\"divider\"></li>\n"
-        else:
-            h += "    <li><a href=\"#\""
-            if onclick:
-                h += " id=\"id_%s\" onclick=\"%s('%s','%s')\"" % (c[0], onclick, c[1], name)
-            h += ">%s</a></li>\n" % c[1]
     h += "  </ul>\n"
     h += "  </div>\n"
     h += "</div>"

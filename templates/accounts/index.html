@@ -22,23 +22,19 @@
   {% as_dropdown 'gender'               genders       form.errors.gender.as_text                      'Gender'                gender_default %}
   {% as_dropdown 'units'                units         form.errors.units.as_text                       'Units'                 unit_default %}
   {% as_controls 'height'               'Height:'     settings.height                                 settings.errors.height %}
-  {% as_dropdown 'recalc'               recalc        settings.errors.recalculate_day_of_week.as_text 'Recalculate Day'       recalc_default %}
+  {% as_dropdown 'recalculate_day_of_week' recalc        settings.errors.recalculate_day_of_week.as_text 'Recalculate Day'       recalc_default %}
   {% as_dropdown 'activity_multiplier'  multipliers   settings.errors.ractivity_multiplier.as_text    'Activity Multiplier:'  mult_default %}
   {% as_submit 'Update' True disable %}
 </form>
+</div>
+<div class='error'>
+    {{ debug }}
 </div>
 {% endblock %}
 {% block extrajs %}
 {% load static %}
 <script src="{% static 'js/jquery/jquery-ui-1.10.3.custom.js' %}"></script>
 <script type="text/javascript">
-  function selectItem(f, name) {
-    id = f.getAttribute('id');
-    html = $('#' + id).html();
-    $('#' + name + '_button').html(html + " <span class=\"caret\"></span>");
-    $('input[name=' + name + ']').val(val);
-  }
-  
   $(function() { 
     $('#id_birthday').datepicker();
   });

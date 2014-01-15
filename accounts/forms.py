@@ -7,7 +7,7 @@ from django.utils.timezone import utc
 
 
 from accounts.models import TempAccount, Account, AccountSettings
-from utils.util import valid_user, createcode, create_birthday_time, birthday_time_as_str
+from utils.util import valid_user, createcode, create_birthday_time, birthday_time_as_str, in_ttuple
 
 class CreateForm(ModelForm):
     password_confirm = forms.CharField(max_length=128,
@@ -72,16 +72,13 @@ class EditAccountForm(ModelForm):
 
     def is_valid(self):
         valid = super(EditAccountForm, self).is_valid()
-        MULTIPLIERS = ('sedentary', 'lightly', 'moderately', 'very', 'extremely')
-        GENDERS = ('m', 'f')
-        UNITS = ('imperial', 'metric')
-        #mult = self.cleaned_data.get('activity_multiplier')
+        GENDERS = Account.GENDER_CHOICES[1:]
+        UNITS = Account.UNIT_CHOICES[1:]
         birthday = birthday_time_as_str(self.cleaned_data.get('birthday'))
-        #height = self.cleaned_data.get('height')
         gender = self.cleaned_data.get('gender')
         units = self.cleaned_data.get('units')
 
-        if gender not in GENDERS:
+        if not in_ttuple(GENDERS, gender):# not in GENDERS:
             self._errors['gender_errs'] = ErrorList([u"You must select a gender."])
             valid = False
 
@@ -117,6 +114,12 @@ class EditAccountForm(ModelForm):
 
 
 class EditAccountSettingsForm(ModelForm):
+    def is_valid(self):
+        valid = super(EditAccountSettingsForm, self).is_valid()
+        RECALC = AccountSettings.DOW_CHOICES[1:]
+        MULTIPLIERS = AccountSettings.MULTIPLIER_CHOICES[1:]
+
+        return valid
 
     class Meta:
         model = AccountSettings

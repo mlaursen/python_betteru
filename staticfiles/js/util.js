@@ -21,7 +21,11 @@ function selectItem(id, name) {
   }
 }
 
-function selectItemDropdown(id, name) {
-  $('#' + name + '_button').html(id + ' <span class="caret"></span>');
-  $('input[name=' + name + ']').attr('value', id.replace('id_', ''));
+function selectItemDropdown(field) {
+  var name = field.parentElement.parentElement.id.replace('_choices', '');
+  $('#'+name+'_button').html(field.text+' <span class="caret"></span>');
+  $('input[name='+name+']').attr('value', field.id.replace('id_', ''));
 }
+
+
+

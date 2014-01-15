@@ -66,6 +66,10 @@ def index(request):
     if request.method == 'POST' and a != example:
         f = EditAccountForm(request.POST)
         f2 = EditAccountSettingsForm(request.POST)
+        success = 'At least we are here\n'
+        if f2.is_valid():
+            success += 'Now f2 is valid\n'
+
         if f.is_valid() and f2.is_valid():
             bday = f.cleaned_data.get('birthday')
             gender = f.cleaned_data.get('gender')
@@ -73,6 +77,7 @@ def index(request):
             height = f2.cleaned_data.get('height')
             mult   = f2.cleaned_data.get('activity_multiplier')
             recalc = f2.cleaned_data.get('recalculate_day_of_week')
+            success += 'Now after clean data'
             a.birthday = bday
             a.gender = gender
             a.units = units
@@ -107,6 +112,7 @@ def index(request):
         'recalc_default': recalc_default,
         'multipliers': mults,
         'mult_default': mult_default,
+        'debug': request.POST,
         })
 
 
