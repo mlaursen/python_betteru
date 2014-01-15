@@ -58,21 +58,11 @@ def index(request):
     units   = Account.UNIT_CHOICES
     recalc  = AccountSettings.DOW_CHOICES
     mults   = AccountSettings.MULTIPLIER_CHOICES
+    acts = None
 
     if request.method == 'POST' and a != example:
         f = EditAccountForm(request.POST)
         f2 = EditAccountSettingsForm(request.POST)
-        success = 'At least we are here\n'
-        if f2.is_valid():
-            success += 'Now f2 is valid\n'
-        else:
-            success = f2.errors
-
-        if f.is_valid():
-            success += "Now f is valid\n"
-        else:
-            success = f.errors
-
         if f.is_valid() and f2.is_valid():
             bday = f.cleaned_data.get('birthday')
             gender = f.cleaned_data.get('gender')
@@ -80,7 +70,6 @@ def index(request):
             height = f2.cleaned_data.get('height')
             mult   = f2.cleaned_data.get('activity_multiplier')
             fRecalc = f2.cleaned_data.get('recalculate_day_of_week')
-            success += 'Now after clean data'
             a.birthday = bday
             a.gender = gender
             a.units = fUnits
@@ -102,8 +91,12 @@ def index(request):
 
     gender_default = get_index_of(genders, a.gender)
     unit_default   = get_index_of(units,   a.units)
-    recalc_default = get_index_of(recalc, acts.recalculate_day_of_week)
-    mult_default   = get_index_of(mults,  acts.activity_multiplier)
+    if acts:
+        recalc_default = get_index_of(recalc, acts.recalculate_day_of_week)
+        mult_default   = get_index_of(mults,  acts.activity_multiplier)
+    else:
+        recalc_default = 0
+        mult_default = 0
 
     return render(request,'accounts/index.html', {'form': f,
         'settings': f2,
