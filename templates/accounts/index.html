@@ -27,9 +27,6 @@
   {% as_submit 'Update' True disable %}
 </form>
 </div>
-<div class='error'>
-    {{ debug }}
-</div>
 {% endblock %}
 {% block extrajs %}
 {% load static %}
@@ -37,6 +34,7 @@
 <script type="text/javascript">
   $(function() { 
     $('#id_birthday').datepicker();
+    window.setTimeout(function() { $('.alert').alert('close'); }, 2000);
   });
 </script>
 {% endblock %}

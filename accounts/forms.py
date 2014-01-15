@@ -82,7 +82,7 @@ class EditAccountForm(ModelForm):
             self._errors['gender_errs'] = ErrorList([u"You must select a gender."])
             valid = False
 
-        if units not in UNITS:
+        if not in_ttuple(UNITS, units):
             self._errors['units_errs'] = ErrorList([u"You must select a unit."])
             valid = False
 

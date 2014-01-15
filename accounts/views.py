@@ -47,8 +47,6 @@ def logout(request):
 def index(request):
     example = Account.objects.get(pk=0)
     disable = False
-    recalc_default = 0
-    mult_default = 0
     if request.session.has_key('uid'):
         a = get_object_or_404(Account, pk=request.session['uid'])
     else:
@@ -60,8 +58,6 @@ def index(request):
     units   = Account.UNIT_CHOICES
     recalc  = AccountSettings.DOW_CHOICES
     mults   = AccountSettings.MULTIPLIER_CHOICES
-    gender_default = get_index_of(genders, a.gender)
-    unit_default   = get_index_of(units,   a.units)
 
     if request.method == 'POST' and a != example:
         f = EditAccountForm(request.POST)
@@ -69,35 +65,45 @@ def index(request):
         success = 'At least we are here\n'
         if f2.is_valid():
             success += 'Now f2 is valid\n'
+        else:
+            success = f2.errors
+
+        if f.is_valid():
+            success += "Now f is valid\n"
+        else:
+            success = f.errors
 
         if f.is_valid() and f2.is_valid():
             bday = f.cleaned_data.get('birthday')
             gender = f.cleaned_data.get('gender')
-            units = f.cleaned_data.get('units')
+            fUnits = f.cleaned_data.get('units')
             height = f2.cleaned_data.get('height')
             mult   = f2.cleaned_data.get('activity_multiplier')
-            recalc = f2.cleaned_data.get('recalculate_day_of_week')
+            fRecalc = f2.cleaned_data.get('recalculate_day_of_week')
             success += 'Now after clean data'
             a.birthday = bday
             a.gender = gender
-            a.units = units
+            a.units = fUnits
             a.save()
             if AccountSettings.objects.filter(account=a, date_changed=date.today):
-                acts = AccountSettings.update_account_settings(a, date.today, recalc, mult, height)
+                acts = AccountSettings.update_account_settings(a, date.today, fRecalc, mult, height)
             else:
-                acts = AccountSettings.objects.create_account_settings(a, recalc, height, mult)
+                acts = AccountSettings.objects.create_account_settings(a, fRecalc, height, mult)
                 acts.save()
             success = 'You have successfully updated your account information!'
     else:
         f = EditAccountForm(instance=a)
         account_settings = AccountSettings.objects.filter(account=a)
         if account_settings:
-            account_settings = get_object_or_404(AccountSettingsView, account=a)
-            f2 = EditAccountSettingsForm(instance=account_settings)
-            recalc_default = get_index_of(recalc, account_settings.recalculate_day_of_week)
-            mult_default   = get_index_of(mults,  account_settings.activity_multiplier)
+            acts = get_object_or_404(AccountSettingsView, account=a)
+            f2 = EditAccountSettingsForm(instance=acts)
         else:
             f2 = EditAccountSettingsForm()
+
+    gender_default = get_index_of(genders, a.gender)
+    unit_default   = get_index_of(units,   a.units)
+    recalc_default = get_index_of(recalc, acts.recalculate_day_of_week)
+    mult_default   = get_index_of(mults,  acts.activity_multiplier)
 
     return render(request,'accounts/index.html', {'form': f,
         'settings': f2,
@@ -112,8 +118,7 @@ def index(request):
         'recalc_default': recalc_default,
         'multipliers': mults,
         'mult_default': mult_default,
-        'debug': request.POST,
-        })
+    })
 
 
 def create_temp(request):
