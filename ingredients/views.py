@@ -7,6 +7,7 @@ from django.utils import timezone
 
 from ingredients.forms import CreateForm
 from ingredients.models import Ingredient, Category, Brand
+from utils.util import get_index_of
 
 import sys, re
 
@@ -31,7 +32,8 @@ def create(request):
     b.reverse()
     b.append('New Brand')
     b.reverse()
-    c = Category.objects.all()
+    c = list(Category.objects.all())
+    cid=0
     if request.method == 'POST':
         f = CreateForm(request.POST)
         if f.is_valid():
@@ -49,11 +51,13 @@ def create(request):
             i = Ingredient.objects.create_ingredient(name, brand, catg, dss, dsu, ass, asu, calories, fat, carbs, prot)
             i.save()
             return HttpResponseRedirect(reverse('ingredients:index'))
+        cid = get_index_of(c, f.cleaned_data.get('category'))
     else:
         f = CreateForm()
     return render(request, 'ingredients/create.html', {'form': f,
         'categories': c,
-        'brands': b},)
+        'brands': b,
+        'cid': cid},)
 
 def load_table(request):
     brands = Brand.objects.all().order_by('name')
